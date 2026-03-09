@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for exec-maven-plugin.
+  Source: https://www.mojohaus.org/exec-maven-plugin/
+  Latest documented version: 3.5.0
+
+  category values:
+    functional  - affects the external process invoked and its arguments
+    behavioral  - affects how the goal runs but not the process or its outputs
+
+  envSpecific: true if the parameter commonly carries file-system paths,
+               machine-specific executable names, or free-form strings/lists
+               passed to external tools.
+-->
+<plugin-catalog>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>exec-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  exec:exec                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>exec</name>
+      <fullName>org.codehaus.mojo:exec-maven-plugin:exec</fullName>
+      <description>Executes an external system command.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Executable ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>executable</name>
+          <description>Path or name of the executable to run. User property: exec.executable</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>workingDirectory</name>
+          <description>Working directory for the executed process. User property: exec.workingdir</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Arguments ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>arguments</name>
+          <description>Command-line arguments to pass to the executable (may embed file paths).</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>commandlineArgs</name>
+          <description>Single string of space-separated command-line arguments. User property: exec.args</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Environment ────────────────────────────────────────────── -->
+        <parameter>
+          <name>environmentVariables</name>
+          <description>Additional environment variables to set for the external process.</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>environmentScript</name>
+          <description>Script that produces environment variable output (key=value lines).</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Process control ────────────────────────────────────────── -->
+        <parameter>
+          <name>successCodes</name>
+          <description>Exit codes treated as successful execution (default: 0 only). User property: exec.successCodes</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>async</name>
+          <description>Run the process asynchronously without waiting for it to finish. User property: exec.async</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>asyncDestroyOnShutdown</name>
+          <description>Kill async processes when the JVM shuts down. User property: exec.asyncDestroyOnShutdown</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputFile</name>
+          <description>File to capture process stdout. User property: exec.outputFile</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip execution of this goal entirely. User property: skip.exec</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  exec:java                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>java</name>
+      <fullName>org.codehaus.mojo:exec-maven-plugin:java</fullName>
+      <description>Executes a Java class in the current JVM with the project's classpath.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Main class ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>mainClass</name>
+          <description>Fully-qualified name of the Java class to execute. User property: exec.mainClass</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Arguments ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>arguments</name>
+          <description>Command-line arguments to pass to the Java class main method (may embed paths).</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>commandlineArgs</name>
+          <description>Single string of space-separated arguments passed to main(). User property: exec.args</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Classpath ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>classpathScope</name>
+          <description>Maven scope used to build the execution classpath (compile, runtime, test, system). User property: exec.classpathScope</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>runtime</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>additionalClasspathElements</name>
+          <description>Extra classpath entries appended to the resolved project classpath (may contain absolute paths).</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addOutputToClasspath</name>
+          <description>Whether to prepend project output directory to the classpath. User property: exec.addOutputToClasspath</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── JVM / thread control ──────────────────────────────────── -->
+        <parameter>
+          <name>cleanupDaemonThreads</name>
+          <description>Interrupt and join daemon threads left running after main() returns. User property: exec.cleanupDaemonThreads</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>daemonThreadJoinTimeout</name>
+          <description>Milliseconds to wait for daemon threads to finish before giving up. User property: exec.daemonThreadJoinTimeout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>long</type>
+          <defaultValue>15000</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>stopUnresponsiveDaemonThreads</name>
+          <description>Call Thread.stop() on daemon threads that do not finish within the timeout. User property: exec.stopUnresponsiveDaemonThreads</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>systemProperties</name>
+          <description>System properties set on the JVM before the class is executed.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip execution of this goal entirely. User property: skip.exec</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  exec:help                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.codehaus.mojo:exec-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

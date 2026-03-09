@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import org.apache.maven.buildcache.OnUnknownPlugin;
 import org.apache.maven.buildcache.PluginScanConfig;
 import org.apache.maven.buildcache.hash.HashFactory;
 import org.apache.maven.buildcache.xml.config.DirName;
@@ -165,4 +166,25 @@ public interface CacheConfig {
      * Default: true
      */
     boolean isCacheCompile();
+
+    /**
+     * Whether automatic reconciliation from the bundled plugin catalog registry is enabled.
+     * When true (default), functional parameters are automatically tracked and behavioral
+     * parameters are saved to build info without invalidating the cache.
+     */
+    boolean isPluginMetadataRegistryEnabled();
+
+    /**
+     * Action taken when a plugin, plugin-goal, or plugin-goal-parameter has no catalog entry
+     * and no explicit reconcile configuration. Default: {@link OnUnknownPlugin#FAIL}.
+     */
+    OnUnknownPlugin getOnUnknownPlugin();
+
+    /**
+     * Validates that {@code parameterName} is known in the plugin catalog for the given mojo execution.
+     * If the registry is enabled, the goal has a catalog entry, and the parameter is absent from the
+     * catalog, the configured {@link OnUnknownPlugin} action is applied (fail / warn / ignore).
+     * No-op when the registry is disabled or the goal is not catalogued.
+     */
+    void checkUnknownParameter(MojoExecution mojoExecution, String parameterName);
 }

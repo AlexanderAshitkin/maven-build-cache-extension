@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for jib-maven-plugin.
+  Source: https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin
+  Latest documented version: 3.4.3
+-->
+<plugin-catalog>
+  <groupId>com.google.cloud.tools</groupId>
+  <artifactId>jib-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jib:build                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>build</name>
+      <fullName>com.google.cloud.tools:jib-maven-plugin:build</fullName>
+      <description>Builds and pushes a container image to a remote registry without Docker.</description>
+      <versionRange>[0.1,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>from</name>
+          <description>Base image configuration (image, auth, platforms). User property: jib.from.image</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>to</name>
+          <description>Target image configuration (image, tags, auth). User property: jib.to.image</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>container</name>
+          <description>Container configuration (entrypoint, jvmFlags, ports, environment, labels, etc.).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>extraDirectories</name>
+          <description>Extra files to add to the container image from local directories.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputPaths</name>
+          <description>Paths for build artifacts: digest, imageId, imageJson, tar files.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>allowInsecureRegistries</name>
+          <description>Allow communication with insecure (non-HTTPS) registries. User property: jib.allowInsecureRegistries</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>containerizingMode</name>
+          <description>How to containerize: exploded (layers) or packaged (fat JAR). User property: jib.containerizingMode</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>exploded</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip Jib goal execution. User property: jib.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jib:dockerBuild                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>dockerBuild</name>
+      <fullName>com.google.cloud.tools:jib-maven-plugin:dockerBuild</fullName>
+      <description>Builds and loads a container image into the local Docker daemon.</description>
+      <versionRange>[0.1,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>from</name>
+          <description>Base image configuration. User property: jib.from.image</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>to</name>
+          <description>Target image name for the local Docker daemon. User property: jib.to.image</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>container</name>
+          <description>Container configuration (entrypoint, jvmFlags, ports, environment, labels).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>extraDirectories</name>
+          <description>Extra files to add to the container image from local directories.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dockerExecutable</name>
+          <description>Path to the Docker executable. User property: jib.dockerExecutable</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip Jib goal execution. User property: jib.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jib:buildTar                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>buildTar</name>
+      <fullName>com.google.cloud.tools:jib-maven-plugin:buildTar</fullName>
+      <description>Builds a container image and exports it as a TAR archive.</description>
+      <versionRange>[0.9,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>from</name>
+          <description>Base image configuration. User property: jib.from.image</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>to</name>
+          <description>Target image name in the TAR archive. User property: jib.to.image</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>container</name>
+          <description>Container configuration (entrypoint, jvmFlags, ports, environment, labels).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputPaths</name>
+          <description>Output path for the generated TAR file.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip Jib goal execution. User property: jib.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.9,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jib:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>com.google.cloud.tools:jib-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[0.1,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.1,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -21,6 +21,7 @@ package org.apache.maven.buildcache;
 import java.io.File;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -60,6 +61,7 @@ class BuildCacheMojosExecutionStrategyTest {
             strategy = new BuildCacheMojosExecutionStrategy(
                     mock(CacheController.class),
                     cacheConfigMock,
+                    mock(PluginCatalogRegistry.class),
                     mock(MojoParametersListener.class),
                     mock(LifecyclePhasesHelper.class),
                     mock(MavenPluginManager.class),
@@ -199,6 +201,124 @@ class BuildCacheMojosExecutionStrategyTest {
             cache.setValue(value);
 
             return Pair.of(config, cache);
+        }
+    }
+
+    /**
+     * Tests that demonstrate how functional vs behavioral parameter categories
+     * affect cache-key matching, simulating the default catalog-driven reconciliation.
+     *
+     * <p>In production, {@code CacheConfigImpl.getTrackedProperties()} returns only
+     * <em>functional</em> parameters (those declared as {@code category=functional} in the
+     * plugin catalog). Behavioral parameters are intentionally excluded from the list.
+     * These tests mock that contract directly to verify the matching semantics.
+     */
+    @Nested
+    class CatalogReconciliationTest {
+
+        private BuildCacheMojosExecutionStrategy strategy;
+        private MavenProject projectMock;
+        private MojoExecution executionMock;
+        private CompletedExecution cacheRecordMock;
+        private CacheConfig cacheConfigMock;
+
+        @BeforeEach
+        void setUp() {
+            cacheConfigMock = mock(CacheConfig.class);
+            strategy = new BuildCacheMojosExecutionStrategy(
+                    mock(CacheController.class),
+                    cacheConfigMock,
+                    mock(PluginCatalogRegistry.class),
+                    mock(MojoParametersListener.class),
+                    mock(LifecyclePhasesHelper.class),
+                    mock(MavenPluginManager.class),
+                    mock(MojoExecutionScope.class));
+
+            projectMock = mock(MavenProject.class);
+            executionMock = mock(MojoExecution.class);
+            cacheRecordMock = mock(CompletedExecution.class);
+
+            when(projectMock.getBasedir()).thenReturn(new File("."));
+        }
+
+        /**
+         * A change in a <em>functional</em> parameter must cause a cache miss.
+         *
+         * <p>Simulates: the catalog marks {@code anyObject} as {@code functional}, so
+         * {@code CacheConfigImpl} includes it in the tracked-property list. When its
+         * value differs from the cached value the params no longer match.
+         */
+        @Test
+        void functionalParameterChangeCausesCacheMiss() {
+            // Registry returns "anyObject" as a tracked (functional) property
+            TrackedProperty functional = new TrackedProperty();
+            functional.setPropertyName("anyObject");
+            when(cacheConfigMock.getTrackedProperties(executionMock)).thenReturn(Collections.singletonList(functional));
+
+            // Cached build had anyObject="cachedValue"
+            PropertyValue cachedValue = new PropertyValue();
+            cachedValue.setName("anyObject");
+            cachedValue.setValue("cachedValue");
+            when(cacheRecordMock.getProperties()).thenReturn(Collections.singletonList(cachedValue));
+
+            // Current build has anyObject="newValue" — a functional change
+            TestMojo mojo = new TestMojo();
+            mojo.setAnyObject("newValue");
+
+            assertFalse(
+                    strategy.isParamsMatched(projectMock, executionMock, mojo, cacheRecordMock),
+                    "A change in a functional parameter must cause a cache miss");
+        }
+
+        /**
+         * A change in a <em>behavioral</em> parameter must NOT invalidate the cache.
+         *
+         * <p>Simulates: the catalog marks {@code bool} as {@code behavioral}, so
+         * {@code CacheConfigImpl} excludes it from the tracked-property list (returns an
+         * empty list). Because there are no tracked properties, the comparison always
+         * succeeds regardless of the mojo's current field values.
+         */
+        @Test
+        void behavioralParameterChangeDoesNotInvalidateCache() {
+            // Registry returns empty list — behavioral params are never tracked
+            when(cacheConfigMock.getTrackedProperties(executionMock)).thenReturn(Collections.emptyList());
+            when(cacheRecordMock.getProperties()).thenReturn(Collections.emptyList());
+
+            // Current build has bool=true; cached build implicitly had bool=false
+            // Since bool is behavioral (not tracked), the difference must be ignored
+            TestMojo mojo = new TestMojo();
+            mojo.setBool(true);
+
+            assertTrue(
+                    strategy.isParamsMatched(projectMock, executionMock, mojo, cacheRecordMock),
+                    "A change in a behavioral parameter must not invalidate the cache");
+        }
+
+        /**
+         * When only behavioral parameters changed and a functional parameter kept the same
+         * cached value, the result must still be a cache hit.
+         */
+        @Test
+        void functionalParamMatchesDespiteBehavioralChange() {
+            // Only the functional param is tracked
+            TrackedProperty functional = new TrackedProperty();
+            functional.setPropertyName("anyObject");
+            when(cacheConfigMock.getTrackedProperties(executionMock)).thenReturn(Collections.singletonList(functional));
+
+            // Cached build had anyObject="stable"
+            PropertyValue cachedValue = new PropertyValue();
+            cachedValue.setName("anyObject");
+            cachedValue.setValue("stable");
+            when(cacheRecordMock.getProperties()).thenReturn(Collections.singletonList(cachedValue));
+
+            // Current build: anyObject unchanged, but bool flipped (behavioral — not tracked)
+            TestMojo mojo = new TestMojo();
+            mojo.setAnyObject("stable"); // same as cached
+            mojo.setBool(true); // behavioral change — irrelevant
+
+            assertTrue(
+                    strategy.isParamsMatched(projectMock, executionMock, mojo, cacheRecordMock),
+                    "Cache must hit when only behavioral parameters changed");
         }
     }
 }

@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for helm-maven-plugin.
+  Source: https://github.com/kokuwaio/helm-maven-plugin
+  Latest documented version: 6.14.0
+-->
+<plugin-catalog>
+  <groupId>io.kokuwa.maven</groupId>
+  <artifactId>helm-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:init                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>init</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:init</fullName>
+      <description>Downloads the Helm binary and initializes the Helm environment.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>helmVersion</name>
+          <description>Helm binary version to download and use. User property: helm.version</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>helmExecutableDirectory</name>
+          <description>Directory where the Helm binary is stored/cached. User property: helm.executableDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>helmDownloadUrl</name>
+          <description>URL for downloading Helm binary (overrides auto-computed URL). User property: helm.downloadUrl</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip Helm init goal. User property: helm.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:dependency-build                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>dependency-build</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:dependency-build</fullName>
+      <description>Downloads and builds chart dependencies (helm dependency build).</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>chartDirectory</name>
+          <description>Directory containing the Helm chart. User property: helm.chartDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip dependency-build goal. User property: helm.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:lint                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>lint</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:lint</fullName>
+      <description>Runs helm lint to validate chart syntax and structure.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>chartDirectory</name>
+          <description>Directory containing the Helm chart to lint. User property: helm.chartDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lintStrict</name>
+          <description>Use --strict mode for lint (fail on warnings). User property: helm.lint.strict</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>values</name>
+          <description>Values files to pass to lint via --values. User property: helm.lint.values</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip lint goal. User property: helm.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:template                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>template</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:template</fullName>
+      <description>Renders chart templates locally and outputs them (helm template).</description>
+      <versionRange>[4.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>chartDirectory</name>
+          <description>Directory containing the Helm chart. User property: helm.chartDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>values</name>
+          <description>Values files to pass via --values. User property: helm.template.values</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where rendered templates are written. User property: helm.template.outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip template goal. User property: helm.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:package                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>package</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:package</fullName>
+      <description>Packages a Helm chart into a versioned chart archive (.tgz).</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>chartDirectory</name>
+          <description>Directory containing the Helm chart to package. User property: helm.chartDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the chart archive is written. User property: helm.outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/helm</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>chartVersion</name>
+          <description>Version to set in the chart metadata. Default: ${project.version}. User property: helm.chartVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.version}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>appVersion</name>
+          <description>Application version to set in the chart metadata. User property: helm.appVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip package goal. User property: helm.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:upload                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>upload</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:upload</fullName>
+      <description>Uploads a packaged Helm chart to a chart repository.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>uploadRepoStable</name>
+          <description>Repository configuration (url, type, username, password) for stable charts.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>uploadRepoSnapshot</name>
+          <description>Repository configuration for snapshot charts.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Object</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory containing the chart archives to upload.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/helm</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip upload goal. User property: helm.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  helm:help                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>io.kokuwa.maven:helm-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

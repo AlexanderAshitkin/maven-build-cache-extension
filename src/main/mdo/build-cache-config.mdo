@@ -1043,6 +1043,16 @@ under the License.
                         * false: logged only tracked and included by whitelists (&lt;log/&gt;) on plugin level]]>
                     </description>
                 </field>
+                <field xml.attribute="true">
+                    <name>skipReconciliation</name>
+                    <type>boolean</type>
+                    <defaultValue>false</defaultValue>
+                    <description>
+                        When true, all reconciliation is skipped for this plugin:goal. No properties are
+                        tracked in the cache key. Use this to explicitly opt a plugin out of reconciliation
+                        instead of leaving it unconfigured (which would trigger onUnknownPlugin behaviour).
+                    </description>
+                </field>
             </fields>
         </class>
 
@@ -1132,6 +1142,12 @@ under the License.
                     <description>Specify which plugin should run always if present in build regardless of cached status</description>
 
                 </field>
+                <field xml.attribute="true">
+                    <name>metadataRegistryEnabled</name>
+                    <type>boolean</type>
+                    <defaultValue>true</defaultValue>
+                    <description>Enable automatic reconciliation from plugin catalog registry. Default: true.</description>
+                </field>
             </fields>
         </class>
 
@@ -1185,6 +1201,21 @@ under the License.
                         plugin level
                         * false: logged only tracked and included by whitelists (&lt;log/&gt;) on plugin level
                         &lt;log/&gt;]]>
+                    </description>
+                </field>
+                <field xml.attribute="true">
+                    <name>onUnknownPlugin</name>
+                    <type>String</type>
+                    <defaultValue>fail</defaultValue>
+                    <description><![CDATA[
+                        Action taken when a plugin, plugin-goal, or plugin-goal-parameter is encountered that
+                        is neither in the bundled plugin catalog nor covered by an explicit &lt;plugin&gt;
+                        reconcile entry. Per-plugin entries (with optional skipReconciliation) take
+                        precedence over this setting.
+                        Supported values:
+                        * fail (default) — throw an exception and stop the build.
+                        * ignore          — silently skip reconciliation for this plugin/goal/parameter.
+                        * printWarn       — log a warning and continue without reconciliation.]]>
                     </description>
                 </field>
             </fields>

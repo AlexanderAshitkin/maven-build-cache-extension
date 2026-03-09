@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for liquibase-maven-plugin.
+  Source: https://docs.liquibase.com/tools-integrations/maven/home.html
+  Latest documented version: 4.x
+
+  NOTE: Only publicly available, minimal parameter metadata included.
+  This catalog does not reproduce proprietary documentation.
+-->
+<plugin-catalog>
+  <groupId>org.liquibase</groupId>
+  <artifactId>liquibase-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:update                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>update</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:update</fullName>
+      <description>Applies pending changesets from the changelog to bring the database up to date.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Changelog ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>changeLogFile</name>
+          <description>Path to the Liquibase changelog file (XML, YAML, JSON, or SQL). User property: liquibase.changeLogFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Database connection ────────────────────────────────────── -->
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the target database. User property: liquibase.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>username</name>
+          <description>Database username for authentication. User property: liquibase.username</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <description>Database password for authentication. User property: liquibase.password</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>driver</name>
+          <description>Fully qualified class name of the JDBC driver. User property: liquibase.driver</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Schema ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>defaultSchemaName</name>
+          <description>Default schema used for unqualified database objects. User property: liquibase.defaultSchemaName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>contexts</name>
+          <description>Comma-separated list of contexts to apply; only matching changesets are executed. User property: liquibase.contexts</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>labels</name>
+          <description>Label expression that filters which changesets are applied. User property: liquibase.labels</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Changeset authoring ────────────────────────────────────── -->
+        <parameter>
+          <name>changeSetAuthor</name>
+          <description>Default author attribute for auto-generated changesets. User property: liquibase.changeSetAuthor</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Partial update ─────────────────────────────────────────── -->
+        <parameter>
+          <name>count</name>
+          <description>Number of changesets to apply; applies all if omitted. User property: liquibase.migrationSqlOutputFile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>toTag</name>
+          <description>Apply changesets up to and including the changeset tagged with this value. User property: liquibase.toTag</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Verbosity ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>verbose</name>
+          <description>Enable verbose logging output during the update. User property: liquibase.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the update goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:rollback                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>rollback</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:rollback</fullName>
+      <description>Rolls back changesets by count, date, or tag using the rollback SQL in the changelog.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>changeLogFile</name>
+          <description>Path to the Liquibase changelog file containing rollback SQL. User property: liquibase.changeLogFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the target database. User property: liquibase.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rollbackCount</name>
+          <description>Number of changesets to roll back. User property: liquibase.rollbackCount</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rollbackDate</name>
+          <description>Roll back all changesets applied after this date (yyyy-MM-dd'T'HH:mm:ss). User property: liquibase.rollbackDate</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rollbackTag</name>
+          <description>Roll back all changesets applied after the changeset with this tag. User property: liquibase.rollbackTag</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the rollback goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:diff                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>diff</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:diff</fullName>
+      <description>Reports structural differences between two database connections or a changelog and a database.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>referenceUrl</name>
+          <description>JDBC URL of the reference (source) database to diff against. User property: liquibase.referenceUrl</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>referenceUsername</name>
+          <description>Username for the reference database. User property: liquibase.referenceUsername</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>referencePassword</name>
+          <description>Password for the reference database. User property: liquibase.referencePassword</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputFile</name>
+          <description>File path where the diff report is written. User property: liquibase.outputFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>diffTypes</name>
+          <description>Comma-separated types of objects to include in diff (e.g. tables,views,columns). User property: liquibase.diffTypes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the diff goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:status                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>status</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:status</fullName>
+      <description>Lists all changesets that have not yet been applied to the database.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>changeLogFile</name>
+          <description>Path to the Liquibase changelog file. User property: liquibase.changeLogFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the target database. User property: liquibase.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the status goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:validate                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>validate</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:validate</fullName>
+      <description>Validates the changelog for correctness without executing any changesets.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>changeLogFile</name>
+          <description>Path to the Liquibase changelog file to validate. User property: liquibase.changeLogFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database used to resolve database-type-specific changelog content. User property: liquibase.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the validate goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:changelogSync                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>changelogSync</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:changelogSync</fullName>
+      <description>Marks all changesets in the changelog as executed without applying them to the database.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>changeLogFile</name>
+          <description>Path to the Liquibase changelog file. User property: liquibase.changeLogFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the target database. User property: liquibase.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the changelogSync goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:generateChangeLog                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>generateChangeLog</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:generateChangeLog</fullName>
+      <description>Generates a changelog representing the current state of the database schema.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the source database to reverse-engineer. User property: liquibase.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputChangeLogFile</name>
+          <description>Path where the generated changelog file will be written. User property: liquibase.outputChangeLogFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>diffTypes</name>
+          <description>Comma-separated list of object types to include in the generated changelog. User property: liquibase.diffTypes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the generateChangeLog goal entirely. User property: liquibase.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  liquibase:help                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.liquibase:liquibase-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

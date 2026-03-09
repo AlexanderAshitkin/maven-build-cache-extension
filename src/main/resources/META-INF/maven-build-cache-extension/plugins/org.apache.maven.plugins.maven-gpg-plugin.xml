@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-gpg-plugin.
+  Source: https://maven.apache.org/plugins/maven-gpg-plugin/
+  Latest documented version: 3.2.8
+
+  category values:
+    functional  - affects which artifacts are signed or where signatures are written
+    behavioral  - affects how signing is performed (which key, agent, passphrase) but
+                  not what artifacts are ultimately produced
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+
+  Security note: passphrase and keyname are inherently machine/environment specific.
+  They are classified behavioral+envSpecific=true. Do NOT store these in shared
+  POM files; use environment variables or a GPG agent instead.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-gpg-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  gpg:sign                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>sign</name>
+      <fullName>org.apache.maven.plugins:maven-gpg-plugin:sign</fullName>
+      <description>Signs project artifacts, the POM, and attached artifacts with GnuPG for deployment.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Signature output directories ─────────────────────────── -->
+        <parameter>
+          <name>ascDirectory</name>
+          <description>Directory where detached signature (.asc) files are placed before attaching. Default: ${project.build.directory}/gpg</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/gpg</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for signed artifacts when using sign-and-deploy-file goal.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Artifact selection ────────────────────────────────────── -->
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style wildcard patterns for artifact files to exclude from signing (e.g., **/*.md5, **/*.sha1).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Signer selection ───────────────────────────────────────── -->
+        <parameter>
+          <name>signer</name>
+          <description>Signer implementation to use: gpg (external GPG binary) or bc (Bouncy Castle). User property: gpg.signer</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>gpg</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── GPG signer: key identification ───────────────────────── -->
+        <parameter>
+          <name>keyname</name>
+          <description>GPG key ID or fingerprint passed as --local-user to the gpg binary. GPG signer only. User property: gpg.keyname</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── GPG signer: passphrase ─────────────────────────────────── -->
+        <parameter>
+          <name>passphrase</name>
+          <description>GPG key passphrase. Deprecated: use the MAVEN_GPG_PASSPHRASE environment variable or a gpg-agent instead. User property: gpg.passphrase</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>passphraseEnvName</name>
+          <description>Name of the environment variable that contains the GPG passphrase (recommended over passphrase). User property: gpg.passphraseEnvName</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>MAVEN_GPG_PASSPHRASE</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>passphraseServerId</name>
+          <description>Server ID in settings.xml whose passphrase is used. Deprecated: use MAVEN_GPG_PASSPHRASE instead. User property: gpg.passphraseServerId</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── GPG signer: binary and agent ─────────────────────────── -->
+        <parameter>
+          <name>executable</name>
+          <description>Full path to the gpg (or gpg2) binary. GPG signer only. User property: gpg.executable</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useAgent</name>
+          <description>Allow gpg-agent to supply the passphrase (applies to both signer implementations). User property: gpg.useagent</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>homedir</name>
+          <description>GnuPG home directory containing keyrings. GPG signer only. User property: gpg.homedir</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>defaultKeyring</name>
+          <description>Add default keyrings from gpg home directory. GPG signer only. User property: gpg.defaultKeyring</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>gpgArguments</name>
+          <description>Additional arguments to pass to the gpg command. GPG signer only.</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+
+        <!-- ── BC signer: key material ───────────────────────────────── -->
+        <parameter>
+          <name>keyEnvName</name>
+          <description>Environment variable containing the exported GnuPG key in TSK format. BC signer only. User property: gpg.keyEnvName</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>MAVEN_GPG_KEY</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>keyFingerprint</name>
+          <description>Fingerprint of the key to use for signing. BC signer only. User property: gpg.keyFingerprint</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Best practices enforcement ───────────────────────────── -->
+        <parameter>
+          <name>bestPractices</name>
+          <description>Enforce best practices for sensitive data handling (reject plaintext passphrase configuration). User property: gpg.bestPractices</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip GPG signing entirely. User property: gpg.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  gpg:sign-and-deploy-file                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>sign-and-deploy-file</name>
+      <fullName>org.apache.maven.plugins:maven-gpg-plugin:sign-and-deploy-file</fullName>
+      <description>Signs artifacts and deploys them to a remote repository in a single step.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>file</name>
+          <description>File to be deployed and signed. User property: file</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>repositoryId</name>
+          <description>ID of the server in settings.xml to use for authentication. User property: repositoryId</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>url</name>
+          <description>URL of the repository to deploy to. User property: url</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>groupId</name>
+          <description>GroupId of the artifact to deploy. User property: groupId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>artifactId</name>
+          <description>ArtifactId of the artifact to deploy. User property: artifactId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>version</name>
+          <description>Version of the artifact to deploy. User property: version</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>packaging</name>
+          <description>Packaging type of the artifact to deploy. User property: packaging</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip signing and deployment. User property: gpg.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  gpg:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-gpg-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

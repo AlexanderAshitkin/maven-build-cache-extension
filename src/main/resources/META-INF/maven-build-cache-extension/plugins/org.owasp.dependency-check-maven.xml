@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for dependency-check-maven.
+  Source: https://jeremylong.github.io/DependencyCheck/dependency-check-maven/
+  Latest documented version: 10.0.0
+-->
+<plugin-catalog>
+  <groupId>org.owasp</groupId>
+  <artifactId>dependency-check-maven</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency-check:check                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>check</name>
+      <fullName>org.owasp:dependency-check-maven:check</fullName>
+      <description>Analyzes project dependencies for known vulnerabilities (CVEs).</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where vulnerability reports are written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>Report format: HTML, XML, CSV, JSON, JUNIT, SARIF, ALL. User property: format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>HTML</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>formats</name>
+          <description>Multiple report formats to generate simultaneously.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failBuildOnCVSS</name>
+          <description>Fail build if any vulnerability has CVSS score >= this value. User property: failBuildOnCVSS</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>float</type>
+          <defaultValue>11</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failBuildOnAnyVulnerability</name>
+          <description>Fail build if any vulnerability is found. User property: failBuildOnAnyVulnerability</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressionFiles</name>
+          <description>Paths to XML suppression files for false-positive CVEs.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressionFile</name>
+          <description>Path to a single XML suppression file for false-positive CVEs. User property: suppressionFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>scanSet</name>
+          <description>Additional directories or files to scan beyond project dependencies.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style patterns for artifacts to exclude from analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>assemblyAnalyzerEnabled</name>
+          <description>Enable .NET assembly analyzer. User property: assemblyAnalyzerEnabled</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Boolean</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nodeAnalyzerEnabled</name>
+          <description>Enable Node.js package analyzer. User property: nodeAnalyzerEnabled</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Boolean</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nvdApiKey</name>
+          <description>NVD API key for faster CVE data downloads. User property: nvdApiKey</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[8.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nvdDatafeedUrl</name>
+          <description>URL of an NVD data feed mirror. User property: nvdDatafeedUrl</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[8.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>connectionTimeout</name>
+          <description>HTTP connection timeout (ms) for NVD API calls. User property: connectionTimeout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip dependency-check analysis entirely. User property: dependency-check.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency-check:aggregate                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>aggregate</name>
+      <fullName>org.owasp:dependency-check-maven:aggregate</fullName>
+      <description>Analyzes all modules in a multi-module build and produces an aggregate report.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the aggregate report is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>Report format: HTML, XML, CSV, JSON, JUNIT, SARIF, ALL.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>HTML</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failBuildOnCVSS</name>
+          <description>Fail build if any vulnerability has CVSS score >= this value.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>float</type>
+          <defaultValue>11</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressionFiles</name>
+          <description>Paths to XML suppression files for false-positive CVEs.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip aggregate analysis. User property: dependency-check.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency-check:update-only                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>update-only</name>
+      <fullName>org.owasp:dependency-check-maven:update-only</fullName>
+      <description>Updates the local NVD database without running analysis.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>nvdApiKey</name>
+          <description>NVD API key for downloading CVE data.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[8.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the database update. User property: dependency-check.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency-check:help                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.owasp:dependency-check-maven:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

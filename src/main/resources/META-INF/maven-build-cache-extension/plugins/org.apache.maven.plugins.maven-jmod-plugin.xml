@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-jmod-plugin.
+  Source: https://maven.apache.org/plugins/maven-jmod-plugin/
+  Latest documented version: 3.0.0-alpha-1
+
+  category values:
+    functional  - affects the jmod file content (which classes, commands, configs,
+                  headers, libs are packaged; version recorded in the module)
+    behavioral  - affects how jmod runs but not the output artifact
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values (toolchain, source directories) that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-jmod-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jmod:create                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>create</name>
+      <fullName>org.apache.maven.plugins:maven-jmod-plugin:create</fullName>
+      <description>Creates a JMOD file from the project's compiled classes, native commands, config files, headers, and libraries.</description>
+      <versionRange>[3.0.0-alpha-1,)</versionRange>
+      <parameters>
+
+        <!-- ── Output ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated JMOD file is placed. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Source directories ────────────────────────────────────── -->
+        <parameter>
+          <name>classesDirectory</name>
+          <description>Directory containing the compiled classes to include in the JMOD (--class-path). Default: ${project.build.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>cmdsDirectory</name>
+          <description>Directory containing native command files to include in the JMOD (--cmds). Default: ${project.build.directory}/jmod-cmds</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jmod-cmds</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>configsDirectory</name>
+          <description>Directory containing configuration files to include in the JMOD (--config). Default: ${project.build.directory}/jmod-configs</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jmod-configs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>headersDirectory</name>
+          <description>Directory containing C header files to include in the JMOD (--header-files). Default: ${project.build.directory}/jmod-headers</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jmod-headers</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>legalDirectory</name>
+          <description>Directory containing legal notices to include in the JMOD (--legal-notices). Default: ${project.build.directory}/jmod-legal</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jmod-legal</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>libsDirectory</name>
+          <description>Directory containing native libraries to include in the JMOD (--libs). Default: ${project.build.directory}/jmod-libs</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jmod-libs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Module metadata ───────────────────────────────────────── -->
+        <parameter>
+          <name>moduleVersion</name>
+          <description>The module version recorded in the JMOD file (--module-version). Default: ${project.version}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.version}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>modulePath</name>
+          <description>Semicolon-separated list of module-path locations to resolve dependencies when creating the JMOD.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mainClass</name>
+          <description>Main class to record in the JMOD (--main-class), used when module is launched as an executable.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Toolchain ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>jdkToolchain</name>
+          <description>Map of toolchain requirements (e.g. version, vendor) to locate the JDK providing jmod. Resolved against local toolchains.xml.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the jmod:create goal execution. User property: maven.jmod.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jmod:help                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-jmod-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[3.0.0-alpha-1,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-alpha-1,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

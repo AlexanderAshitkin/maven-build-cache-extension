@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-toolchains-plugin.
+  Source: https://maven.apache.org/plugins/maven-toolchains-plugin/
+  Latest documented version: 3.2.0
+
+  category values:
+    functional  - determines which toolchain is selected and used for compilation/testing
+    behavioral  - affects how the goal runs without changing toolchain selection or outputs
+
+  envSpecific: true if the parameter references machine-local toolchain registries,
+               installed JDK/tool paths, or environment-specific identifiers.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-toolchains-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  toolchains:toolchain                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>toolchain</name>
+      <fullName>org.apache.maven.plugins:maven-toolchains-plugin:toolchain</fullName>
+      <description>Selects and stores toolchains from toolchains.xml for use by other plugins in the build.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Toolchain selection ────────────────────────────────────── -->
+        <parameter>
+          <name>toolchains</name>
+          <description>Map of toolchain type to requirement properties used to select toolchains from toolchains.xml.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip toolchain selection entirely. User property: maven.toolchain.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  toolchains:select-toolchain                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>select-toolchain</name>
+      <fullName>org.apache.maven.plugins:maven-toolchains-plugin:select-toolchain</fullName>
+      <description>Selects a single toolchain by type using pluggable discovery strategies.</description>
+      <versionRange>[3.2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Toolchain type ─────────────────────────────────────────── -->
+        <parameter>
+          <name>toolchainType</name>
+          <description>Type of toolchain to select (e.g. jdk, netbeans). User property: toolchainType</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Discovery strategy ─────────────────────────────────────── -->
+        <parameter>
+          <name>discoveryStrategies</name>
+          <description>Ordered list of discovery strategy identifiers used to locate toolchains.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip toolchain selection entirely. User property: maven.toolchain.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  toolchains:help                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-toolchains-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

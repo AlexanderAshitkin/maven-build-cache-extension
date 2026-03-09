@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for sonar-maven-plugin.
+  Source: https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-maven/
+  Latest documented version: 4.x
+
+  NOTE: Only publicly available, minimal parameter metadata included.
+  This catalog does not reproduce proprietary documentation.
+
+  NOTE: Sonar parameters use dot-notation user properties (e.g. sonar.host.url).
+  The XML element names below use camelCase equivalents for Maven plugin parameter
+  names; the corresponding user properties are noted in each description.
+-->
+<plugin-catalog>
+  <groupId>org.sonarsource.scanner.maven</groupId>
+  <artifactId>sonar-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  sonar:sonar                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>sonar</name>
+      <fullName>org.sonarsource.scanner.maven:sonar-maven-plugin:sonar</fullName>
+      <description>Runs SonarQube/SonarCloud analysis and publishes results to the configured server.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Server connection ──────────────────────────────────────── -->
+        <parameter>
+          <name>sonarHostUrl</name>
+          <description>URL of the SonarQube server. User property: sonar.host.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>http://localhost:9000</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarToken</name>
+          <description>Authentication token for the SonarQube server. User property: sonar.token</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarLogin</name>
+          <description>Login or authentication token for SonarQube (deprecated; prefer sonar.token). User property: sonar.login</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarPassword</name>
+          <description>Password for SonarQube authentication (deprecated; prefer sonar.token). User property: sonar.password</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Project identification ─────────────────────────────────── -->
+        <parameter>
+          <name>sonarProjectKey</name>
+          <description>Unique project key in SonarQube. User property: sonar.projectKey</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarProjectName</name>
+          <description>Display name of the project in SonarQube. User property: sonar.projectName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarProjectVersion</name>
+          <description>Version of the project reported to SonarQube. User property: sonar.projectVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source paths ────────────────────────────────────────────── -->
+        <parameter>
+          <name>sonarSources</name>
+          <description>Comma-separated paths to main source directories. User property: sonar.sources</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarTests</name>
+          <description>Comma-separated paths to test source directories. User property: sonar.tests</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarJavaBinaries</name>
+          <description>Comma-separated paths to compiled main class directories or JARs. User property: sonar.java.binaries</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarJavaTestBinaries</name>
+          <description>Comma-separated paths to compiled test class directories or JARs. User property: sonar.java.test.binaries</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Exclusions ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>sonarExclusions</name>
+          <description>Comma-separated file patterns to exclude from analysis. User property: sonar.exclusions</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarCoverageExclusions</name>
+          <description>Comma-separated file patterns to exclude from coverage metrics. User property: sonar.coverage.exclusions</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Java-specific analysis ─────────────────────────────────── -->
+        <parameter>
+          <name>sonarJavaSource</name>
+          <description>Java source compatibility level used during analysis. User property: sonar.java.source</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarJavaTarget</name>
+          <description>Java bytecode target version used during analysis. User property: sonar.java.target</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Language and encoding ──────────────────────────────────── -->
+        <parameter>
+          <name>sonarLanguage</name>
+          <description>Force analysis to a single language (e.g. java, js). User property: sonar.language</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sonarEncoding</name>
+          <description>Source file encoding used during analysis. User property: sonar.sourceEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>UTF-8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Branch analysis ────────────────────────────────────────── -->
+        <parameter>
+          <name>sonarBranchName</name>
+          <description>Name of the branch being analyzed (requires branch analysis feature). User property: sonar.branch.name</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6,)</versionRange>
+        </parameter>
+
+        <!-- ── Quality gate ───────────────────────────────────────────── -->
+        <parameter>
+          <name>sonarQualitygateWait</name>
+          <description>Wait for quality gate result and fail the build if gate is not passed. User property: sonar.qualitygate.wait</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip SonarQube analysis entirely. User property: sonar.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  sonar:help                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.sonarsource.scanner.maven:sonar-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

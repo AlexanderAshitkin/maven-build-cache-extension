@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for git-commit-id-maven-plugin.
+  Source: https://github.com/git-commit-id/git-commit-id-maven-plugin
+  Latest documented version: 9.x
+
+  NOTE: Only publicly available, minimal parameter metadata included.
+  This catalog does not reproduce proprietary documentation.
+-->
+<plugin-catalog>
+  <groupId>io.github.git-commit-id</groupId>
+  <artifactId>git-commit-id-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  git-commit-id:revision                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>revision</name>
+      <fullName>io.github.git-commit-id:git-commit-id-maven-plugin:revision</fullName>
+      <description>Reads Git metadata and exposes it as Maven project properties.</description>
+      <versionRange>[4.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Repository location ────────────────────────────────────── -->
+        <parameter>
+          <name>dotGitDirectory</name>
+          <description>Path to the .git directory. User property: maven.gitcommitid.dotGitDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.basedir}/.git</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated properties file will be written. User property: maven.gitcommitid.outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>generateGitPropertiesFile</name>
+          <description>Whether to write a git.properties file to the output directory. User property: maven.gitcommitid.generateGitPropertiesFile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>generateGitPropertiesFilename</name>
+          <description>Filename (relative to outputDirectory) for the generated properties file. User property: maven.gitcommitid.generateGitPropertiesFilename</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>git.properties</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>Output format for the generated file: properties or json. User property: maven.gitcommitid.format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>properties</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Property names ─────────────────────────────────────────── -->
+        <parameter>
+          <name>prefix</name>
+          <description>Prefix used for all exposed Maven properties (e.g. git). User property: maven.gitcommitid.prefix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>git</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Date formatting ────────────────────────────────────────── -->
+        <parameter>
+          <name>dateFormat</name>
+          <description>Format pattern for date-type git properties (SimpleDateFormat syntax). User property: maven.gitcommitid.dateFormat</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd'T'HH:mm:ssZ</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dateFormatTimeZone</name>
+          <description>Time zone used when formatting date properties. User property: maven.gitcommitid.dateFormatTimeZone</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Property filtering ─────────────────────────────────────── -->
+        <parameter>
+          <name>excludeProperties</name>
+          <description>List of property name regex patterns to exclude from exposure. User property: maven.gitcommitid.excludeProperties</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeOnlyProperties</name>
+          <description>List of property name regex patterns to include (all others excluded). User property: maven.gitcommitid.includeOnlyProperties</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Multi-module ───────────────────────────────────────────── -->
+        <parameter>
+          <name>injectAllReactorProjects</name>
+          <description>Inject properties into all reactor projects, not just the current one. User property: maven.gitcommitid.injectAllReactorProjects</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Error handling ─────────────────────────────────────────── -->
+        <parameter>
+          <name>failOnNoGitDirectory</name>
+          <description>Fail the build if .git directory cannot be found. User property: maven.gitcommitid.failOnNoGitDirectory</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failOnUnableToExtractRepoInfo</name>
+          <description>Fail the build if Git repository information cannot be extracted. User property: maven.gitcommitid.failOnUnableToExtractRepoInfo</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Commit hash ────────────────────────────────────────────── -->
+        <parameter>
+          <name>abbrevLength</name>
+          <description>Length of the abbreviated commit hash. User property: maven.gitcommitid.abbrevLength</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>7</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>evaluateOnCommit</name>
+          <description>Specific commit ref to evaluate instead of HEAD. User property: maven.gitcommitid.evaluateOnCommit</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>HEAD</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Native Git ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>useNativeGit</name>
+          <description>Use native git binary instead of JGit library. User property: maven.gitcommitid.useNativeGit</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nativeGitTimeoutInMs</name>
+          <description>Timeout in milliseconds for native git command execution. User property: maven.gitcommitid.nativeGitTimeoutInMs</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>long</type>
+          <defaultValue>30000</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Git describe ───────────────────────────────────────────── -->
+        <parameter>
+          <name>gitDescribe</name>
+          <description>Configuration for the git describe output (skip, always, abbrev, dirty, match, tags, forceLongFormat). User property: maven.gitcommitid.gitDescribe</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>GitDescribeConfig</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Replacements ───────────────────────────────────────────── -->
+        <parameter>
+          <name>replacementProperties</name>
+          <description>List of regex-based find-replace rules applied to property values before exposure.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Verbosity ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>verbose</name>
+          <description>Emit verbose logging during property extraction. User property: maven.gitcommitid.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the revision goal entirely. User property: maven.gitcommitid.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  git-commit-id:validateRevision                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>validateRevision</name>
+      <fullName>io.github.git-commit-id:git-commit-id-maven-plugin:validateRevision</fullName>
+      <description>Validates that exposed git properties match user-defined patterns; fails the build on mismatch.</description>
+      <versionRange>[4.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>validationProperties</name>
+          <description>List of ValidationProperty entries specifying property name, regex, and failure message.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>validationShouldFailIfNoMatch</name>
+          <description>Fail the build when a validation property does not match its regex. User property: maven.gitcommitid.validationShouldFailIfNoMatch</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the validateRevision goal entirely. User property: maven.gitcommitid.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  git-commit-id:help                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>io.github.git-commit-id:git-commit-id-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[4.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-changelog-plugin.
+  Source: https://maven.apache.org/plugins/maven-changelog-plugin/
+  Latest documented version: 2.3
+
+  category values:
+    functional  - affects report content/output (cache must be invalidated on change)
+    behavioral  - affects how the goal runs but not the output artifacts
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-changelog-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  changelog:changelog                                                -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>changelog</name>
+      <fullName>org.apache.maven.plugins:maven-changelog-plugin:changelog</fullName>
+      <description>Generates a changelog report from SCM history.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Source / output directories ───────────────────────────── -->
+        <parameter>
+          <name>basedir</name>
+          <description>Base directory of the project used as SCM checkout root. User property: basedir</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the changelog report is written. User property: project.reporting.outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Encoding used for the generated report files. User property: outputEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>inputEncoding</name>
+          <description>Encoding used when reading SCM changelog output. User property: inputEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── SCM query type / range ─────────────────────────────────── -->
+        <parameter>
+          <name>type</name>
+          <description>Type of changelog query: range, date, or tag. User property: changelog.type</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>range</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>range</name>
+          <description>Number of days (type=range) or number of revisions to include. User property: changelog.range</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>30</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dates</name>
+          <description>Date range for SCM query when type=date (format: yyyy-MM-dd). User property: changelog.dates</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tags</name>
+          <description>SCM tag names defining the revision range when type=tag. User property: changelog.tags</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SCM connection ─────────────────────────────────────────── -->
+        <parameter>
+          <name>connectionType</name>
+          <description>SCM connection type to use: connection or developerConnection. User property: changelog.connectionType</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>connection</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Date / heading formatting ──────────────────────────────── -->
+        <parameter>
+          <name>dateFormat</name>
+          <description>Date format pattern used when parsing SCM date output. User property: changelog.dateFormat</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>headingDateFormat</name>
+          <description>Date format pattern used in section headings of the report. User property: changelog.headingDateFormat</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Issue linking ──────────────────────────────────────────── -->
+        <parameter>
+          <name>issueIDRegexPattern</name>
+          <description>Regex pattern to detect issue IDs in commit messages. User property: changelog.issueIDRegexPattern</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>[a-zA-Z]{2,}-\d+</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>issueLinkUrl</name>
+          <description>URL template for linking issue IDs; %ISSUE% is replaced with the matched ID. User property: changelog.issueLinkUrl</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Cross-reference / display URLs ────────────────────────── -->
+        <parameter>
+          <name>displayFileDetailUrl</name>
+          <description>URL template for per-file SCM browser links; %FILE% replaced with file path. User property: changelog.displayFileDetailUrl</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>displayChangeSetDetailUrl</name>
+          <description>URL template for changeset browser links; %REV% replaced with revision. User property: changelog.displayChangeSetDetailUrl</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>displayFileRevDetailUrl</name>
+          <description>URL template for file-revision browser links. User property: changelog.displayFileRevDetailUrl</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Report options ─────────────────────────────────────────── -->
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link source cross-references to JXR report when available. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  changelog:dev-activity                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>dev-activity</name>
+      <fullName>org.apache.maven.plugins:maven-changelog-plugin:dev-activity</fullName>
+      <description>Generates a developer activity report from SCM history.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>basedir</name>
+          <description>Base directory of the project used as SCM checkout root. User property: basedir</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the developer activity report is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Encoding used for the generated report files.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>type</name>
+          <description>Type of SCM query: range, date, or tag. User property: changelog.type</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>range</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>range</name>
+          <description>Number of days to include when type=range. User property: changelog.range</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>30</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dates</name>
+          <description>Date range for SCM query when type=date.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tags</name>
+          <description>SCM tag names defining the revision range when type=tag.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>connectionType</name>
+          <description>SCM connection type to use: connection or developerConnection.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>connection</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dateFormat</name>
+          <description>Date format pattern used when parsing SCM date output.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>headingDateFormat</name>
+          <description>Date format pattern used in section headings of the report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>displayFileDetailUrl</name>
+          <description>URL template for per-file SCM browser links; %FILE% replaced with file path.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>issueIDRegexPattern</name>
+          <description>Regex pattern to detect issue IDs in commit messages.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>[a-zA-Z]{2,}-\d+</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>issueLinkUrl</name>
+          <description>URL template for linking issue IDs; %ISSUE% is replaced with the matched ID.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  changelog:file-activity                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>file-activity</name>
+      <fullName>org.apache.maven.plugins:maven-changelog-plugin:file-activity</fullName>
+      <description>Generates a file activity report showing most-changed files from SCM history.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>basedir</name>
+          <description>Base directory of the project used as SCM checkout root. User property: basedir</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the file activity report is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Encoding used for the generated report files.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>type</name>
+          <description>Type of SCM query: range, date, or tag. User property: changelog.type</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>range</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>range</name>
+          <description>Number of days to include when type=range. User property: changelog.range</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>30</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dates</name>
+          <description>Date range for SCM query when type=date.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tags</name>
+          <description>SCM tag names defining the revision range when type=tag.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>connectionType</name>
+          <description>SCM connection type to use: connection or developerConnection.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>connection</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dateFormat</name>
+          <description>Date format pattern used when parsing SCM date output.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>headingDateFormat</name>
+          <description>Date format pattern used in section headings of the report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>yyyy-MM-dd</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>displayFileDetailUrl</name>
+          <description>URL template for per-file SCM browser links; %FILE% replaced with file path.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>issueIDRegexPattern</name>
+          <description>Regex pattern to detect issue IDs in commit messages.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>[a-zA-Z]{2,}-\d+</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>issueLinkUrl</name>
+          <description>URL template for linking issue IDs; %ISSUE% is replaced with the matched ID.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  changelog:help                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-changelog-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output formatting. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

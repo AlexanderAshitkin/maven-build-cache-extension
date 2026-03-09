@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-acr-plugin.
+  Source: https://maven.apache.org/plugins/maven-acr-plugin/
+  Latest documented version: 3.2.0
+
+  category values:
+    functional  - affects artifact content (which files end up in the ACR JAR,
+                  manifest content, archive structure)
+    behavioral  - affects how packaging runs but not the output artifact
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-acr-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  acr:acr                                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>acr</name>
+      <fullName>org.apache.maven.plugins:maven-acr-plugin:acr</fullName>
+      <description>Builds the Application Client module JAR (ACR) from project classes and resources.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Source directory ──────────────────────────────────────── -->
+        <parameter>
+          <name>contentDirectory</name>
+          <description>Directory containing the application-client source content (descriptors, resources). Default: ${project.build.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated Application Client JAR is placed. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the generated Application Client JAR. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier appended to the Application Client JAR artifact name.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content inclusion / exclusion ────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style patterns for files to include from the contentDirectory.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style patterns for files to exclude from the contentDirectory.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>filteringDeploymentDescriptors</name>
+          <description>Enable Maven resource filtering on the application-client.xml deployment descriptor. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filters</name>
+          <description>List of property files used as filter sources during resource filtering.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Archive / manifest ────────────────────────────────────── -->
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration for the Application Client JAR (manifest, compression, index).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Reproducible builds ───────────────────────────────────── -->
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the Application Client packaging goal. User property: maven.acr.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  acr:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-acr-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

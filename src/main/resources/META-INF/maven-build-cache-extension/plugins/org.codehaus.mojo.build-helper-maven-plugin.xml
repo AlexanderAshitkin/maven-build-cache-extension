@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for build-helper-maven-plugin.
+  Source: https://www.mojohaus.org/build-helper-maven-plugin/
+  Latest documented version: 3.6.0
+
+  category values:
+    functional  - changes which source/resource directories or artifacts
+                  are registered with the build
+    behavioral  - affects execution mechanics without changing build outputs
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>build-helper-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:add-source                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>add-source</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:add-source</fullName>
+      <description>Adds additional source directories to the Maven build.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>sources</name>
+          <description>List of additional source directories to add to the compile source roots.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipAddSource</name>
+          <description>Skip adding source directories. User property: skipAddSource</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:add-test-source                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>add-test-source</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:add-test-source</fullName>
+      <description>Adds additional test source directories to the Maven build.</description>
+      <versionRange>[1.5,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>sources</name>
+          <description>List of additional test source directories to add to the test compile source roots.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipAddTestSource</name>
+          <description>Skip adding test source directories. User property: skipAddTestSource</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:add-resource                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>add-resource</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:add-resource</fullName>
+      <description>Adds additional resource directories to the Maven build.</description>
+      <versionRange>[1.7,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>resources</name>
+          <description>List of additional Resource objects (directory, includes, excludes, filtering, targetPath) to add to the build resources.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Resource[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:add-test-resource                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>add-test-resource</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:add-test-resource</fullName>
+      <description>Adds additional test resource directories to the Maven build.</description>
+      <versionRange>[1.7,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>resources</name>
+          <description>List of additional Resource objects to add to the test resources.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Resource[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:attach-artifact                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>attach-artifact</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:attach-artifact</fullName>
+      <description>Attaches additional artifacts (files) to the current Maven project for installation and deployment.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>artifacts</name>
+          <description>List of artifact descriptors (file path, type, classifier) to attach to the project.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Artifact[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipAttach</name>
+          <description>Skip attaching additional artifacts. User property: skipAttach</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.3,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:parse-version                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>parse-version</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:parse-version</fullName>
+      <description>Parses the project version into component properties (major, minor, incremental, qualifier, buildNumber).</description>
+      <versionRange>[1.5,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>propertyPrefix</name>
+          <description>Prefix for the generated version component properties (e.g. parsedVersion.majorVersion). User property: propertyPrefix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>parsedVersion</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>versionString</name>
+          <description>Version string to parse instead of the project version. User property: versionString</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.version}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>formattedPropertyPrefix</name>
+          <description>Prefix for OSGi-formatted version component properties. User property: formattedPropertyPrefix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:regex-property                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>regex-property</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:regex-property</fullName>
+      <description>Sets a Maven property to a value derived by applying a regular expression replacement to an input string.</description>
+      <versionRange>[1.7,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>name</name>
+          <description>Name of the Maven property to set with the result. User property: name</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>value</name>
+          <description>Input value to match the regular expression against. User property: value</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>regex</name>
+          <description>Regular expression pattern applied to the input value. User property: regex</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>replacement</name>
+          <description>Replacement string for the matched portion of the value. User property: replacement</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failIfNoMatch</name>
+          <description>Fail the build if the regex does not match the value. User property: failIfNoMatch</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:reserve-network-port                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>reserve-network-port</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:reserve-network-port</fullName>
+      <description>Reserves available TCP ports and exposes them as Maven properties for use during integration tests.</description>
+      <versionRange>[1.5,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>portNames</name>
+          <description>Names of Maven properties to set with reserved port numbers.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>minPortNumber</name>
+          <description>Lower bound of the port range to search. User property: minPortNumber</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>1024</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>maxPortNumber</name>
+          <description>Upper bound of the port range to search. User property: maxPortNumber</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>65535</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:timestamp-property                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>timestamp-property</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:timestamp-property</fullName>
+      <description>Sets a Maven property to the current date/time formatted according to a pattern.</description>
+      <versionRange>[1.9,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>name</name>
+          <description>Name of the Maven property to set with the formatted timestamp.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>pattern</name>
+          <description>SimpleDateFormat pattern used to format the timestamp (e.g. yyyy-MM-dd HH:mm:ss).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>locale</name>
+          <description>Locale string (language[_country[_variant]]) used for date formatting.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>timeZone</name>
+          <description>Time zone ID used for the timestamp (e.g. UTC, America/New_York).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>unit</name>
+          <description>Time unit to add to the current time before formatting: millisecond, second, minute, hour, day, week, month, year.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>offset</name>
+          <description>Signed integer offset added to the current time in the specified unit.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.9,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:bsh-property                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>bsh-property</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:bsh-property</fullName>
+      <description>Sets Maven properties using BeanShell script expressions.</description>
+      <versionRange>[1.5,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>source</name>
+          <description>Inline BeanShell script source that sets property values.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>properties</name>
+          <description>Names of Maven properties to capture from the BeanShell execution context.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:regex-properties                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>regex-properties</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:regex-properties</fullName>
+      <description>Sets multiple Maven properties using a list of regular expression replacement rules.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>regexPropertySettings</name>
+          <description>List of RegexProperty descriptors (name, value, regex, replacement, failIfNoMatch) to apply.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>RegexProperty[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  build-helper:help                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.codehaus.mojo:build-helper-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -1,0 +1,603 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-checkstyle-plugin.
+  Source: https://maven.apache.org/plugins/maven-checkstyle-plugin/
+  Latest documented version: 3.6.0
+
+  category values:
+    functional  - affects which violations are detected or output produced
+    behavioral  - affects how the goal runs but not the violations detected
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-checkstyle-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  checkstyle:checkstyle                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>checkstyle</name>
+      <fullName>org.apache.maven.plugins:maven-checkstyle-plugin:checkstyle</fullName>
+      <description>Generates a Checkstyle report for the project source code.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Configuration ──────────────────────────────────────────── -->
+        <parameter>
+          <name>configLocation</name>
+          <description>URL, classpath resource, or file path to the Checkstyle configuration file. User property: checkstyle.config.location</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>sun_checks.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertiesLocation</name>
+          <description>URL or path to a properties file supplying Checkstyle configuration values. User property: checkstyle.properties.location</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressionsLocation</name>
+          <description>URL or path to a Checkstyle suppressions XML file. User property: checkstyle.suppressions.location</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressionsFileExpression</name>
+          <description>Config attribute name used to pass the suppressions file path to Checkstyle.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>checkstyle.suppressions.file</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>headerLocation</name>
+          <description>Path to the file containing the required source file header. User property: checkstyle.header.file</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>LICENSE.txt</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertyExpansion</name>
+          <description>Inline property expansions passed to Checkstyle configuration as key=value pairs.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source directories ─────────────────────────────────────── -->
+        <parameter>
+          <name>sourceDirectories</name>
+          <description>Main source directories to check. Defaults to project.compileSourceRoots.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.13,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testSourceDirectories</name>
+          <description>Test source directories to check when includeTestSourceDirectory=true.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.13,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeTestSourceDirectory</name>
+          <description>Also apply Checkstyle to test sources. User property: checkstyle.includeTestSourceDirectory</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>resourceIncludes</name>
+          <description>Ant-style patterns for resource files to include in Checkstyle analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>**/*.properties</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>resourceExcludes</name>
+          <description>Ant-style patterns for resource files to exclude from Checkstyle analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeResources</name>
+          <description>Include main resource directories in Checkstyle analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeTestResources</name>
+          <description>Include test resource directories in Checkstyle analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+
+        <!-- ── File filtering ─────────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style file patterns for source files to include. User property: checkstyle.includes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>**/*.java</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style file patterns for source files to exclude. User property: checkstyle.excludes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the Checkstyle report is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputFileFormat</name>
+          <description>Format of the raw Checkstyle output: xml or plain. User property: checkstyle.output.format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputFile</name>
+          <description>File path where the raw Checkstyle output is written. User property: checkstyle.output.file</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/checkstyle-result.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding of the source files. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Violation reporting ────────────────────────────────────── -->
+        <parameter>
+          <name>violationIgnore</name>
+          <description>Comma-separated list of Checkstyle rule names to ignore in the report. User property: checkstyle.violation.ignore</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>violationSeverity</name>
+          <description>Minimum severity level to report: info, warning, or error. User property: checkstyle.violationSeverity</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>warning</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Cross-reference ────────────────────────────────────────── -->
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link violation lines to JXR source cross-reference when available. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Checkstyle version / classpath ─────────────────────────── -->
+        <parameter>
+          <name>checkstyleVersion</name>
+          <description>Override Checkstyle version bundled with the plugin. User property: checkstyle.version</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.15,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>cacheFile</name>
+          <description>Checkstyle internal cache file path for incremental analysis. User property: checkstyle.cache.file</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.directory}/checkstyle-cachefile</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useFile</name>
+          <description>Write raw violations to outputFile as well as the HTML report.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip all Checkstyle processing. User property: checkstyle.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  checkstyle:check                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>check</name>
+      <fullName>org.apache.maven.plugins:maven-checkstyle-plugin:check</fullName>
+      <description>Runs Checkstyle and fails the build on violations above the threshold.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>configLocation</name>
+          <description>URL, classpath resource, or file path to the Checkstyle configuration file. User property: checkstyle.config.location</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>sun_checks.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressionsLocation</name>
+          <description>URL or path to a Checkstyle suppressions XML file. User property: checkstyle.suppressions.location</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>violationSeverity</name>
+          <description>Minimum severity level that triggers a build failure: info, warning, or error. User property: checkstyle.violationSeverity</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>error</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>maxAllowedViolations</name>
+          <description>Maximum number of violations allowed before failing the build. User property: checkstyle.maxAllowedViolations</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>violationIgnore</name>
+          <description>Comma-separated list of Checkstyle rule names to ignore during check. User property: checkstyle.violation.ignore</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sourceDirectories</name>
+          <description>Main source directories to check.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.13,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeTestSourceDirectory</name>
+          <description>Also check test sources. User property: checkstyle.includeTestSourceDirectory</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding of source files. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style file patterns for source files to include. User property: checkstyle.includes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>**/*.java</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style file patterns for source files to exclude. User property: checkstyle.excludes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertiesLocation</name>
+          <description>URL or path to a properties file supplying Checkstyle configuration values.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failsOnError</name>
+          <description>Fail the build if an error occurs during Checkstyle execution (not violations). User property: checkstyle.failsOnError</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>logViolationsToConsole</name>
+          <description>Print each violation to the console in addition to writing the report. User property: checkstyle.console</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.10,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>checkstyleRules</name>
+          <description>Inline Checkstyle configuration XML as an alternative to configLocation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>PlexusConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.12,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the Checkstyle check entirely. User property: checkstyle.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  checkstyle:checkstyle-aggregate                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>checkstyle-aggregate</name>
+      <fullName>org.apache.maven.plugins:maven-checkstyle-plugin:checkstyle-aggregate</fullName>
+      <description>Generates an aggregated Checkstyle report for a multi-module project.</description>
+      <versionRange>[2.8,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>configLocation</name>
+          <description>URL, classpath resource, or file path to the Checkstyle configuration file. User property: checkstyle.config.location</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>sun_checks.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the aggregated report is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeTestSourceDirectory</name>
+          <description>Also include test sources in the aggregate report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding of source files.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>violationSeverity</name>
+          <description>Minimum severity level to report: info, warning, or error.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>warning</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip aggregate Checkstyle processing. User property: checkstyle.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.8,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  checkstyle:help                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-checkstyle-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output formatting. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-pmd-plugin.
+  Source: https://maven.apache.org/plugins/maven-pmd-plugin/
+  Latest documented version: 3.26.0
+
+  category values:
+    functional  - affects which violations are found or the report content
+                  (cache must be invalidated on change)
+    behavioral  - affects how analysis runs but not which violations are found
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-pmd-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:pmd                                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>pmd</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:pmd</fullName>
+      <description>Runs PMD static analysis and generates a report.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output / reporting ─────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for generated reports. Default: ${project.reporting.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>Report format: xml, html, txt, csv, etc. User property: format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link PMD violations to generated cross-reference HTML source. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipEmptyReport</name>
+          <description>Skip report generation when no violations are found. User property: pmd.skipEmptyReport</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Source encoding / language ────────────────────────────── -->
+        <parameter>
+          <name>sourceEncoding</name>
+          <description>Source file encoding. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>targetJdk</name>
+          <description>Target JDK version for PMD analysis (e.g. 1.8, 11, 17). User property: targetJdk</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${maven.compiler.target}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Rule configuration ─────────────────────────────────────── -->
+        <parameter>
+          <name>rulesets</name>
+          <description>Rulesets to apply (file paths, URLs, or built-in ruleset names).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <defaultValue>rulesets/java/quickstart.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── File include/exclude ───────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>List of Ant-style patterns for source files to include in PMD analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>List of Ant-style patterns for source files to exclude from PMD analysis.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeRoots</name>
+          <description>Source root directories to exclude from PMD analysis entirely.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeFromFailureFile</name>
+          <description>File listing violations to exclude from failure checks. User property: pmd.excludeFromFailureFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Test sources ───────────────────────────────────────────── -->
+        <parameter>
+          <name>includeTests</name>
+          <description>Include test source directories in PMD analysis. User property: includeTests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Type resolution ────────────────────────────────────────── -->
+        <parameter>
+          <name>typeResolution</name>
+          <description>Enable type resolution for deeper analysis using project classpath. User property: pmd.typeResolution</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Analysis cache ─────────────────────────────────────────── -->
+        <parameter>
+          <name>analysisCache</name>
+          <description>Enable incremental analysis cache to speed up repeated runs. User property: pmd.analysisCache</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>analysisCacheLocation</name>
+          <description>Location of the incremental analysis cache file. User property: pmd.analysisCacheLocation</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.directory}/pmd/pmd.cache</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.8,)</versionRange>
+        </parameter>
+
+        <!-- ── Benchmark / verbosity ──────────────────────────────────── -->
+        <parameter>
+          <name>benchmark</name>
+          <description>Show benchmark timings for PMD rules. User property: benchmark</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <description>Print debug information during PMD analysis. User property: pmd.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ───────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip PMD analysis entirely. User property: pmd.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:pmd-no-fork                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>pmd-no-fork</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:pmd-no-fork</fullName>
+      <description>Runs PMD analysis without forking the lifecycle (report mojo variant).</description>
+      <versionRange>[3.15.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for generated reports. Default: ${project.reporting.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>Report format: xml, html, txt, csv, etc. User property: format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sourceEncoding</name>
+          <description>Source file encoding. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>targetJdk</name>
+          <description>Target JDK version for PMD analysis. User property: targetJdk</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${maven.compiler.target}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rulesets</name>
+          <description>Rulesets to apply (file paths, URLs, or built-in ruleset names).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <defaultValue>rulesets/java/quickstart.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip PMD analysis entirely. User property: pmd.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:check                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>check</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:check</fullName>
+      <description>Fails the build if PMD violations exceed configured thresholds.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>failurePriority</name>
+          <description>Minimum PMD priority (1-5) that causes build failure. User property: pmd.failurePriority</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>5</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>maxAllowedViolations</name>
+          <description>Maximum number of PMD violations allowed before failing. User property: pmd.maxAllowedViolations</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>printFailingErrors</name>
+          <description>Print failing PMD violations to console. User property: pmd.printFailingErrors</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeFromFailureFile</name>
+          <description>File listing violations to exclude from failure checks. User property: pmd.excludeFromFailureFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip PMD check entirely. User property: pmd.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipPmdError</name>
+          <description>Skip check if PMD analysis itself encounters errors. User property: skipPmdError</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:cpd                                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>cpd</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:cpd</fullName>
+      <description>Runs CPD (Copy/Paste Detector) and generates a duplication report.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>minimumTokens</name>
+          <description>Minimum token count to consider code a duplication. User property: minimumTokens</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>100</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for CPD report. Default: ${project.reporting.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>CPD report format: xml, text, csv. User property: format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>List of Ant-style patterns for source files to exclude from CPD.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sourceEncoding</name>
+          <description>Source file encoding for CPD analysis. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeTests</name>
+          <description>Include test source directories in CPD analysis. User property: includeTests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipEmptyReport</name>
+          <description>Skip CPD report when no duplications are found. User property: cpd.skipEmptyReport</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip CPD analysis entirely. User property: cpd.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:cpd-no-fork                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>cpd-no-fork</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:cpd-no-fork</fullName>
+      <description>Runs CPD without forking the lifecycle (report mojo variant).</description>
+      <versionRange>[3.15.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>minimumTokens</name>
+          <description>Minimum token count to consider code a duplication. User property: minimumTokens</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>100</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for CPD report.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>format</name>
+          <description>CPD report format. User property: format</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip CPD analysis entirely. User property: cpd.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:cpd-check                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>cpd-check</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:cpd-check</fullName>
+      <description>Fails the build if CPD finds duplicated code blocks.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>minimumTokens</name>
+          <description>Minimum token count threshold for duplication failure. User property: minimumTokens</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>100</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>maxAllowedViolations</name>
+          <description>Maximum allowed CPD duplications before failing. User property: cpd.maxAllowedViolations</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>printFailingErrors</name>
+          <description>Print CPD duplications to console on failure. User property: cpd.printFailingErrors</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip CPD check entirely. User property: cpd.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  pmd:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-pmd-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output formatting. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

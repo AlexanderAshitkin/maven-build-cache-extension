@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for buildplan-maven-plugin.
+  Source: https://www.mojohaus.org/buildplan-maven-plugin/
+  Latest documented version: 2.2.0
+
+  category values:
+    functional  - affects which lifecycle segment is displayed or analysed
+    behavioral  - affects output formatting without changing what is displayed
+
+  envSpecific: true if the parameter carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>buildplan-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  buildplan:list                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>list</name>
+      <fullName>org.codehaus.mojo:buildplan-maven-plugin:list</fullName>
+      <description>Lists all mojos that will be executed for the current build lifecycle.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Task segment ───────────────────────────────────────────── -->
+        <parameter>
+          <name>taskSegmentName</name>
+          <description>Name of the task segment (phase or goal) to plan. Defaults to the current lifecycle phase.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output encoding ────────────────────────────────────────── -->
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Character encoding used when writing build plan output. User property: outputEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  buildplan:list-phase                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>list-phase</name>
+      <fullName>org.codehaus.mojo:buildplan-maven-plugin:list-phase</fullName>
+      <description>Lists mojos grouped by lifecycle phase for the current build plan.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Phase filter ───────────────────────────────────────────── -->
+        <parameter>
+          <name>phase</name>
+          <description>Lifecycle phase name to restrict the listing to (e.g. compile, test). User property: phase</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output encoding ────────────────────────────────────────── -->
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Character encoding used when writing build plan output. User property: outputEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  buildplan:list-plugin                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>list-plugin</name>
+      <fullName>org.codehaus.mojo:buildplan-maven-plugin:list-plugin</fullName>
+      <description>Lists mojos grouped by plugin for the current build plan.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Plugin filter ──────────────────────────────────────────── -->
+        <parameter>
+          <name>plugin</name>
+          <description>Plugin artifactId to restrict the listing to (e.g. maven-compiler-plugin). User property: plugin</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output encoding ────────────────────────────────────────── -->
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Character encoding used when writing build plan output. User property: outputEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  buildplan:list-lifecycle                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>list-lifecycle</name>
+      <fullName>org.codehaus.mojo:buildplan-maven-plugin:list-lifecycle</fullName>
+      <description>Lists all phases of the active lifecycle and the mojos bound to each phase.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output encoding ────────────────────────────────────────── -->
+        <parameter>
+          <name>outputEncoding</name>
+          <description>Character encoding used when writing build plan output. User property: outputEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  buildplan:help                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.codehaus.mojo:buildplan-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

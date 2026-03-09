@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-antrun-plugin.
+  Source: https://maven.apache.org/plugins/maven-antrun-plugin/
+  Latest documented version: 3.2.0
+
+  category values:
+    functional  - affects what Ant tasks are executed and what files/artifacts they produce
+    behavioral  - affects how the Ant execution runs but not the task output
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+
+  Note: The `target` parameter contains arbitrary Ant XML which may reference
+  file-system paths, environment variables, and external tools. It is therefore
+  classified as functional+envSpecific=true. The build cache must treat any
+  change to the Ant target configuration as a cache-invalidating change.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-antrun-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  antrun:run                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>run</name>
+      <fullName>org.apache.maven.plugins:maven-antrun-plugin:run</fullName>
+      <description>Runs Ant tasks embedded in the Maven build lifecycle.</description>
+      <versionRange>[1.1,)</versionRange>
+      <parameters>
+
+        <!-- ── Ant target configuration ─────────────────────────────── -->
+        <parameter>
+          <name>target</name>
+          <description>XML configuration for the Ant target to execute. May contain file paths, environment references, and arbitrary Ant tasks. Any change to this element invalidates the build-cache entry.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>PlexusConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Property propagation ──────────────────────────────────── -->
+        <parameter>
+          <name>exportAntProperties</name>
+          <description>Export Ant properties set in the target back into Maven properties after execution (inline tasks only).</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertyPrefix</name>
+          <description>String to prepend to project and dependency property names when exporting to Ant.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Error handling ────────────────────────────────────────── -->
+        <parameter>
+          <name>failOnError</name>
+          <description>Fail the Maven build when the Ant build fails. When false, Ant errors are logged and the build continues.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip Antrun goal execution entirely. User property: maven.antrun.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  antrun:help                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-antrun-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.7,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

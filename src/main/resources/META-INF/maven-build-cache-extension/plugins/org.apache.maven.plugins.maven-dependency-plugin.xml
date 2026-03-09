@@ -1,0 +1,925 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-dependency-plugin.
+  Source: https://maven.apache.org/plugins/maven-dependency-plugin/
+  Latest documented version: 3.10.0
+
+  category values:
+    functional  - affects which artifacts are copied/unpacked or what analysis is performed
+    behavioral  - affects how the goal runs (overwrite policies, verbosity) but not the output artifacts
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-dependency-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency:copy                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>copy</name>
+      <fullName>org.apache.maven.plugins:maven-dependency-plugin:copy</fullName>
+      <description>Copies a list of artifacts from the repository to a defined location.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Artifact selection ────────────────────────────────────── -->
+        <parameter>
+          <name>artifact</name>
+          <description>Artifact to copy from command line in groupId:artifactId:version[:packaging[:classifier]] format. User property: artifact</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>artifactItems</name>
+          <description>Collection of ArtifactItems to copy (groupId, artifactId, version, type, classifier, outputDirectory, destFileName).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Default directory where artifacts are copied. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/dependency</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── File naming ───────────────────────────────────────────── -->
+        <parameter>
+          <name>stripVersion</name>
+          <description>Remove the version from the filename of copied artifacts. User property: mdep.stripVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>stripClassifier</name>
+          <description>Remove the classifier from the filename of copied artifacts. User property: mdep.stripClassifier</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>prependGroupId</name>
+          <description>Prepend the artifact groupId to the filename during copy. User property: mdep.prependGroupId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useBaseVersion</name>
+          <description>Use artifact baseVersion (not unique SNAPSHOT timestamp) in filename. User property: mdep.useBaseVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Overwrite behavior ─────────────────────────────────────── -->
+        <parameter>
+          <name>overWriteIfNewer</name>
+          <description>Overwrite artifacts if the source is newer. User property: mdep.overWriteIfNewer</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.7.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteReleases</name>
+          <description>Overwrite release artifacts. User property: mdep.overWriteReleases</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteSnapshots</name>
+          <description>Overwrite snapshot artifacts. User property: mdep.overWriteSnapshots</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip plugin execution completely. User property: mdep.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency:copy-dependencies                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>copy-dependencies</name>
+      <fullName>org.apache.maven.plugins:maven-dependency-plugin:copy-dependencies</fullName>
+      <description>Copies project dependencies from the repository to a specified directory.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output directory ──────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory to copy dependencies into. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/dependency</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Scope filters ─────────────────────────────────────────── -->
+        <parameter>
+          <name>includeScope</name>
+          <description>Scope threshold to include: compile, runtime, test, provided, system. User property: includeScope</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeScope</name>
+          <description>Single scope to exclude from the copy operation. User property: excludeScope</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Type / classifier filters ─────────────────────────────── -->
+        <parameter>
+          <name>includeTypes</name>
+          <description>Comma-separated artifact types to include (e.g., jar, war). User property: includeTypes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeTypes</name>
+          <description>Comma-separated artifact types to exclude. User property: excludeTypes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeClassifiers</name>
+          <description>Comma-separated classifiers to include. User property: includeClassifiers</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeClassifiers</name>
+          <description>Comma-separated classifiers to exclude. User property: excludeClassifiers</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── GroupId / ArtifactId filters ──────────────────────────── -->
+        <parameter>
+          <name>includeGroupIds</name>
+          <description>Comma-separated group IDs to include. User property: includeGroupIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeGroupIds</name>
+          <description>Comma-separated group IDs to exclude. User property: excludeGroupIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeArtifactIds</name>
+          <description>Comma-separated artifact IDs to include. User property: includeArtifactIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeArtifactIds</name>
+          <description>Comma-separated artifact IDs to exclude. User property: excludeArtifactIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeTransitive</name>
+          <description>Exclude transitive dependencies. User property: excludeTransitive</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── File naming / layout ───────────────────────────────────── -->
+        <parameter>
+          <name>stripVersion</name>
+          <description>Remove the version from the filename. User property: mdep.stripVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>stripClassifier</name>
+          <description>Remove the classifier from the filename. User property: mdep.stripClassifier</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>prependGroupId</name>
+          <description>Prepend groupId to the filename. User property: mdep.prependGroupId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useRepositoryLayout</name>
+          <description>Copy files using repository directory layout (groupId/artifactId/version). User property: mdep.useRepositoryLayout</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useSubDirectoryPerArtifact</name>
+          <description>Place each artifact in its own subdirectory. User property: mdep.useSubDirectoryPerArtifact</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useSubDirectoryPerScope</name>
+          <description>Place artifacts in scope-named subdirectories. User property: mdep.useSubDirectoryPerScope</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useSubDirectoryPerType</name>
+          <description>Place artifacts in type-named subdirectories. User property: mdep.useSubDirectoryPerType</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>copyPom</name>
+          <description>Also copy the POM file for each artifact. User property: mdep.copyPom</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Overwrite behavior ─────────────────────────────────────── -->
+        <parameter>
+          <name>overWriteIfNewer</name>
+          <description>Overwrite if the source artifact is newer. User property: mdep.overWriteIfNewer</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteSnapshots</name>
+          <description>Overwrite snapshot artifacts even if they already exist. User property: mdep.overWriteSnapshots</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteReleases</name>
+          <description>Overwrite release artifacts even if they already exist. User property: mdep.overWriteReleases</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>silent</name>
+          <description>Suppress informational log messages. Deprecated: use -q instead. User property: silent</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip plugin execution entirely. User property: mdep.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency:unpack                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>unpack</name>
+      <fullName>org.apache.maven.plugins:maven-dependency-plugin:unpack</fullName>
+      <description>Retrieves a list of artifacts from the repository and unpacks them to a defined location.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Artifact selection ────────────────────────────────────── -->
+        <parameter>
+          <name>artifact</name>
+          <description>Artifact to unpack from command line in groupId:artifactId:version[:packaging[:classifier]] format. User property: artifact</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>artifactItems</name>
+          <description>Collection of ArtifactItems to unpack. Each item may specify its own outputDirectory, includes, excludes, and encoding.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Default directory into which artifacts are unpacked. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/dependency</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content filters ───────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Comma-separated Ant-style patterns for files to include from the archive. User property: mdep.unpack.includes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Comma-separated Ant-style patterns for files to exclude from the archive. User property: mdep.unpack.excludes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding to use when filtering resources from the archive. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Overwrite behavior ─────────────────────────────────────── -->
+        <parameter>
+          <name>overWriteIfNewer</name>
+          <description>Overwrite unpacked files if the archive is newer. User property: mdep.overWriteIfNewer</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteReleases</name>
+          <description>Overwrite unpacked release artifacts. User property: mdep.overWriteReleases</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteSnapshots</name>
+          <description>Overwrite unpacked snapshot artifacts. User property: mdep.overWriteSnapshots</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip plugin execution entirely. User property: mdep.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency:unpack-dependencies                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>unpack-dependencies</name>
+      <fullName>org.apache.maven.plugins:maven-dependency-plugin:unpack-dependencies</fullName>
+      <description>Unpacks project dependencies from the repository to a specified directory.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output directory ──────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory into which all project dependencies are unpacked. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/dependency</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Scope filters ─────────────────────────────────────────── -->
+        <parameter>
+          <name>includeScope</name>
+          <description>Scope threshold to include (compile, runtime, test, provided, system). User property: includeScope</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeScope</name>
+          <description>Single scope to exclude. User property: excludeScope</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Type / classifier / GAV filters ───────────────────────── -->
+        <parameter>
+          <name>includeTypes</name>
+          <description>Comma-separated types to include. User property: includeTypes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeTypes</name>
+          <description>Comma-separated types to exclude. User property: excludeTypes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeClassifiers</name>
+          <description>Comma-separated classifiers to include. User property: includeClassifiers</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeClassifiers</name>
+          <description>Comma-separated classifiers to exclude. User property: excludeClassifiers</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeGroupIds</name>
+          <description>Comma-separated group IDs to include. User property: includeGroupIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeGroupIds</name>
+          <description>Comma-separated group IDs to exclude. User property: excludeGroupIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeArtifactIds</name>
+          <description>Comma-separated artifact IDs to include. User property: includeArtifactIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeArtifactIds</name>
+          <description>Comma-separated artifact IDs to exclude. User property: excludeArtifactIds</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeTransitive</name>
+          <description>Exclude transitive dependencies. User property: excludeTransitive</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content filters ───────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Comma-separated Ant-style patterns for files to include when unpacking. User property: mdep.unpack.includes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Comma-separated Ant-style patterns for files to exclude when unpacking. User property: mdep.unpack.excludes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useSubDirectoryPerArtifact</name>
+          <description>Unpack each artifact into its own subdirectory. User property: mdep.useSubDirectoryPerArtifact</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Overwrite behavior ─────────────────────────────────────── -->
+        <parameter>
+          <name>overWriteIfNewer</name>
+          <description>Overwrite unpacked files if the archive is newer. User property: mdep.overWriteIfNewer</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteReleases</name>
+          <description>Overwrite unpacked release artifacts. User property: mdep.overWriteReleases</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overWriteSnapshots</name>
+          <description>Overwrite unpacked snapshot artifacts. User property: mdep.overWriteSnapshots</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip plugin execution entirely. User property: mdep.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency:analyze                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>analyze</name>
+      <fullName>org.apache.maven.plugins:maven-dependency-plugin:analyze</fullName>
+      <description>Analyzes project dependencies to identify used/undeclared and unused/declared artifacts.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Analysis configuration ────────────────────────────────── -->
+        <parameter>
+          <name>ignoredDependencies</name>
+          <description>Dependency patterns to exclude from all analysis result lists. Format: [groupId]:[artifactId]:[type]:[version]</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoredUnusedDeclaredDependencies</name>
+          <description>Dependencies to ignore if declared but detected as unused. Format: [groupId]:[artifactId]:[type]:[version]</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoredUsedUndeclaredDependencies</name>
+          <description>Dependencies to ignore if used but not declared. Format: [groupId]:[artifactId]:[type]:[version]</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>usedDependencies</name>
+          <description>Force specific dependencies to be treated as used. Format: groupId:artifactId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoreNonCompile</name>
+          <description>Ignore runtime/provided/test/system scopes for unused dependency analysis. User property: ignoreNonCompile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoreAllNonTestScoped</name>
+          <description>Ignore all dependencies only used in tests but not test-scoped. User property: ignoreAllNonTestScoped</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>analyzer</name>
+          <description>Plexus role-hint for the dependency analyzer implementation. User property: analyzer</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>default</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Build failure control ─────────────────────────────────── -->
+        <parameter>
+          <name>failOnWarning</name>
+          <description>Fail the build if any dependency warning is found. User property: failOnWarning</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <description>Output information about used dependencies in addition to warnings. User property: verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip plugin execution entirely. User property: mdep.analyze.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  dependency:help                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-dependency-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-invoker-plugin.
+  Source: https://maven.apache.org/plugins/maven-invoker-plugin/
+  Latest documented version: 3.9.0
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-invoker-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  invoker:install                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>install</name>
+      <fullName>org.apache.maven.plugins:maven-invoker-plugin:install</fullName>
+      <description>Installs the project artifacts into a local repository for integration testing.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Repository ────────────────────────────────────────────── -->
+        <parameter>
+          <name>localRepositoryPath</name>
+          <description>Path to the local repository for installing artifacts used by integration tests.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/it-repo</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>filterFile</name>
+          <description>Path to a properties file whose entries are used to filter POM/script files.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filteredExtensions</name>
+          <description>File extensions to filter when copying project files to cloneProjectsTo.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <defaultValue>xml,yml,yaml,properties</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the invoker:install goal entirely. User property: invoker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  invoker:run                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>run</name>
+      <fullName>org.apache.maven.plugins:maven-invoker-plugin:run</fullName>
+      <description>Runs a set of Maven projects as integration tests and optionally verifies them.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Project selection ─────────────────────────────────────── -->
+        <parameter>
+          <name>projectsDirectory</name>
+          <description>Base directory for integration test projects. User property: invoker.projectsDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}/src/it</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>cloneProjectsTo</name>
+          <description>Directory to clone each integration test project to before running it.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>pomFile</name>
+          <description>The POM file for the project to run. Defaults to pom.xml inside each test directory.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>pom.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style patterns of subdirectories to include as integration test projects.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <defaultValue>*/pom.xml,*/invoke.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style patterns of subdirectories to exclude from integration test execution.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>setupIncludes</name>
+          <description>Ant-style patterns of projects to run before the main integration tests (setup projects).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <defaultValue>setup*/pom.xml</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Maven invocation ──────────────────────────────────────── -->
+        <parameter>
+          <name>goals</name>
+          <description>List of goals to execute in each integration test project.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <defaultValue>package</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>profiles</name>
+          <description>List of Maven profiles to activate when running integration test projects.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mavenExecutable</name>
+          <description>Path/name of the Maven executable used to invoke integration tests.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>properties</name>
+          <description>Additional system properties passed to each Maven invocation via -D.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Properties</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mergeUserSettings</name>
+          <description>Merge the user's settings.xml into the invoker settings for each test invocation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.6,)</versionRange>
+        </parameter>
+
+        <!-- ── Repository / settings ─────────────────────────────────── -->
+        <parameter>
+          <name>localRepositoryPath</name>
+          <description>Path to a local Maven repository used by the invoked builds.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/it-repo</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>settingsFile</name>
+          <description>Custom settings.xml file passed to each Maven invocation.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for reading/writing filtered integration test files.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filteredExtensions</name>
+          <description>File extensions to filter when copying integration test files.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <defaultValue>xml,yml,yaml,properties</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filterProperties</name>
+          <description>Additional properties used for filtering integration test files.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>invokerPropertiesFile</name>
+          <description>Name of the invoker.properties file inside each test project directory.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>invoker.properties</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filterFile</name>
+          <description>Path to properties file whose entries are substituted in POM and script files.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>scriptVariables</name>
+          <description>Additional variables injected into the BeanShell/Groovy hook scripts.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Hook scripts ──────────────────────────────────────────── -->
+        <parameter>
+          <name>preBuildHookScript</name>
+          <description>Name of the BeanShell/Groovy script executed before each integration test build.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>setup</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>postBuildHookScript</name>
+          <description>Name of the BeanShell/Groovy script executed after each integration test build.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>verify</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Logging / diagnostics ─────────────────────────────────── -->
+        <parameter>
+          <name>streamLogs</name>
+          <description>Stream build output to the Maven log instead of capturing to files.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>noLog</name>
+          <description>Suppress capture of build output log files for integration tests.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showErrors</name>
+          <description>Show error stack traces from invoked builds in the Maven log.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Parallelism / execution ───────────────────────────────── -->
+        <parameter>
+          <name>parallelThreads</name>
+          <description>Number of integration test projects to run in parallel (0 = sequential).</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>1</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>timeoutInSeconds</name>
+          <description>Timeout in seconds for each individual integration test build (0 = no timeout).</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the invoker:run goal entirely. User property: invoker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipInvocation</name>
+          <description>Skip Maven invocations but still run pre/post-build hook scripts. User property: invoker.skipInvocation</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.8,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  invoker:verify                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>verify</name>
+      <fullName>org.apache.maven.plugins:maven-invoker-plugin:verify</fullName>
+      <description>Checks the results of integration tests run by invoker:run and fails the build on error.</description>
+      <versionRange>[1.6,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>reportDirectory</name>
+          <description>Directory containing the XML test reports produced by invoker:run.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/invoker-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>invokerTest</name>
+          <description>Comma-separated list of integration test names to include/exclude (supports wildcards).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.8,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failIfNoProjects</name>
+          <description>Fail the build when no integration test projects are found to verify.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the invoker:verify goal entirely. User property: invoker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.6,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  invoker:report                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>report</name>
+      <fullName>org.apache.maven.plugins:maven-invoker-plugin:report</fullName>
+      <description>Generates an HTML report from the integration test results produced by invoker:run.</description>
+      <versionRange>[1.6,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>reportDirectory</name>
+          <description>Directory containing the XML integration test reports to render.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/invoker-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the HTML report is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}/invoker</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.6,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  invoker:help                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-invoker-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.3,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.3,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

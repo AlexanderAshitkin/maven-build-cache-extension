@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-enforcer-plugin.
+  Source: https://maven.apache.org/plugins/maven-enforcer-plugin/
+  Latest documented version: 3.6.2
+
+  category values:
+    functional  - affects which rules are evaluated and what constitutes a violation
+    behavioral  - affects how rule evaluation runs (fail fast, caching, skip)
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-enforcer-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  enforcer:enforce                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>enforce</name>
+      <fullName>org.apache.maven.plugins:maven-enforcer-plugin:enforce</fullName>
+      <description>Executes configured enforcer rules for each project in the build.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Rules configuration ───────────────────────────────────── -->
+        <parameter>
+          <name>rules</name>
+          <description>XML configuration for enforcer rules (e.g., requireMavenVersion, requireJavaVersion, bannedDependencies).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>PlexusConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rulesToExecute</name>
+          <description>List of EnforcerRule class names to execute; takes precedence over the rules XML element. User property: enforcer.rules</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rulesToSkip</name>
+          <description>List of EnforcerRule class names to skip during execution. User property: enforcer.skipRules</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Failure control ───────────────────────────────────────── -->
+        <parameter>
+          <name>fail</name>
+          <description>Fail the build when at least one rule fails. User property: enforcer.fail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failFast</name>
+          <description>Stop evaluating rules after the first failure. User property: enforcer.failFast</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failIfNoRules</name>
+          <description>Fail the build when no rules are configured. User property: enforcer.failIfNoRules</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoreCache</name>
+          <description>Disable rule-result caching and force all rules to re-execute on each module. User property: enforcer.ignoreCache</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip all enforcer rule checks. User property: enforcer.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  enforcer:display-info                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>display-info</name>
+      <fullName>org.apache.maven.plugins:maven-enforcer-plugin:display-info</fullName>
+      <description>Displays environment information that may be useful for writing or debugging enforcer rules.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <!-- No user-configurable parameters for this informational goal. -->
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  enforcer:help                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-enforcer-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

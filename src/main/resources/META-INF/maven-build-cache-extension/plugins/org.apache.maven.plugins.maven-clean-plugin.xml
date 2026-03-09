@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-clean-plugin.
+  Source: https://maven.apache.org/plugins/maven-clean-plugin/
+  Latest documented version: 3.5.0
+
+  category values:
+    functional  - affects which files are deleted (changes the build-output landscape)
+    behavioral  - affects how the deletion runs but not which files are removed
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-clean-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  clean:clean                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>clean</name>
+      <fullName>org.apache.maven.plugins:maven-clean-plugin:clean</fullName>
+      <description>Remove files generated at build-time in the project's directory.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── What to delete ────────────────────────────────────────── -->
+        <parameter>
+          <name>excludeDefaultDirectories</name>
+          <description>Disables deletion of the default build output directories (target, etc.). When true, only filesets entries are deleted. User property: maven.clean.excludeDefaultDirectories</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filesets</name>
+          <description>List of additional file sets (directories with include/exclude patterns) to delete beyond the default output directories.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Fileset[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Symbolic links ────────────────────────────────────────── -->
+        <parameter>
+          <name>followSymLinks</name>
+          <description>Whether the plugin follows symbolic links when deleting files from default output directories. User property: maven.clean.followSymLinks</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Error handling ────────────────────────────────────────── -->
+        <parameter>
+          <name>failOnError</name>
+          <description>Whether to fail the build if an error occurs during clean. When false, errors are logged but the build continues.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>retryOnError</name>
+          <description>Whether to retry file deletion after a short delay when the initial attempt fails (useful for files locked by antivirus or indexing tools).</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>force</name>
+          <description>Whether to force deletion of read-only files.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Fast clean ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>fast</name>
+          <description>Enable fast clean by atomically moving directories to fastDir for background deletion instead of deleting in place. Falls back to traditional deletion if atomic move fails. User property: maven.clean.fast</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fastDir</name>
+          <description>Location where directories are atomically moved prior to background deletion when fast=true. Should reside on the same filesystem volume as the deleted directories. User property: maven.clean.fastDir</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${maven.multiModuleProjectDirectory}/target/.clean</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fastMode</name>
+          <description>Mode for fast clean: background (delete immediately in background, wait at end), at-end (synchronous deletion at reactor end), or defer (background deletion at end — only for embedded Maven). User property: maven.clean.fastMode</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>background</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Logging ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>verbose</name>
+          <description>Enable verbose output listing every file deleted. Defaults to Maven's global debug flag (-X). User property: maven.clean.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>Boolean</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip clean goal execution entirely. User property: maven.clean.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  clean:help                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-clean-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.5,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

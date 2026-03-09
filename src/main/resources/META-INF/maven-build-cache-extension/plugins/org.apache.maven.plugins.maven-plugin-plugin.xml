@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-plugin-plugin.
+  Source: https://maven.apache.org/plugin-tools/maven-plugin-plugin/
+  Latest documented version: 3.15.1
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-plugin-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  plugin:descriptor                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>descriptor</name>
+      <fullName>org.apache.maven.plugins:maven-plugin-plugin:descriptor</fullName>
+      <description>Generates the plugin descriptor (plugin.xml) from annotated/javadoc Mojo sources.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated plugin.xml descriptor is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}/META-INF/maven</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source processing ──────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for reading source files during descriptor generation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>extractors</name>
+          <description>List of extractor names used to discover Mojo metadata (e.g. java-annotations, java-javadoc).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <defaultValue>java-annotations</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>requiresDependencyResolution</name>
+          <description>Dependency resolution scope required by the generated plugin (compile, runtime, test).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mojoDependencies</name>
+          <description>Artifacts whose plugin descriptor files are merged into the generated descriptor.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Prefix / metadata ─────────────────────────────────────── -->
+        <parameter>
+          <name>goalPrefix</name>
+          <description>Goal prefix for the plugin (defaults to the artifactId without -maven-plugin or -plugin suffix).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Help Mojo generation ──────────────────────────────────── -->
+        <parameter>
+          <name>skipGeneratingHelpMojo</name>
+          <description>Skip automatic generation of the help Mojo source. User property: maven.plugin.skipGeneratingHelpMojo</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>helpPackageName</name>
+          <description>Package name for the generated HelpMojo class. User property: maven.plugin.helpPackageName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Failure control ───────────────────────────────────────── -->
+        <parameter>
+          <name>skipErrorNoDescriptorsFound</name>
+          <description>Warn instead of failing when no Mojo descriptors are found in the project.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip plugin descriptor generation entirely. User property: maven.plugin.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  plugin:helpmojo                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>helpmojo</name>
+      <fullName>org.apache.maven.plugins:maven-plugin-plugin:helpmojo</fullName>
+      <description>Generates a help Mojo class that describes the plugin's goals and parameters.</description>
+      <versionRange>[2.7,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>helpPackageName</name>
+          <description>Package name for the generated HelpMojo class. User property: maven.plugin.helpPackageName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated HelpMojo source file is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/generated-sources/plugin</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goalPrefix</name>
+          <description>Goal prefix used in the generated help text. Defaults to the plugin's prefix.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipGeneratingHelpMojo</name>
+          <description>Skip generation of the HelpMojo source. User property: maven.plugin.skipGeneratingHelpMojo</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  plugin:report                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>report</name>
+      <fullName>org.apache.maven.plugins:maven-plugin-plugin:report</fullName>
+      <description>Generates a plugin goals report for the project site.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated report HTML is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for reading source files in report generation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>requirements</name>
+          <description>Maven and JDK version requirements displayed in the generated report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Requirements</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip generating the plugin report. User property: maven.plugin.report.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  plugin:addPluginArtifactMetadata                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>addPluginArtifactMetadata</name>
+      <fullName>org.apache.maven.plugins:maven-plugin-plugin:addPluginArtifactMetadata</fullName>
+      <description>Attaches plugin prefix metadata to the project artifact for discovery by Maven.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>goalPrefix</name>
+          <description>Goal prefix added as artifact metadata for plugin discovery.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip attaching plugin artifact metadata. User property: maven.plugin.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  plugin:updateRegistry                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>updateRegistry</name>
+      <fullName>org.apache.maven.plugins:maven-plugin-plugin:updateRegistry</fullName>
+      <description>Updates the user's plugin registry with newly built plugin version information.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>skip</name>
+          <description>Skip updating the plugin registry. User property: maven.plugin.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  plugin:help                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-plugin-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

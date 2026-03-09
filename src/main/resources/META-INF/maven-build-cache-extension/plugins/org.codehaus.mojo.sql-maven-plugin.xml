@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for sql-maven-plugin.
+  Source: https://www.mojohaus.org/sql-maven-plugin/
+  Latest documented version: 3.0.0
+
+  category values:
+    functional  - affects which SQL is executed and what is written to the
+                  database or output file; changes the observable result
+    behavioral  - affects how SQL execution proceeds (error handling, output
+                  formatting) but not the data committed to the database
+
+  envSpecific: true if the parameter commonly carries file-system paths,
+               server credentials, JDBC URLs, or free-form strings passed
+               to external tools.
+-->
+<plugin-catalog>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>sql-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  sql:execute                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>execute</name>
+      <fullName>org.codehaus.mojo:sql-maven-plugin:execute</fullName>
+      <description>Executes SQL statements or scripts against a database via JDBC.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+
+        <!-- ── JDBC connection ────────────────────────────────────────── -->
+        <parameter>
+          <name>url</name>
+          <description>JDBC connection URL (e.g. jdbc:mysql://localhost:3306/mydb). User property: sql.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>driver</name>
+          <description>Fully-qualified class name of the JDBC driver. User property: sql.driver</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>serverId</name>
+          <description>ID of a server entry in settings.xml used to obtain JDBC credentials. User property: sql.serverId</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>username</name>
+          <description>JDBC username (overrides settings.xml server entry). User property: sql.username</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <description>JDBC password (overrides settings.xml server entry). User property: sql.password</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>driverProperties</name>
+          <description>Additional JDBC driver properties as key=value pairs (may include host-specific settings). User property: sql.driverProperties</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Properties</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>settingsKey</name>
+          <description>Key used to cache the JDBC connection in the Maven settings context. User property: sql.settingsKey</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SQL content ────────────────────────────────────────────── -->
+        <parameter>
+          <name>sqlCommand</name>
+          <description>Inline SQL statement(s) to execute (semicolon-separated). User property: sql.sqlCommand</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>srcFiles</name>
+          <description>List of SQL script files to execute. User property: sql.srcFiles</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fileset</name>
+          <description>Fileset descriptor (directory, includes, excludes) for SQL script files to execute.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Fileset</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>orderFile</name>
+          <description>Ordering of SQL files when multiple are specified: ascending, descending. User property: sql.orderFile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SQL parsing ────────────────────────────────────────────── -->
+        <parameter>
+          <name>delimiter</name>
+          <description>SQL statement delimiter character or string. User property: sql.delimiter</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>;</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>delimiterType</name>
+          <description>How the delimiter is recognized: normal (inline) or row (on its own line). User property: sql.delimiterType</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>normal</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>keepFormat</name>
+          <description>Preserve whitespace and newlines in SQL statements as written in source files. User property: sql.keepFormat</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding of the SQL script files. User property: sql.encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enableFiltering</name>
+          <description>Enable Maven resource filtering on SQL script files before execution. User property: sql.enableFiltering</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filterDelimiter</name>
+          <description>Delimiter token used for Maven resource filtering within SQL scripts. User property: sql.filterDelimiter</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${*}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Transaction control ────────────────────────────────────── -->
+        <parameter>
+          <name>autocommit</name>
+          <description>Execute each SQL statement in its own auto-committed transaction. User property: sql.autocommit</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>append</name>
+          <description>Append to an existing output file rather than overwriting it. User property: sql.append</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showheaders</name>
+          <description>Include column headers in query result output. User property: sql.showheaders</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputFile</name>
+          <description>File to which SQL query results are written. User property: sql.outputFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Error / behavioral ─────────────────────────────────────── -->
+        <parameter>
+          <name>onError</name>
+          <description>Action on SQL error: continue, stop, or abort. User property: sql.onError</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>abort</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>printResultSet</name>
+          <description>Print SQL query result sets to the Maven log output. User property: sql.printResultSet</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip SQL execution entirely. User property: sql.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  sql:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.codehaus.mojo:sql-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

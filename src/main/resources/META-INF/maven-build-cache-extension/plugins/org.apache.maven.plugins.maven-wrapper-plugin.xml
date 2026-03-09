@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-wrapper-plugin.
+  Source: https://maven.apache.org/plugins/maven-wrapper-plugin/
+  Latest documented version: 3.3.2
+
+  category values:
+    functional  - affects which Maven version and distribution is downloaded by the wrapper
+    behavioral  - affects how the wrapper scripts are generated but not what Maven is invoked
+
+  envSpecific: true if the parameter carries a URL, path, or server/proxy ID
+               that is resolved against a machine-local registry.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-wrapper-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  wrapper:wrapper                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>wrapper</name>
+      <fullName>org.apache.maven.plugins:maven-wrapper-plugin:wrapper</fullName>
+      <description>Generates Maven wrapper scripts (mvnw, mvnw.cmd) and the .mvn/wrapper directory.</description>
+      <versionRange>[3.0.1,)</versionRange>
+      <parameters>
+
+        <!-- ── Maven version ──────────────────────────────────────────── -->
+        <parameter>
+          <name>mavenVersion</name>
+          <description>Version of Maven to download and wrap (e.g. 3.9.6). User property: maven</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Distribution type ─────────────────────────────────────── -->
+        <parameter>
+          <name>distributionType</name>
+          <description>Type of Maven distribution to download: bin (binaries only) or source. User property: type</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>bin</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Distribution URL ───────────────────────────────────────── -->
+        <parameter>
+          <name>distributionUrl</name>
+          <description>Full URL to the Maven distribution archive. Overrides mavenVersion and distributionType.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Repository URL ─────────────────────────────────────────── -->
+        <parameter>
+          <name>repositoryUrl</name>
+          <description>Base URL of the Maven repository used to construct the distribution download URL.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>https://repo.maven.apache.org/maven2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Proxy settings ─────────────────────────────────────────── -->
+        <parameter>
+          <name>proxyId</name>
+          <description>ID of the proxy from settings.xml to use when downloading the distribution.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Wrapper jar policy ─────────────────────────────────────── -->
+        <parameter>
+          <name>includePluginInBuildPlugins</name>
+          <description>Whether to add the wrapper plugin to the build plugins section of the POM.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  wrapper:help                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-wrapper-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[3.0.1,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -31,16 +31,21 @@ import java.nio.file.spi.FileSystemProvider;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Properties;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.maven.buildcache.DefaultPluginScanConfig;
+import org.apache.maven.buildcache.OnUnknownPlugin;
+import org.apache.maven.buildcache.PluginCatalogRegistry;
 import org.apache.maven.buildcache.hash.HashFactory;
 import org.apache.maven.buildcache.xml.config.Configuration;
 import org.apache.maven.buildcache.xml.config.Remote;
+import org.apache.maven.buildcache.xml.config.TrackedProperty;
 import org.apache.maven.execution.MavenExecutionRequest;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.model.Plugin;
@@ -115,7 +120,7 @@ class CacheConfigImplTest {
 
         Provider<MavenSession> provider = (() -> mavenSession);
         // test object
-        testObject = new CacheConfigImpl(xmlService, provider, rtInfo);
+        testObject = new CacheConfigImpl(xmlService, provider, rtInfo, new PluginCatalogRegistry());
     }
 
     private static void deepMockConfigFile(File mockFile, boolean exists) throws IOException {
@@ -480,5 +485,98 @@ class CacheConfigImplTest {
         assertDefaults(
                 Pair.of("getUrl", () -> assertEquals("dummy.url.xyz", testObject.getUrl())),
                 Pair.of("isRemoteCacheEnabled", () -> assertTrue(testObject.isRemoteCacheEnabled())));
+    }
+
+    // -------------------------------------------------------------------------
+    // Catalog-driven reconciliation tests
+    // -------------------------------------------------------------------------
+
+    /**
+     * With the default config (registry enabled, no explicit reconcile section) and a
+     * real {@link org.apache.maven.buildcache.PluginCatalogRegistry}, the tracked
+     * properties for {@code maven-compiler-plugin:compile} must contain the
+     * <em>functional</em> parameter {@code source} but must NOT contain the
+     * <em>behavioral</em> parameter {@code verbose}.
+     */
+    @Test
+    void catalogDrivenReconcileReturnsFunctionalParamsOnly() {
+        assertEquals(CacheState.INITIALIZED, testObject.initialize());
+
+        // Build a mock MojoExecution for maven-compiler-plugin:compile
+        Plugin plugin = mock(Plugin.class);
+        when(plugin.getGroupId()).thenReturn("org.apache.maven.plugins");
+        when(plugin.getArtifactId()).thenReturn("maven-compiler-plugin");
+
+        MojoExecution execution = mock(MojoExecution.class);
+        when(execution.getPlugin()).thenReturn(plugin);
+        when(execution.getGoal()).thenReturn("compile");
+
+        List<TrackedProperty> tracked = testObject.getTrackedProperties(execution);
+
+        Set<String> trackedNames =
+                tracked.stream().map(TrackedProperty::getPropertyName).collect(java.util.stream.Collectors.toSet());
+
+        assertTrue(trackedNames.contains("source"), "'source' is functional and must be tracked");
+        assertFalse(trackedNames.contains("verbose"), "'verbose' is behavioral and must NOT be tracked");
+    }
+
+    /**
+     * With no {@code <reconcile>} element in the config, {@code getOnUnknownPlugin()} must
+     * return {@link OnUnknownPlugin#FAIL} (the default).
+     */
+    @Test
+    void defaultOnUnknownPluginIsFail() {
+        assertEquals(CacheState.INITIALIZED, testObject.initialize());
+        assertEquals(OnUnknownPlugin.FAIL, testObject.getOnUnknownPlugin());
+    }
+
+    /**
+     * An unknown plugin (no catalog, no explicit reconcile) with the default
+     * {@code onUnknownPlugin=fail} must throw {@link IllegalStateException}.
+     */
+    @Test
+    void unknownPluginWithDefaultFailThrows() {
+        assertEquals(CacheState.INITIALIZED, testObject.initialize());
+
+        Plugin plugin = mock(Plugin.class);
+        when(plugin.getGroupId()).thenReturn("com.example");
+        when(plugin.getArtifactId()).thenReturn("unknown-plugin");
+
+        MojoExecution execution = mock(MojoExecution.class);
+        when(execution.getPlugin()).thenReturn(plugin);
+        when(execution.getGoal()).thenReturn("run");
+
+        org.junit.jupiter.api.Assertions.assertThrows(
+                IllegalStateException.class,
+                () -> testObject.getTrackedProperties(execution),
+                "Unknown plugin with onUnknownPlugin=fail must throw");
+    }
+
+    /**
+     * An unknown plugin configured with {@code onUnknownPlugin="ignore"} must return an
+     * empty tracked-property list without throwing.
+     */
+    @Test
+    void unknownPluginWithIgnoreReturnsEmpty() throws Exception {
+        // Inject onUnknownPlugin="ignore" via the cache config XML
+        testCacheConfig = new XmlService()
+                .loadCacheConfig(("<cache><executionControl>"
+                                + "<reconcile onUnknownPlugin=\"ignore\"/>"
+                                + "</executionControl></cache>")
+                        .getBytes());
+        when(xmlService.loadCacheConfig(rootConfigFile)).thenReturn(testCacheConfig);
+        testObject = new CacheConfigImpl(xmlService, (() -> mavenSession), rtInfo, new PluginCatalogRegistry());
+        assertEquals(CacheState.INITIALIZED, testObject.initialize());
+
+        Plugin plugin = mock(Plugin.class);
+        when(plugin.getGroupId()).thenReturn("com.example");
+        when(plugin.getArtifactId()).thenReturn("unknown-plugin");
+
+        MojoExecution execution = mock(MojoExecution.class);
+        when(execution.getPlugin()).thenReturn(plugin);
+        when(execution.getGoal()).thenReturn("run");
+
+        List<TrackedProperty> tracked = testObject.getTrackedProperties(execution);
+        assertTrue(tracked.isEmpty(), "Unknown plugin with onUnknownPlugin=ignore must return empty list");
     }
 }

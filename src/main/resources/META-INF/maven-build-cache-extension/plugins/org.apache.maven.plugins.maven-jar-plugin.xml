@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-jar-plugin.
+  Source: https://maven.apache.org/plugins/maven-jar-plugin/
+  Latest documented version: 3.5.0
+
+  category values:
+    functional  - affects artifact content (which classes/resources end up in the JAR,
+                  manifest content, archive structure)
+    behavioral  - affects how packaging runs but not the output artifact
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-jar-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jar:jar                                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>jar</name>
+      <fullName>org.apache.maven.plugins:maven-jar-plugin:jar</fullName>
+      <description>Builds a JAR from the project main classes.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output location ───────────────────────────────────────── -->
+        <parameter>
+          <name>classesDirectory</name>
+          <description>Directory containing classes and resources to package into the JAR. Default: ${project.build.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated JAR file is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Artifact naming ───────────────────────────────────────── -->
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the generated JAR (without classifier or extension). Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier appended to the artifact name (e.g. "exec" produces myapp-exec.jar).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content selection ─────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which class/resource files to include in the JAR.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which class/resource files to exclude from the JAR.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addDefaultExcludes</name>
+          <description>When false, version-control metadata files (.git, .svn, .DS_Store, etc.) are not automatically excluded from the JAR. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>detectMultiReleaseJar</name>
+          <description>Automatically detect multi-release JAR content (META-INF/versions) and set the Multi-Release manifest attribute. User property: maven.jar.detectMultiReleaseJar. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Archive / manifest ────────────────────────────────────── -->
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, index, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Reproducible builds ───────────────────────────────────── -->
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Attachment ────────────────────────────────────────────── -->
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the generated JAR to the Maven project. User property: maven.jar.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Empty-JAR guard ───────────────────────────────────────── -->
+        <parameter>
+          <name>skipIfEmpty</name>
+          <description>Skip JAR creation if the classes directory is empty or does not exist. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Rebuild control ───────────────────────────────────────── -->
+        <parameter>
+          <name>forceCreation</name>
+          <description>Force JAR recreation even when the contents have not changed since the last build. User property: maven.jar.forceCreation. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip execution of the jar goal entirely. User property: maven.jar.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jar:test-jar                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-jar</name>
+      <fullName>org.apache.maven.plugins:maven-jar-plugin:test-jar</fullName>
+      <description>Builds a JAR of test classes for the current project.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output location ───────────────────────────────────────── -->
+        <parameter>
+          <name>testClassesDirectory</name>
+          <description>Directory containing test classes and resource files to package. Default: ${project.build.testOutputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.testOutputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated test-JAR file is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Artifact naming ───────────────────────────────────────── -->
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the generated test-JAR. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the test-JAR artifact. Default: tests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>tests</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content selection ─────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which test class/resource files to include.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which test class/resource files to exclude.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addDefaultExcludes</name>
+          <description>When false, version-control metadata files are not automatically excluded. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.4.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>detectMultiReleaseJar</name>
+          <description>Automatically detect multi-release JAR content and set the Multi-Release manifest attribute. User property: maven.jar.detectMultiReleaseJar. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Archive / manifest ────────────────────────────────────── -->
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, index, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Reproducible builds ───────────────────────────────────── -->
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Attachment ────────────────────────────────────────────── -->
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the generated test-JAR to the Maven project. User property: maven.jar.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Empty-JAR guard ───────────────────────────────────────── -->
+        <parameter>
+          <name>skipIfEmpty</name>
+          <description>Skip JAR creation if the test-classes directory is empty. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Rebuild control ───────────────────────────────────────── -->
+        <parameter>
+          <name>forceCreation</name>
+          <description>Force JAR recreation even when the contents have not changed. User property: maven.jar.forceCreation. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip execution of the test-jar goal entirely. User property: maven.test.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jar:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-jar-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

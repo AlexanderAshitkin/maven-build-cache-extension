@@ -1,0 +1,597 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for flyway-maven-plugin.
+  Source: https://documentation.red-gate.com/flyway/flyway-cli-and-api/usage/maven-goal
+  Latest documented version: 10.x
+
+  NOTE: Only publicly available, minimal parameter metadata included.
+  This catalog does not reproduce proprietary documentation.
+-->
+<plugin-catalog>
+  <groupId>org.flywaydb</groupId>
+  <artifactId>flyway-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:migrate                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>migrate</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:migrate</fullName>
+      <description>Migrates the database to the latest version by applying pending migration scripts.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Database connection ────────────────────────────────────── -->
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to migrate. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>user</name>
+          <description>Database user for authentication. User property: flyway.user</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <description>Database password for authentication. User property: flyway.password</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>driver</name>
+          <description>Fully qualified class name of the JDBC driver. User property: flyway.driver</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Migration locations ────────────────────────────────────── -->
+        <parameter>
+          <name>locations</name>
+          <description>Comma-separated list of locations to scan for migration scripts (filesystem: or classpath:). User property: flyway.locations</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String[]</type>
+          <defaultValue>db/migration</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Schema management ──────────────────────────────────────── -->
+        <parameter>
+          <name>schemas</name>
+          <description>Schemas managed by Flyway; the first schema is the default. User property: flyway.schemas</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>table</name>
+          <description>Name of the Flyway schema history table. User property: flyway.table</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>flyway_schema_history</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Migration naming ───────────────────────────────────────── -->
+        <parameter>
+          <name>sqlMigrationPrefix</name>
+          <description>Prefix for versioned SQL migration filenames. User property: flyway.sqlMigrationPrefix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>V</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sqlMigrationSeparator</name>
+          <description>Separator between version and description in migration filenames. User property: flyway.sqlMigrationSeparator</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>__</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sqlMigrationSuffixes</name>
+          <description>Comma-separated list of file suffixes for SQL migration files. User property: flyway.sqlMigrationSuffixes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <defaultValue>.sql</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Baseline ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>baselineVersion</name>
+          <description>Version tag applied when baselining an existing database. User property: flyway.baselineVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>baselineDescription</name>
+          <description>Description for the baseline migration entry. User property: flyway.baselineDescription</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>&lt;&lt; Flyway Baseline &gt;&gt;</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>baselineOnMigrate</name>
+          <description>Automatically baseline the database if the history table is missing. User property: flyway.baselineOnMigrate</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Validation ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>validateOnMigrate</name>
+          <description>Validate applied migrations against the classpath before running new ones. User property: flyway.validateOnMigrate</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Safety controls ────────────────────────────────────────── -->
+        <parameter>
+          <name>cleanDisabled</name>
+          <description>Disable the clean command to protect production databases from accidental drops. User property: flyway.cleanDisabled</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outOfOrder</name>
+          <description>Allow out-of-order migration execution for hotfixes applied across branches. User property: flyway.outOfOrder</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoreMigrationPatterns</name>
+          <description>Comma-separated list of migration state patterns to ignore during validation. User property: flyway.ignoreMigrationPatterns</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[8.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding of SQL migration files. User property: flyway.encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>UTF-8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Placeholders ───────────────────────────────────────────── -->
+        <parameter>
+          <name>placeholders</name>
+          <description>Map of placeholder key-value pairs substituted in SQL migration scripts. User property: flyway.placeholders.*</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>placeholderPrefix</name>
+          <description>Prefix of placeholder tokens in SQL scripts. User property: flyway.placeholderPrefix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>placeholderSuffix</name>
+          <description>Suffix of placeholder tokens in SQL scripts. User property: flyway.placeholderSuffix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Target version ─────────────────────────────────────────── -->
+        <parameter>
+          <name>targetVersion</name>
+          <description>Target version up to which migrations should be applied; current applies all. User property: flyway.target</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>current</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the migrate goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:clean                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>clean</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:clean</fullName>
+      <description>Drops all objects in the configured schemas; intended for development environments only.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to clean. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>cleanDisabled</name>
+          <description>When true, the clean command is a no-op regardless of other settings. User property: flyway.cleanDisabled</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the clean goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:info                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>info</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:info</fullName>
+      <description>Prints the status of all migrations including applied and pending ones.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to inspect. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>locations</name>
+          <description>Locations to scan for migration scripts. User property: flyway.locations</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the info goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:validate                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>validate</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:validate</fullName>
+      <description>Validates that the applied migrations match the available migration scripts.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to validate against. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>locations</name>
+          <description>Locations to scan for migration scripts to validate against. User property: flyway.locations</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>ignoreMigrationPatterns</name>
+          <description>Comma-separated list of migration state patterns to ignore during validation. User property: flyway.ignoreMigrationPatterns</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[8.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the validate goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:undo                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>undo</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:undo</fullName>
+      <description>Undoes the most recently applied versioned migration (Flyway Teams feature).</description>
+      <versionRange>[6.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to undo on. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[6.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the undo goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[6.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:baseline                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>baseline</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:baseline</fullName>
+      <description>Baselines an existing database, marking it as already having been migrated to baselineVersion.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to baseline. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>baselineVersion</name>
+          <description>Version to tag the baseline with. User property: flyway.baselineVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>baselineDescription</name>
+          <description>Description for the baseline entry in the schema history table. User property: flyway.baselineDescription</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the baseline goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:repair                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>repair</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:repair</fullName>
+      <description>Repairs the Flyway schema history table by removing failed migrations and realigning checksums.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>url</name>
+          <description>JDBC URL of the database to repair. User property: flyway.url</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the repair goal entirely. User property: flyway.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  flyway:help                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.flywaydb:flyway-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[5.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[5.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

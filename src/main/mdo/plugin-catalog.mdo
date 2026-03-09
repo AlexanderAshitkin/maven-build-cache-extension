@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Modello model descriptor for the plugin-catalog XML format.
+  Individual plugin catalogs (e.g. org.apache.maven.plugins.maven-compiler-plugin.xml)
+  conform to this schema.
+-->
+<model xmlns="http://codehaus-plexus.github.io/MODELLO/1.4.0"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://codehaus-plexus.github.io/MODELLO/1.4.0
+           http://codehaus-plexus.github.io/modello/xsd/modello-1.4.0.xsd"
+       xml.namespace="http://maven.apache.org/PLUGIN-CATALOG/${version}"
+       xml.schemaLocation="https://maven.apache.org/xsd/plugin-catalog-${version}.xsd">
+
+  <id>plugin-catalog</id>
+  <name>PluginCatalog</name>
+  <description>
+    Machine-readable catalog of Maven plugin goals and their parameters,
+    used by the Build Cache Extension for automatic reconciliation configuration.
+  </description>
+
+  <defaults>
+    <default>
+      <key>package</key>
+      <value>org.apache.maven.buildcache.plugincatalog</value>
+    </default>
+  </defaults>
+
+  <classes>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  PluginCatalog — root element                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <class rootElement="true" xml.tagName="plugin-catalog">
+      <name>PluginCatalog</name>
+      <description>
+        Top-level descriptor for a single Maven plugin. One file per plugin,
+        named &lt;groupId&gt;.&lt;artifactId&gt;.xml.
+      </description>
+      <version>1.2.0</version>
+      <fields>
+        <field>
+          <name>groupId</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>true</required>
+          <description>Maven groupId of the plugin (e.g. org.apache.maven.plugins).</description>
+        </field>
+        <field>
+          <name>artifactId</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>true</required>
+          <description>Maven artifactId of the plugin (e.g. maven-compiler-plugin).</description>
+        </field>
+        <field>
+          <name>goals</name>
+          <version>1.2.0</version>
+          <type>List</type>
+          <required>true</required>
+          <description>Ordered list of goals provided by this plugin.</description>
+          <association>
+            <type>Goal</type>
+            <multiplicity>*</multiplicity>
+          </association>
+        </field>
+      </fields>
+    </class>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  Goal                                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <class>
+      <name>Goal</name>
+      <description>Descriptor for a single plugin goal (mojo).</description>
+      <version>1.2.0</version>
+      <fields>
+        <field>
+          <name>name</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>true</required>
+          <description>
+            Short goal name as used on the command line (e.g. compile, testCompile).
+          </description>
+        </field>
+        <field>
+          <name>fullName</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>true</required>
+          <description>
+            Fully qualified goal name: groupId:artifactId:goalName
+            (e.g. org.apache.maven.plugins:maven-compiler-plugin:compile).
+          </description>
+        </field>
+        <field>
+          <name>description</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>false</required>
+          <description>Short human-readable description of what this goal does.</description>
+        </field>
+        <field>
+          <name>versionRange</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>false</required>
+          <description>
+            Maven version range notation indicating which plugin versions include this goal
+            (e.g. [2.0,) means available since 2.0 with no upper bound).
+          </description>
+        </field>
+        <field>
+          <name>parameters</name>
+          <version>1.2.0</version>
+          <type>List</type>
+          <required>false</required>
+          <description>List of configuration parameters accepted by this goal.</description>
+          <association>
+            <type>Parameter</type>
+            <multiplicity>*</multiplicity>
+          </association>
+        </field>
+      </fields>
+    </class>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  Parameter                                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <class>
+      <name>Parameter</name>
+      <description>Descriptor for a single mojo configuration parameter.</description>
+      <version>1.2.0</version>
+      <fields>
+        <field>
+          <name>name</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>true</required>
+          <description>
+            Parameter name as used in &lt;configuration&gt; or as a system property.
+          </description>
+        </field>
+        <field>
+          <name>description</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>false</required>
+          <description>
+            Short description of the parameter (≤ 100 characters). Should include the
+            user property alias when one exists (e.g. "User property: maven.compiler.source").
+          </description>
+        </field>
+        <field>
+          <name>category</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>true</required>
+          <description>
+            Classification used for cache-key decisions:
+            "functional" — changing this parameter affects build outputs (bytecode, generated
+              sources, artifact content) and MUST invalidate the cache;
+            "behavioral" — changing this parameter only affects how the goal executes (logging,
+              memory, threading, incremental detection) and does NOT invalidate the cache.
+          </description>
+        </field>
+        <field>
+          <name>envSpecific</name>
+          <version>1.2.0</version>
+          <type>boolean</type>
+          <required>true</required>
+          <description>
+            True when this parameter commonly holds environment-specific values such as
+            file-system paths, machine-local URLs, or tool installation directories.
+            Such parameters should be excluded from remote cache keys.
+          </description>
+        </field>
+        <field>
+          <name>type</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>false</required>
+          <description>
+            Java type of the parameter value (e.g. String, boolean, int, File, List, Map, Set).
+          </description>
+        </field>
+        <field>
+          <name>defaultValue</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>false</required>
+          <defaultValue>null</defaultValue>
+          <description>
+            Default value used when the parameter is not configured. May reference a Maven
+            expression (e.g. ${project.build.sourceEncoding}).
+            Omit the element entirely when no default is defined.
+          </description>
+        </field>
+        <field>
+          <name>skipProperty</name>
+          <version>1.2.0</version>
+          <type>boolean</type>
+          <required>true</required>
+          <description>
+            True when this parameter disables execution of the goal entirely
+            (i.e. it is a "skip" flag). Setting it to true bypasses the goal.
+          </description>
+        </field>
+        <field>
+          <name>versionRange</name>
+          <version>1.2.0</version>
+          <type>String</type>
+          <required>false</required>
+          <description>
+            Maven version range notation indicating which plugin versions support this parameter.
+            An open upper bound (e.g. [3.6,)) means the parameter is still current.
+            A closed upper bound (e.g. [2.0,3.0)) means the parameter was removed or deprecated.
+          </description>
+        </field>
+      </fields>
+    </class>
+
+  </classes>
+
+</model>

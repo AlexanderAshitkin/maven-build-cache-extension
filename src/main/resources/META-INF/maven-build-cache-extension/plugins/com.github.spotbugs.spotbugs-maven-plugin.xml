@@ -1,0 +1,468 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for spotbugs-maven-plugin.
+  Source: https://spotbugs.github.io/spotbugs-maven-plugin/
+  Latest documented version: 4.9.x
+
+  category values:
+    functional  - affects which bugs are detected or what is included in the report
+    behavioral  - affects analysis resources or whether the build fails on findings,
+                  but not the detection logic itself
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>com.github.spotbugs</groupId>
+  <artifactId>spotbugs-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  spotbugs:spotbugs                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>spotbugs</name>
+      <fullName>com.github.spotbugs:spotbugs-maven-plugin:spotbugs</fullName>
+      <description>Runs SpotBugs analysis and generates an XML report without failing the build.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Analysis configuration ─────────────────────────────────── -->
+        <parameter>
+          <name>effort</name>
+          <description>Analysis effort level: Min, Default, or Max. Higher effort is more thorough but slower. User property: spotbugs.effort</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>Default</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>threshold</name>
+          <description>Minimum bug priority to report: Low, Medium, High, or Default. User property: spotbugs.threshold</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>Default</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filter files ───────────────────────────────────────────── -->
+        <parameter>
+          <name>excludeFilterFile</name>
+          <description>Path(s) to SpotBugs XML filter file(s) specifying bugs to exclude from analysis. User property: spotbugs.excludeFilterFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeFilterFile</name>
+          <description>Path(s) to SpotBugs XML filter file(s) specifying bugs to include in analysis. User property: spotbugs.includeFilterFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeBugsFile</name>
+          <description>Path to a SpotBugs baseline XML file listing bugs to suppress from the report. User property: spotbugs.excludeBugsFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Plugins and detectors ──────────────────────────────────── -->
+        <parameter>
+          <name>plugins</name>
+          <description>Additional SpotBugs detector plugin JARs specified as GAV coordinates.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>visitors</name>
+          <description>Comma-separated list of bug detector visitor class names to run. User property: spotbugs.visitors</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>omitVisitors</name>
+          <description>Comma-separated list of bug detector visitor class names to skip. User property: spotbugs.omitVisitors</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source scope ───────────────────────────────────────────── -->
+        <parameter>
+          <name>includeTests</name>
+          <description>Run SpotBugs analysis on test classes as well. User property: spotbugs.includeTests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Report output ──────────────────────────────────────────── -->
+        <parameter>
+          <name>xmlOutput</name>
+          <description>Generate a SpotBugs XML report in addition to the native report. User property: spotbugs.xmlOutput</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>xmlOutputDirectory</name>
+          <description>Directory for the SpotBugs XML report file. User property: spotbugs.xmlOutputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sarifOutput</name>
+          <description>Generate a SARIF report in addition to the native report. User property: spotbugs.sarifOutput</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sarifOutputDirectory</name>
+          <description>Directory for the SARIF output file. User property: spotbugs.sarifOutputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[4.5,)</versionRange>
+        </parameter>
+
+        <!-- ── JVM resources ─────────────────────────────────────────── -->
+        <parameter>
+          <name>maxHeap</name>
+          <description>Maximum heap size in megabytes for the SpotBugs analysis JVM. User property: spotbugs.maxHeap</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>768</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>debug</name>
+          <description>Enable SpotBugs debug output. User property: spotbugs.debug</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip SpotBugs analysis entirely. User property: spotbugs.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  spotbugs:check                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>check</name>
+      <fullName>com.github.spotbugs:spotbugs-maven-plugin:check</fullName>
+      <description>Runs SpotBugs analysis and fails the build if any bugs are found above the configured threshold.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Analysis configuration ─────────────────────────────────── -->
+        <parameter>
+          <name>effort</name>
+          <description>Analysis effort level: Min, Default, or Max. User property: spotbugs.effort</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>Default</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>threshold</name>
+          <description>Minimum bug priority to report: Low, Medium, High, or Default. User property: spotbugs.threshold</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>Default</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filter files ───────────────────────────────────────────── -->
+        <parameter>
+          <name>excludeFilterFile</name>
+          <description>Path(s) to filter files specifying bugs to exclude. User property: spotbugs.excludeFilterFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeFilterFile</name>
+          <description>Path(s) to filter files specifying bugs to include. User property: spotbugs.includeFilterFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeBugsFile</name>
+          <description>Path to a baseline XML file listing bugs to suppress. User property: spotbugs.excludeBugsFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Plugins and detectors ──────────────────────────────────── -->
+        <parameter>
+          <name>plugins</name>
+          <description>Additional SpotBugs detector plugin JARs as GAV coordinates.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>visitors</name>
+          <description>Comma-separated list of detector visitor class names to run. User property: spotbugs.visitors</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>omitVisitors</name>
+          <description>Comma-separated list of detector visitor class names to skip. User property: spotbugs.omitVisitors</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source scope ───────────────────────────────────────────── -->
+        <parameter>
+          <name>includeTests</name>
+          <description>Also analyse test classes. User property: spotbugs.includeTests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Report output ──────────────────────────────────────────── -->
+        <parameter>
+          <name>xmlOutput</name>
+          <description>Generate an XML report file. User property: spotbugs.xmlOutput</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>xmlOutputDirectory</name>
+          <description>Directory for the XML report. User property: spotbugs.xmlOutputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Failure control ────────────────────────────────────────── -->
+        <parameter>
+          <name>failOnError</name>
+          <description>Fail the build when SpotBugs finds any bugs above the threshold. User property: spotbugs.failOnError</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── JVM resources ─────────────────────────────────────────── -->
+        <parameter>
+          <name>maxHeap</name>
+          <description>Maximum heap size in megabytes for the SpotBugs JVM. User property: spotbugs.maxHeap</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>768</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>debug</name>
+          <description>Enable SpotBugs debug output. User property: spotbugs.debug</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip SpotBugs check entirely. User property: spotbugs.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  spotbugs:gui                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>gui</name>
+      <fullName>com.github.spotbugs:spotbugs-maven-plugin:gui</fullName>
+      <description>Launches the SpotBugs GUI to browse the analysis results interactively.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>skip</name>
+          <description>Skip launching the GUI. User property: spotbugs.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  spotbugs:help                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>com.github.spotbugs:spotbugs-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[3.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

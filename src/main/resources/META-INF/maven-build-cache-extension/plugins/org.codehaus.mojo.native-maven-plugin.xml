@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for native-maven-plugin.
+  Source: https://www.mojohaus.org/native-maven-plugin/
+  Latest documented version: 1.0-alpha-11
+
+  category values:
+    functional  - affects which native sources are compiled or linked and
+                  the resulting native artifacts
+    behavioral  - affects execution mechanics without changing native artifacts
+
+  envSpecific: true if the parameter commonly carries file-system paths,
+               machine-specific executable names, or free-form strings/lists
+               passed to external tools.
+-->
+<plugin-catalog>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>native-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:initialize                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>initialize</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:initialize</fullName>
+      <description>Initializes native build configuration and sets up the target output directory.</description>
+      <versionRange>[1.0-alpha-1,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where compiled native object files are placed. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:compile                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>compile</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:compile</fullName>
+      <description>Compiles native C/C++ source files into object files using the configured compiler.</description>
+      <versionRange>[1.0-alpha-1,)</versionRange>
+      <parameters>
+
+        <!-- ── Source location ────────────────────────────────────────── -->
+        <parameter>
+          <name>sourceDirectory</name>
+          <description>Directory containing native C/C++ source files to compile. User property: sourceDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}/src/main/native</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where compiled native object files are placed. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style patterns selecting source files to compile (relative to sourceDirectory).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style patterns excluding source files from compilation (relative to sourceDirectory).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Compiler selection ─────────────────────────────────────── -->
+        <parameter>
+          <name>compilerProvider</name>
+          <description>Compiler implementation to use: generic, msvc, gcc, cc. User property: compilerProvider</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>generic</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compilerExecutable</name>
+          <description>Executable name or full path of the C/C++ compiler to invoke. User property: compilerExecutable</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Compiler options ───────────────────────────────────────── -->
+        <parameter>
+          <name>compilerStartOptions</name>
+          <description>Free-form compiler options prepended before source file arguments. User property: compilerStartOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compilerEndOptions</name>
+          <description>Free-form compiler options appended after source file arguments. User property: compilerEndOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compilerDefinitions</name>
+          <description>List of preprocessor symbol definitions (e.g. -DNDEBUG) passed to the compiler.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>envFactoryName</name>
+          <description>Fully-qualified class name of the NativeEnvFactory implementation for platform detection. User property: envFactoryName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>jdkIncludePath</name>
+          <description>Path to JDK include directory for JNI header files (e.g. $JAVA_HOME/include). User property: jdkIncludePath</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:link                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>link</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:link</fullName>
+      <description>Links compiled native object files into a shared library, static library, or executable.</description>
+      <versionRange>[1.0-alpha-1,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>linkerProvider</name>
+          <description>Linker implementation to use: generic, msvc, gcc, ar. User property: linkerProvider</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>generic</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkerExecutable</name>
+          <description>Executable name or full path of the linker to invoke. User property: linkerExecutable</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the linked native artifact (library or executable) is placed. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkerFinalName</name>
+          <description>Base name (without extension) of the linked artifact. User property: linkerFinalName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkerStartOptions</name>
+          <description>Free-form linker options prepended to the linker command. User property: linkerStartOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkerMiddleOptions</name>
+          <description>Free-form linker options inserted between object files and libraries. User property: linkerMiddleOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkerEndOptions</name>
+          <description>Free-form linker options appended at the end of the linker command. User property: linkerEndOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkerLibraries</name>
+          <description>List of library names (without -l prefix) to link against. User property: linkerLibraries</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:javah                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>javah</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:javah</fullName>
+      <description>Generates JNI header files from compiled Java classes using javah.</description>
+      <versionRange>[1.0-alpha-1,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>javahClassNames</name>
+          <description>Fully-qualified Java class names for which JNI headers are generated.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>javahOutputDirectory</name>
+          <description>Directory where generated JNI header files are placed. User property: javahOutputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/native/javah</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>javahSearchJNIFromDependencies</name>
+          <description>Include classpath entries from project dependencies when running javah. User property: javahSearchJNIFromDependencies</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:manifest                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>manifest</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:manifest</fullName>
+      <description>Embeds a Windows manifest file into the native executable or DLL (Windows only).</description>
+      <versionRange>[1.0-alpha-8,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>manifestFile</name>
+          <description>Path to the Windows manifest XML file to embed. User property: manifestFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-8,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:ranlib                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>ranlib</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:ranlib</fullName>
+      <description>Runs ranlib on a static library to generate or update the archive index.</description>
+      <versionRange>[1.0-alpha-1,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>ranlibExecutable</name>
+          <description>Executable name or full path of the ranlib tool. User property: ranlibExecutable</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>ranlib</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  native:help                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.codehaus.mojo:native-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[1.0-alpha-1,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[1.0-alpha-1,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

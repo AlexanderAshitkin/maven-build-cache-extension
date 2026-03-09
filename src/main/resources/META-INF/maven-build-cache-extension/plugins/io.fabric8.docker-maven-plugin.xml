@@ -1,0 +1,673 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for docker-maven-plugin (fabric8).
+  Source: https://dmp.fabric8.io/
+  Latest documented version: 0.45.x
+
+  NOTE: Only publicly available, minimal parameter metadata included.
+  This catalog does not reproduce proprietary documentation.
+-->
+<plugin-catalog>
+  <groupId>io.fabric8</groupId>
+  <artifactId>docker-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:build                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>build</name>
+      <fullName>io.fabric8:docker-maven-plugin:build</fullName>
+      <description>Builds Docker images based on the image configurations defined in the plugin configuration.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+
+        <!-- ── Image configuration ────────────────────────────────────── -->
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations (name, build, alias etc.) defining images to build.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory used as the base for the Docker build context temporary files. User property: docker.target.dir</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.directory}/docker</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Registry ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>registry</name>
+          <description>Default Docker registry to prepend to image names that have no explicit registry. User property: docker.registry</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Docker daemon ──────────────────────────────────────────── -->
+        <parameter>
+          <name>dockerHost</name>
+          <description>URL of the Docker daemon socket (e.g. unix:///var/run/docker.sock). User property: docker.host</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>certPath</name>
+          <description>Directory containing TLS certificates used to connect to the Docker daemon. User property: docker.certPath</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Build args ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>buildArgs</name>
+          <description>Map of Docker build-arg key-value pairs passed to the Dockerfile ARG instructions. User property: docker.buildArg.*</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Dockerfile directory ───────────────────────────────────── -->
+        <parameter>
+          <name>dockerFileDir</name>
+          <description>Directory containing the Dockerfile; used as the build context root. User property: docker.dockerFileDir</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>filter</name>
+          <description>Comma-separated list of image aliases or names to build; builds all if omitted. User property: docker.filter</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Behavioral ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>verbose</name>
+          <description>Enable verbose output during the build. User property: docker.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>maxConnections</name>
+          <description>Maximum number of parallel connections to the Docker daemon. User property: docker.maxConnections</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>100</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipBuild</name>
+          <description>Skip only the docker:build goal. User property: docker.skip.build</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:push                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>push</name>
+      <fullName>io.fabric8:docker-maven-plugin:push</fullName>
+      <description>Pushes built Docker images to a registry.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations defining which images to push.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>registry</name>
+          <description>Default Docker registry to push images to. User property: docker.registry</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>authConfig</name>
+          <description>Authentication configuration (server credentials) for the target registry. User property: docker.authConfig.*</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>retries</name>
+          <description>Number of times to retry a failed push before aborting. User property: docker.push.retries</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipPush</name>
+          <description>Skip only the docker:push goal. User property: docker.skip.push</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:pull                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>pull</name>
+      <fullName>io.fabric8:docker-maven-plugin:pull</fullName>
+      <description>Pulls Docker images from a registry.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations specifying which images to pull.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>registry</name>
+          <description>Default Docker registry to pull from. User property: docker.registry</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:start                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>start</name>
+      <fullName>io.fabric8:docker-maven-plugin:start</fullName>
+      <description>Creates and starts containers defined in the image run configuration.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations including run sections for containers to start.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dockerHost</name>
+          <description>URL of the Docker daemon socket. User property: docker.host</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>portPropertyFile</name>
+          <description>File where dynamically mapped container ports are written as properties. User property: docker.portPropertyFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipRun</name>
+          <description>Skip only the docker:start goal. User property: docker.skip.run</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:stop                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>stop</name>
+      <fullName>io.fabric8:docker-maven-plugin:stop</fullName>
+      <description>Stops and optionally removes containers that were started by docker:start.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations identifying which containers to stop.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>keepRunning</name>
+          <description>Keep containers running after the goal completes (do not stop them). User property: docker.keepRunning</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:remove                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>remove</name>
+      <fullName>io.fabric8:docker-maven-plugin:remove</fullName>
+      <description>Removes Docker images built by this plugin.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations specifying which images to remove.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>removeAll</name>
+          <description>Remove all images including those not built in this session. User property: docker.removeAll</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:watch                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>watch</name>
+      <fullName>io.fabric8:docker-maven-plugin:watch</fullName>
+      <description>Watches source files and rebuilds/restarts containers automatically on changes.</description>
+      <versionRange>[0.15,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations for images to watch and auto-rebuild.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.15,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>watchInterval</name>
+          <description>Interval in milliseconds between file system polls. User property: docker.watchInterval</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>5000</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.15,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.15,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:save                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>save</name>
+      <fullName>io.fabric8:docker-maven-plugin:save</fullName>
+      <description>Saves Docker images to a tar archive file.</description>
+      <versionRange>[0.28,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations specifying which images to save.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.28,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>saveFile</name>
+          <description>Path to the output tar archive file. User property: docker.save.file</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.28,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.28,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:load                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>load</name>
+      <fullName>io.fabric8:docker-maven-plugin:load</fullName>
+      <description>Loads Docker images from a tar archive into the Docker daemon.</description>
+      <versionRange>[0.28,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>images</name>
+          <description>List of image configurations; the save section specifies archive to load from.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.28,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.28,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:volume-create                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>volume-create</name>
+      <fullName>io.fabric8:docker-maven-plugin:volume-create</fullName>
+      <description>Creates Docker volumes defined in the plugin volume configuration.</description>
+      <versionRange>[0.20,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>volumes</name>
+          <description>List of volume configurations to create.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.20,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.20,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:volume-remove                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>volume-remove</name>
+      <fullName>io.fabric8:docker-maven-plugin:volume-remove</fullName>
+      <description>Removes Docker volumes created by docker:volume-create.</description>
+      <versionRange>[0.20,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>volumes</name>
+          <description>List of volume configurations to remove.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.20,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all docker goals. User property: docker.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.20,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  docker:help                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>io.fabric8:docker-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[0.14,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.14,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

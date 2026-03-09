@@ -29,7 +29,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -37,6 +39,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Strings;
 import org.apache.maven.SessionScoped;
 import org.apache.maven.buildcache.DefaultPluginScanConfig;
+import org.apache.maven.buildcache.OnUnknownPlugin;
+import org.apache.maven.buildcache.ParameterCategory;
+import org.apache.maven.buildcache.PluginCatalogRegistry;
 import org.apache.maven.buildcache.PluginScanConfig;
 import org.apache.maven.buildcache.PluginScanConfigImpl;
 import org.apache.maven.buildcache.hash.HashFactory;
@@ -119,6 +124,7 @@ public class CacheConfigImpl implements org.apache.maven.buildcache.xml.CacheCon
     private final XmlService xmlService;
     private final Provider<MavenSession> providerSession;
     private final RuntimeInformation rtInfo;
+    private final PluginCatalogRegistry catalogRegistry;
 
     private volatile CacheState state;
     private CacheConfig cacheConfig;
@@ -126,10 +132,15 @@ public class CacheConfigImpl implements org.apache.maven.buildcache.xml.CacheCon
     private List<Pattern> excludePatterns;
 
     @Inject
-    public CacheConfigImpl(XmlService xmlService, Provider<MavenSession> providerSession, RuntimeInformation rtInfo) {
+    public CacheConfigImpl(
+            XmlService xmlService,
+            Provider<MavenSession> providerSession,
+            RuntimeInformation rtInfo,
+            PluginCatalogRegistry catalogRegistry) {
         this.xmlService = xmlService;
         this.providerSession = providerSession;
         this.rtInfo = rtInfo;
+        this.catalogRegistry = catalogRegistry;
     }
 
     @Nonnull
@@ -229,11 +240,121 @@ public class CacheConfigImpl implements org.apache.maven.buildcache.xml.CacheCon
     @Override
     public List<TrackedProperty> getTrackedProperties(MojoExecution mojoExecution) {
         checkInitializedState();
-        final GoalReconciliation reconciliationConfig = findReconciliationConfig(mojoExecution);
-        if (reconciliationConfig != null) {
-            return reconciliationConfig.getReconciles();
-        } else {
+
+        // When registry is disabled (or no plugin info available), fall back to explicit config only
+        if (!isPluginMetadataRegistryEnabled() || mojoExecution.getPlugin() == null) {
+            return resolveExplicitOrUnknown(mojoExecution, null, null, null);
+        }
+
+        String groupId = mojoExecution.getPlugin().getGroupId();
+        String artifactId = mojoExecution.getPlugin().getArtifactId();
+        String goal = mojoExecution.getGoal();
+
+        GoalReconciliation explicit = findReconciliationConfig(mojoExecution);
+
+        // Explicit per-plugin config always wins, regardless of catalog presence.
+        // skipReconciliation is an explicit opt-out.
+        if (explicit != null) {
+            if (explicit.isSkipReconciliation()) {
+                LOGGER.debug(
+                        "Reconciliation skipped for {}:{}:{} (skipReconciliation=true)", groupId, artifactId, goal);
+                return Collections.emptyList();
+            }
+            // If catalog also has an entry, merge: catalog supplies defaults, explicit overrides
+            if (catalogRegistry.hasCatalog(groupId, artifactId) && catalogRegistry.hasGoal(groupId, artifactId, goal)) {
+                return mergeCatalogAndExplicit(groupId, artifactId, goal, explicit);
+            }
+            // No catalog entry but explicit config present → use explicit only
+            return explicit.getReconciles();
+        }
+
+        // No explicit config. Try catalog.
+        if (!catalogRegistry.hasCatalog(groupId, artifactId)) {
+            return resolveUnknown(groupId, artifactId, goal, "plugin");
+        }
+
+        if (!catalogRegistry.hasGoal(groupId, artifactId, goal)) {
+            return resolveUnknown(groupId, artifactId, goal, "goal");
+        }
+
+        // Catalog entry found, no explicit overrides
+        return mergeCatalogAndExplicit(groupId, artifactId, goal, null);
+    }
+
+    /**
+     * Builds the tracked-property list from catalog functional/skipProperty params,
+     * then applies any explicit overrides on top.
+     */
+    private List<TrackedProperty> mergeCatalogAndExplicit(
+            String groupId, String artifactId, String goal, GoalReconciliation explicit) {
+        Map<String, TrackedProperty> result = new LinkedHashMap<>();
+        for (org.apache.maven.buildcache.plugincatalog.Parameter p :
+                catalogRegistry.getParameters(groupId, artifactId, goal)) {
+            if (ParameterCategory.FUNCTIONAL == ParameterCategory.of(p.getCategory()) || p.isSkipProperty()) {
+                TrackedProperty tp = new TrackedProperty();
+                tp.setPropertyName(p.getName());
+                if (p.isSkipProperty()) {
+                    tp.setSkipValue("true");
+                }
+                if (p.getDefaultValue() != null) {
+                    tp.setDefaultValue(p.getDefaultValue());
+                }
+                result.put(p.getName(), tp);
+            }
+        }
+        if (explicit != null) {
+            for (TrackedProperty override : explicit.getReconciles()) {
+                if (result.containsKey(override.getPropertyName())) {
+                    LOGGER.debug(
+                            "Explicit reconcile overrides registry for '{}' in {}:{}:{}",
+                            override.getPropertyName(),
+                            groupId,
+                            artifactId,
+                            goal);
+                }
+                result.put(override.getPropertyName(), override);
+            }
+        }
+        return new ArrayList<>(result.values());
+    }
+
+    /**
+     * Called when registry is disabled or plugin info unavailable: returns explicit config if present,
+     * otherwise applies {@link #getOnUnknownPlugin()} behaviour.
+     */
+    private List<TrackedProperty> resolveExplicitOrUnknown(
+            MojoExecution mojoExecution, String groupId, String artifactId, String goal) {
+        GoalReconciliation explicit = findReconciliationConfig(mojoExecution);
+        if (explicit != null) {
+            return explicit.isSkipReconciliation() ? Collections.emptyList() : explicit.getReconciles();
+        }
+        if (groupId == null) {
+            // Registry disabled globally — no catalog check, no fail
             return Collections.emptyList();
+        }
+        return resolveUnknown(groupId, artifactId, goal, "plugin");
+    }
+
+    /**
+     * Applies the {@link OnUnknownPlugin} action for an unknown plugin / goal / parameter.
+     */
+    private List<TrackedProperty> resolveUnknown(String groupId, String artifactId, String goal, String level) {
+        String msg = String.format(
+                "Build cache: %s '%s:%s' (goal '%s') has no catalog entry and no explicit"
+                        + " <reconcile> configuration. Add it to the plugin catalog or configure it"
+                        + " in .mvn/maven-build-cache-config.xml."
+                        + " To suppress this error set onUnknownPlugin=\"ignore\" or"
+                        + " \"printWarn\" on <executionControl><reconcile>.",
+                level, groupId, artifactId, goal);
+        switch (getOnUnknownPlugin()) {
+            case FAIL:
+                throw new IllegalStateException(msg);
+            case PRINT_WARN:
+                LOGGER.warn(msg);
+                return Collections.emptyList();
+            case IGNORE:
+            default:
+                return Collections.emptyList();
         }
     }
 
@@ -545,6 +666,56 @@ public class CacheConfigImpl implements org.apache.maven.buildcache.xml.CacheCon
     @Override
     public boolean isCacheCompile() {
         return getProperty(CACHE_COMPILE, true);
+    }
+
+    @Override
+    public boolean isPluginMetadataRegistryEnabled() {
+        ExecutionControl ec = cacheConfig.getExecutionControl();
+        return ec == null || ec.isMetadataRegistryEnabled();
+    }
+
+    @Override
+    public OnUnknownPlugin getOnUnknownPlugin() {
+        ExecutionControl ec = cacheConfig.getExecutionControl();
+        if (ec == null || ec.getReconcile() == null) {
+            return OnUnknownPlugin.FAIL;
+        }
+        OnUnknownPlugin parsed = OnUnknownPlugin.of(ec.getReconcile().getOnUnknownPlugin());
+        return parsed != null ? parsed : OnUnknownPlugin.FAIL;
+    }
+
+    @Override
+    public void checkUnknownParameter(MojoExecution mojoExecution, String parameterName) {
+        if (!isPluginMetadataRegistryEnabled() || mojoExecution.getPlugin() == null) {
+            return;
+        }
+        String groupId = mojoExecution.getPlugin().getGroupId();
+        String artifactId = mojoExecution.getPlugin().getArtifactId();
+        String goal = mojoExecution.getGoal();
+        if (!catalogRegistry.hasGoal(groupId, artifactId, goal)) {
+            return; // plugin/goal level already handled in getTrackedProperties
+        }
+        if (catalogRegistry.findParameter(groupId, artifactId, goal, parameterName) != null) {
+            return; // parameter is catalogued (behavioral etc.) — fine to skip
+        }
+        String msg = String.format(
+                "Build cache: parameter '%s' in %s:%s (goal '%s') is not listed"
+                        + " in the plugin catalog. Add it to the catalog or configure it"
+                        + " explicitly in .mvn/maven-build-cache-config.xml."
+                        + " To suppress this error set onUnknownPlugin=\"ignore\" or"
+                        + " \"printWarn\" on <executionControl><reconcile>.",
+                parameterName, groupId, artifactId, goal);
+        OnUnknownPlugin onUnknownPlugin = getOnUnknownPlugin();
+        switch (onUnknownPlugin) {
+            case FAIL:
+                throw new IllegalStateException(msg);
+            case PRINT_WARN:
+                LOGGER.warn(msg);
+                break;
+            case IGNORE:
+            default:
+                throw new IllegalStateException("Unsupported properties handling strategy: " + onUnknownPlugin);
+        }
     }
 
     @Override

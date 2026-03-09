@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-install-plugin.
+  Source: https://maven.apache.org/plugins/maven-install-plugin/
+  Latest documented version: 3.1.4
+
+  category values:
+    functional  - affects what artifact content is installed or its Maven coordinates
+    behavioral  - affects how or when installation runs, not the artifact content
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-install-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  install:install                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>install</name>
+      <fullName>org.apache.maven.plugins:maven-install-plugin:install</fullName>
+      <description>Installs the project artifact and POM into the local Maven repository.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Execution control ─────────────────────────────────────── -->
+        <parameter>
+          <name>installAtEnd</name>
+          <description>Defer installation of all reactor projects until the end of the multimodule build. When true, if the build fails no reactor project is installed. User property: installAtEnd</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>allowIncompleteProjects</name>
+          <description>Allow installation of projects with non-pom packaging that have no main artifact (e.g. projects that only produce attached artifacts). User property: allowIncompleteProjects</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip installation of artifacts that do not need to be installed in the local repository. User property: maven.install.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  install:install-file                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>install-file</name>
+      <fullName>org.apache.maven.plugins:maven-install-plugin:install-file</fullName>
+      <description>Install a file into the local Maven repository with a given set of coordinates, generating a POM if necessary.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Artifact source ───────────────────────────────────────── -->
+        <parameter>
+          <name>file</name>
+          <description>The file to install in the local repository (required). User property: file</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sources</name>
+          <description>Bundled sources JAR to install alongside the main artifact. User property: sources</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>javadoc</name>
+          <description>Bundled Javadoc JAR to install alongside the main artifact. User property: javadoc</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Artifact coordinates ──────────────────────────────────── -->
+        <parameter>
+          <name>groupId</name>
+          <description>GroupId of the artifact to install. Retrieved from an embedded POM or MANIFEST when not set. User property: groupId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>artifactId</name>
+          <description>ArtifactId of the artifact to install. Retrieved from an embedded POM or MANIFEST when not set. User property: artifactId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>version</name>
+          <description>Version of the artifact to install. Retrieved from an embedded POM or MANIFEST when not set. User property: version</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>packaging</name>
+          <description>Packaging type of the artifact to install. Retrieved from an embedded POM or derived from the file extension when not set. User property: packaging</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier to attach to the installed artifact (e.g. sources, javadoc). User property: classifier</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>extension</name>
+          <description>File extension for the installed artifact, overriding plugin auto-detection logic. User property: extension</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1.3,)</versionRange>
+        </parameter>
+
+        <!-- ── POM handling ───────────────────────────────────────────── -->
+        <parameter>
+          <name>pomFile</name>
+          <description>Location of an existing POM file to install alongside the artifact. User property: pomFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>generatePom</name>
+          <description>Generate a minimal POM when none is supplied via pomFile. Defaults to true when no POM is present. User property: generatePom</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Boolean</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Repository target ─────────────────────────────────────── -->
+        <parameter>
+          <name>localRepositoryPath</name>
+          <description>Path to a specific local repository directory to install into, overriding the default local repository from settings.xml. User property: localRepositoryPath</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  install:help                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-install-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.5,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

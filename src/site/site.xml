@@ -36,6 +36,8 @@ under the License.
 
     <menu name="Documentation">
       <item name="Usage" href="usage.html"/>
+      <item name="Default Configuration" href="default-config.html"/>
+      <item name="Supported Plugins" href="supported-plugins.html"/>
       <item name="Remote Cache Setup" href="remote-cache.html"/>
       <item name="Howto" href="how-to.html"/>
       <item name="Performance" href="performance.html"/>

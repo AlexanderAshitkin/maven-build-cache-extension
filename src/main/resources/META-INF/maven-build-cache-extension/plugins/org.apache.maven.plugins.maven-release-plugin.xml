@@ -1,0 +1,487 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-release-plugin.
+  Source: https://maven.apache.org/plugins/maven-release-plugin/
+  Latest documented version: 3.3.1
+
+  category values:
+    functional  - affects the tag name, version numbers, or which files are modified in the release
+    behavioral  - affects how the release process runs (SCM push, goals executed, credentials)
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-release-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  release:prepare                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>prepare</name>
+      <fullName>org.apache.maven.plugins:maven-release-plugin:prepare</fullName>
+      <description>Prepares a Maven project for release by updating POM versions and creating an SCM tag.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Version management ────────────────────────────────────── -->
+        <parameter>
+          <name>releaseVersion</name>
+          <description>Version to use for the release. User property: releaseVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>developmentVersion</name>
+          <description>Version to use for the next development iteration (SNAPSHOT). User property: developmentVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>autoVersionSubmodules</name>
+          <description>Automatically use the parent version for all submodules without prompting. User property: autoVersionSubmodules</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>updateDependencies</name>
+          <description>Update dependency versions in POMs to the next development version after the release. User property: updateDependencies</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SCM tag naming ────────────────────────────────────────── -->
+        <parameter>
+          <name>tagNameFormat</name>
+          <description>Format string for the auto-generated SCM tag name (e.g., @{project.artifactId}-@{project.version}). User property: tagNameFormat</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>@{project.artifactId}-@{project.version}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tag</name>
+          <description>Explicit SCM tag name to use instead of the generated tagNameFormat. User property: tag</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tagBase</name>
+          <description>Base SVN URL for creating tags (for non-standard SVN layouts). User property: tagBase</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SCM commit messages ───────────────────────────────────── -->
+        <parameter>
+          <name>scmCommentPrefix</name>
+          <description>Prefix prepended to all SCM commit messages. User property: scmCommentPrefix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>[maven-release-plugin] </defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>scmReleaseCommitComment</name>
+          <description>Comment for the SCM commit that sets the release version. User property: scmReleaseCommitComment</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>@{prefix} prepare release @{releaseLabel}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>scmDevelopmentCommitComment</name>
+          <description>Comment for the SCM commit that sets the next development version. User property: scmDevelopmentCommitComment</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>@{prefix} prepare for next development iteration</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Modification exclusions ───────────────────────────────── -->
+        <parameter>
+          <name>checkModificationExcludes</name>
+          <description>File patterns to exclude from working-copy modification checks before tagging.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>checkModificationExcludeList</name>
+          <description>Comma-separated file patterns to exclude from modification checks (command-line form). User property: checkModificationExcludeList</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Preparation goals ─────────────────────────────────────── -->
+        <parameter>
+          <name>preparationGoals</name>
+          <description>Goals to run as the preparation step (e.g., clean verify). User property: preparationGoals</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>clean verify</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>completionGoals</name>
+          <description>Goals to run after preparation steps but before SCM commit. User property: completionGoals</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>arguments</name>
+          <description>Additional arguments to pass to the internal Maven invocations. User property: arguments</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SCM push behavior ─────────────────────────────────────── -->
+        <parameter>
+          <name>pushChanges</name>
+          <description>Push SCM changes to the upstream repository (relevant for Git). User property: pushChanges</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>localCheckout</name>
+          <description>Perform the release from a local repository checkout instead of a remote one. User property: localCheckout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>suppressCommitBeforeTag</name>
+          <description>Skip the POM commit before tag creation (combines both changes into a single commit for some SCMs). User property: suppressCommitBeforeTag</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dryRun</name>
+          <description>Perform a dry run without making any SCM changes. User property: dryRun</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── SCM credentials ───────────────────────────────────────── -->
+        <parameter>
+          <name>username</name>
+          <description>SCM authentication username. User property: username</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <description>SCM authentication password. User property: password</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip release prepare execution. User property: release.skipRelease</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  release:perform                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>perform</name>
+      <fullName>org.apache.maven.plugins:maven-release-plugin:perform</fullName>
+      <description>Performs a release by checking out the tagged source and executing the deploy lifecycle.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>goals</name>
+          <description>Goals to run against the tagged release checkout (default: deploy). User property: goals</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>arguments</name>
+          <description>Additional arguments to pass to the internal Maven invocations. User property: arguments</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip release perform execution. User property: release.skipRelease</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  release:rollback                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>rollback</name>
+      <fullName>org.apache.maven.plugins:maven-release-plugin:rollback</fullName>
+      <description>Rolls back a prepare step by reverting POM changes and removing the SCM tag.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>username</name>
+          <description>SCM authentication username. User property: username</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>password</name>
+          <description>SCM authentication password. User property: password</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  release:branch                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>branch</name>
+      <fullName>org.apache.maven.plugins:maven-release-plugin:branch</fullName>
+      <description>Creates a branch of the current project with all versions updated.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>branchName</name>
+          <description>Name of the branch to create. User property: branchName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>branchBase</name>
+          <description>Base SVN URL for branches (for non-standard SVN layouts). User property: branchBase</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>updateBranchVersions</name>
+          <description>Update the branch POM version to the next development version. User property: updateBranchVersions</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>updateWorkingCopyVersions</name>
+          <description>Update working copy versions to the next development version after branching. User property: updateWorkingCopyVersions</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  release:update-versions                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>update-versions</name>
+      <fullName>org.apache.maven.plugins:maven-release-plugin:update-versions</fullName>
+      <description>Updates the versions in project POMs without making SCM changes.</description>
+      <versionRange>[2.2,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>developmentVersion</name>
+          <description>New version to set in POMs. User property: developmentVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>autoVersionSubmodules</name>
+          <description>Automatically use the parent version for all submodules. User property: autoVersionSubmodules</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  release:help                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-release-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

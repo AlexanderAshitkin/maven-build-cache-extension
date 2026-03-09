@@ -1,0 +1,596 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-war-plugin.
+  Source: https://maven.apache.org/plugins/maven-war-plugin/
+  Latest documented version: 3.4.0
+
+  category values:
+    functional  - affects artifact content (which files end up in the WAR,
+                  manifest content, filtering results, overlay composition)
+    behavioral  - affects how packaging runs but not the output artifact
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-war-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  war:war                                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>war</name>
+      <fullName>org.apache.maven.plugins:maven-war-plugin:war</fullName>
+      <description>Builds a WAR archive from the project web application sources.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Source directories ────────────────────────────────────── -->
+        <parameter>
+          <name>warSourceDirectory</name>
+          <description>Directory containing the web application sources (JSP files, static resources, WEB-INF, etc.). Default: ${basedir}/src/main/webapp</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}/src/main/webapp</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>webappDirectory</name>
+          <description>Staging directory where the exploded WAR is assembled before archiving. Default: ${project.build.directory}/${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output location ───────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated WAR file is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Artifact naming ───────────────────────────────────────── -->
+        <parameter>
+          <name>warName</name>
+          <description>Base name of the generated WAR file. User property: war.warName. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier appended to the WAR artifact name.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content inclusion / exclusion ────────────────────────── -->
+        <parameter>
+          <name>warSourceIncludes</name>
+          <description>Comma-separated Ant-style patterns for files to include from warSourceDirectory. Default: **</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>**</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>warSourceExcludes</name>
+          <description>Comma-separated Ant-style patterns for files to exclude from warSourceDirectory.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>packagingIncludes</name>
+          <description>Comma-separated patterns (Ant-style or %regex[]) for paths to include in the final WAR archive.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>packagingExcludes</name>
+          <description>Comma-separated patterns (Ant-style or %regex[]) for paths to exclude from the final WAR archive.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeEmptyDirectories</name>
+          <description>Include empty directories in the WAR archive. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Overlays ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>overlays</name>
+          <description>Ordered list of WAR overlay configurations specifying which dependent WARs to merge and how (groupId, artifactId, includes, excludes, targetPath, filtered, skip).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dependentWarIncludes</name>
+          <description>Comma-separated patterns for files to include from overlaid dependent WARs.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dependentWarExcludes</name>
+          <description>Comma-separated patterns for files to exclude from overlaid dependent WARs.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Extra web resources ────────────────────────────────────── -->
+        <parameter>
+          <name>webResources</name>
+          <description>Additional resource sets to copy into the WAR, with optional filtering, target path, and include/exclude patterns.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Resource[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>webXml</name>
+          <description>Path to a custom web.xml deployment descriptor to include in WEB-INF/.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>containerConfigXML</name>
+          <description>Path to an optional servlet-container configuration file (e.g. Tomcat context.xml) to bundle in the archive.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>filteringDeploymentDescriptors</name>
+          <description>Enable Maven resource filtering for deployment descriptors (web.xml, etc.). Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filters</name>
+          <description>List of property files used as additional filter sources during resource filtering.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>resourceEncoding</name>
+          <description>Character encoding used when filtering web resources. Default: ${project.build.sourceEncoding}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nonFilteredFileExtensions</name>
+          <description>File extensions that must not be filtered even when filtering is enabled (e.g. binary formats).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeString</name>
+          <description>Prefix character that prevents a token from being interpolated during filtering (e.g. "\${foo}" stays literal).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-beta-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>delimiters</name>
+          <description>Custom expression delimiter pairs used during filtering (in addition to or instead of the default ones).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>LinkedHashSet</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultDelimiters</name>
+          <description>Use default ${...} and @...@ delimiters alongside any custom delimiters. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Archive / manifest ────────────────────────────────────── -->
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest class-path entries, manifest sections, compression, index, etc.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>archiveClasses</name>
+          <description>Package WEB-INF/classes into a JAR and place it under WEB-INF/lib/ instead. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>recompressZippedFiles</name>
+          <description>Recompress JAR/ZIP files that are merged into the WAR (turning off can speed up assembly at the cost of larger output). Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputFileNameMapping</name>
+          <description>Expression for renaming library files and TLDs within the WAR (e.g. to strip version from dependency filenames).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Attached classes artifact ─────────────────────────────── -->
+        <parameter>
+          <name>attachClasses</name>
+          <description>Attach the WEB-INF/classes content as an additional project artifact. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classesClassifier</name>
+          <description>Classifier for the attached classes artifact (used when attachClasses=true). Default: classes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>classes</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-1,)</versionRange>
+        </parameter>
+
+        <!-- ── Descriptor validation ──────────────────────────────────── -->
+        <parameter>
+          <name>failOnMissingWebXml</name>
+          <description>Fail the build if web.xml is absent. Defaults to false for Servlet 3.0+ projects that do not require a deployment descriptor.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Boolean</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-2,)</versionRange>
+        </parameter>
+
+        <!-- ── Reproducible builds ───────────────────────────────────── -->
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip all WAR plugin executions. User property: maven.war.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  war:exploded                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>exploded</name>
+      <fullName>org.apache.maven.plugins:maven-war-plugin:exploded</fullName>
+      <description>Assembles the WAR in exploded (directory) form without creating an archive.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>warSourceDirectory</name>
+          <description>Directory containing the web application sources. Default: ${basedir}/src/main/webapp</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}/src/main/webapp</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>webappDirectory</name>
+          <description>Target directory for the exploded WAR. Default: ${project.build.directory}/${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overlays</name>
+          <description>Ordered list of WAR overlay configurations.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>webResources</name>
+          <description>Additional resource sets to copy into the exploded WAR.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Resource[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filteringDeploymentDescriptors</name>
+          <description>Enable Maven resource filtering for deployment descriptors. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>filters</name>
+          <description>List of property files used as additional filter sources.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all WAR plugin executions. User property: maven.war.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  war:inplace                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>inplace</name>
+      <fullName>org.apache.maven.plugins:maven-war-plugin:inplace</fullName>
+      <description>Assembles the webapp in-place inside the source directory (for rapid development with containers).</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>warSourceDirectory</name>
+          <description>Directory containing the web application sources used as the in-place staging directory. Default: ${basedir}/src/main/webapp</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${basedir}/src/main/webapp</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overlays</name>
+          <description>Ordered list of WAR overlay configurations.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1-alpha-1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>webResources</name>
+          <description>Additional resource sets to copy into the in-place webapp directory.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Resource[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all WAR plugin executions. User property: maven.war.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  war:manifest                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>manifest</name>
+      <fullName>org.apache.maven.plugins:maven-war-plugin:manifest</fullName>
+      <description>Generates a MANIFEST.MF for the WAR without building the archive.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration controlling the manifest content to generate.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip all WAR plugin executions. User property: maven.war.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  war:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-war-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

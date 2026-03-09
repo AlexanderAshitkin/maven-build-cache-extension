@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-jlink-plugin.
+  Source: https://maven.apache.org/plugins/maven-jlink-plugin/
+  Latest documented version: 3.2.0
+
+  category values:
+    functional  - affects the jlink runtime image content (which modules are included,
+                  compression level, launcher scripts, endianness, debug symbols)
+    behavioral  - affects how jlink runs but not the output image content
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values (toolchain, module paths) that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-jlink-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jlink:jlink                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>jlink</name>
+      <fullName>org.apache.maven.plugins:maven-jlink-plugin:jlink</fullName>
+      <description>Creates a custom Java runtime image using the jlink tool from the configured JDK.</description>
+      <versionRange>[3.0.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Module resolution ─────────────────────────────────────── -->
+        <parameter>
+          <name>addModules</name>
+          <description>List of modules to add to the runtime image (passed to jlink --add-modules).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>modulePaths</name>
+          <description>List of additional module-path entries (directories or JARs) passed to jlink --module-path.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>limitModules</name>
+          <description>Comma-separated list of modules to limit the observable module universe (jlink --limit-modules).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the jlink runtime image is created. Default: ${project.build.directory}/jlink</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jlink</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the attached jlink zip artifact.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Launcher ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>launcher</name>
+          <description>Launcher command name and module/main-class (format: name=module/main). Creates a platform-specific start script.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Compression ───────────────────────────────────────────── -->
+        <parameter>
+          <name>compress</name>
+          <description>Compression level for resources in the image: 0=none, 1=constant-string sharing, 2=ZIP (jlink --compress). Default: 0</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Content trimming ──────────────────────────────────────── -->
+        <parameter>
+          <name>stripDebug</name>
+          <description>Strip debug information from the runtime image (jlink --strip-debug). Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>noHeaderFiles</name>
+          <description>Exclude header files from the runtime image (jlink --no-header-files). Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>noManPages</name>
+          <description>Exclude man pages from the runtime image (jlink --no-man-pages). Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeHeaders</name>
+          <description>Include C header files from the JDK in the runtime image. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeManPages</name>
+          <description>Include man pages in the runtime image. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeNativeCommands</name>
+          <description>Include native commands (java, javac, etc.) in the runtime image. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Endianness ────────────────────────────────────────────── -->
+        <parameter>
+          <name>endian</name>
+          <description>Byte order of the generated runtime image: native, little, or big (jlink --endian). Default: native</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>native</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Toolchain ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>jdkToolchain</name>
+          <description>Map of toolchain requirements (e.g. version, vendor) used to locate the JDK providing jlink. Resolved against local toolchains.xml.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Verbosity ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>verbose</name>
+          <description>Enable verbose output from jlink (does not affect image content). Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip the jlink goal execution. User property: maven.jlink.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jlink:help                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-jlink-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[3.0.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

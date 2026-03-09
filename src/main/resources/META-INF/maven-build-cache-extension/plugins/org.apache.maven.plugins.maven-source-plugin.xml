@@ -1,0 +1,791 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-source-plugin.
+  Source: https://maven.apache.org/plugins/maven-source-plugin/
+  Latest documented version: 3.3.1
+
+  category values:
+    functional  - affects artifact content (which source files are bundled,
+                  manifest, classifier, whether resources/POM are included)
+    behavioral  - affects how source packaging runs but not the output artifact
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-source-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  source:jar                                                         -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>jar</name>
+      <fullName>org.apache.maven.plugins:maven-source-plugin:jar</fullName>
+      <description>Bundles the main project sources into a JAR archive and forks the build lifecycle to ensure sources are generated before packaging.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output location ───────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated sources JAR is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Artifact naming ───────────────────────────────────────── -->
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the output artifact (the classifier and "-sources" are appended). Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the sources JAR artifact. User property: maven.source.classifier. Default: sources</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>sources</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Content selection ─────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which source files to include in the sources JAR.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which source files to exclude from the sources JAR.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeResources</name>
+          <description>Exclude resource directories (src/main/resources) from the sources JAR, bundling only Java source files. User property: maven.source.excludeResources. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includePom</name>
+          <description>Include the project POM file in the sources JAR. User property: maven.source.includePom. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultExcludes</name>
+          <description>Apply default SCM metadata excludes (.git, .svn, CVS, etc.) to the sources JAR. User property: maven.source.useDefaultExcludes. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Archive / manifest ────────────────────────────────────── -->
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Attachment ────────────────────────────────────────────── -->
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the generated sources JAR as a project artifact. User property: maven.source.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Reproducible builds ───────────────────────────────────── -->
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Rebuild control ───────────────────────────────────────── -->
+        <parameter>
+          <name>forceCreation</name>
+          <description>Force sources JAR recreation even when the contents have not changed. User property: maven.source.forceCreation. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skipSource</name>
+          <description>Skip execution of source JAR goals entirely. User property: maven.source.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  source:jar-no-fork                                                 -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>jar-no-fork</name>
+      <fullName>org.apache.maven.plugins:maven-source-plugin:jar-no-fork</fullName>
+      <description>Bundles the main project sources into a JAR archive without forking the build lifecycle. Suitable when sources are guaranteed to have been generated already.</description>
+      <versionRange>[2.0.3,)</versionRange>
+      <parameters>
+
+        <!-- Parameters are identical to source:jar -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated sources JAR is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the output artifact. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the sources JAR artifact. User property: maven.source.classifier. Default: sources</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>sources</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which source files to include.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which source files to exclude.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeResources</name>
+          <description>Exclude resource directories from the sources JAR. User property: maven.source.excludeResources. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includePom</name>
+          <description>Include the project POM file in the sources JAR. User property: maven.source.includePom. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultExcludes</name>
+          <description>Apply default SCM metadata excludes. User property: maven.source.useDefaultExcludes. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the generated sources JAR. User property: maven.source.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>forceCreation</name>
+          <description>Force sources JAR recreation even when unchanged. User property: maven.source.forceCreation. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSource</name>
+          <description>Skip execution of source JAR goals entirely. User property: maven.source.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  source:test-jar                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-jar</name>
+      <fullName>org.apache.maven.plugins:maven-source-plugin:test-jar</fullName>
+      <description>Bundles the project test sources into a JAR archive and forks the build lifecycle.</description>
+      <versionRange>[2.0.3,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated test-sources JAR is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the output artifact. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the test-sources JAR artifact. User property: maven.source.test.classifier. Default: test-sources</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>test-sources</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which test source files to include.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which test source files to exclude.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeResources</name>
+          <description>Exclude test resource directories from the test-sources JAR. User property: maven.source.excludeResources. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includePom</name>
+          <description>Include the project POM file in the test-sources JAR. User property: maven.source.includePom. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultExcludes</name>
+          <description>Apply default SCM metadata excludes. User property: maven.source.useDefaultExcludes. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the generated test-sources JAR. User property: maven.source.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>forceCreation</name>
+          <description>Force test-sources JAR recreation even when unchanged. User property: maven.source.forceCreation. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSource</name>
+          <description>Skip execution of source JAR goals entirely. User property: maven.source.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  source:test-jar-no-fork                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-jar-no-fork</name>
+      <fullName>org.apache.maven.plugins:maven-source-plugin:test-jar-no-fork</fullName>
+      <description>Bundles the project test sources into a JAR archive without forking the lifecycle.</description>
+      <versionRange>[2.0.3,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the generated test-sources JAR is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the output artifact. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the test-sources JAR artifact. User property: maven.source.test.classifier. Default: test-sources</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>test-sources</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which test source files to include.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which test source files to exclude.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeResources</name>
+          <description>Exclude test resource directories from the test-sources JAR. User property: maven.source.excludeResources. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includePom</name>
+          <description>Include the project POM file in the test-sources JAR. User property: maven.source.includePom. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultExcludes</name>
+          <description>Apply default SCM metadata excludes. User property: maven.source.useDefaultExcludes. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the generated test-sources JAR. User property: maven.source.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>forceCreation</name>
+          <description>Force test-sources JAR recreation even when unchanged. User property: maven.source.forceCreation. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSource</name>
+          <description>Skip execution of source JAR goals entirely. User property: maven.source.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  source:aggregate                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>aggregate</name>
+      <fullName>org.apache.maven.plugins:maven-source-plugin:aggregate</fullName>
+      <description>Aggregates sources from all modules in a multi-module build into a single sources JAR.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the aggregated sources JAR is written. Default: ${project.build.directory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the aggregated output artifact. Default: ${project.build.finalName}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the aggregated sources JAR. User property: maven.source.classifier. Default: sources</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>sources</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Ant-style fileset patterns selecting which source files to include.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Ant-style fileset patterns selecting which source files to exclude.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeResources</name>
+          <description>Exclude resource directories from the aggregated sources JAR. User property: maven.source.excludeResources. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includePom</name>
+          <description>Include POM files in the aggregated sources JAR. User property: maven.source.includePom. Default: false</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>archive</name>
+          <description>Maven Archiver configuration: manifest entries, compression, and other archive metadata.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>MavenArchiveConfiguration</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>attach</name>
+          <description>Whether to attach the aggregated sources JAR to the project. User property: maven.source.attach. Default: true</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Timestamp for reproducible archive entries (ISO 8601 date-time or seconds since epoch). User property: project.build.outputTimestamp. Default: ${project.build.outputTimestamp}</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSource</name>
+          <description>Skip execution of source JAR goals entirely. User property: maven.source.skip. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  source:help                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-source-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. Default: false</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. Default: 80</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. Default: 2</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

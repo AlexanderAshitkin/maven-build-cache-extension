@@ -47,7 +47,7 @@ mvn verify -Prun-its,maven3
 
 ### Smoke profile (quick developer check)
 
-The `run-its-smoke` profile runs a focused subset of ~42 integration tests annotated
+The `run-its-smoke` profile runs a curated subset of ~42 integration tests annotated
 with `@Tag("smoke")`. It covers the most critical cache behaviours plus at least one
 test per Maven project flavour (P01–P19) and per major cache trait (F1–F13).
 Typical runtime is significantly shorter than the full suite.

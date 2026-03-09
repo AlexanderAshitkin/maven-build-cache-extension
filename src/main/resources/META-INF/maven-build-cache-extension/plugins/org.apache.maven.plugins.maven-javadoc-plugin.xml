@@ -1,0 +1,1139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-javadoc-plugin.
+  Source: https://maven.apache.org/plugins/maven-javadoc-plugin/
+  Latest documented version: 3.11.2
+
+  category values:
+    functional  - affects the content or structure of the generated Javadoc
+    behavioral  - affects how the goal runs but not the Javadoc content
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-javadoc-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:javadoc                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>javadoc</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:javadoc</fullName>
+      <description>Generates Javadoc HTML pages for the project main sources.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output directories ─────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Destination directory for generated Javadoc files. User property: destDir</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/apidocs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportOutputDirectory</name>
+          <description>Report output directory for site integration. User property: reportOutputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}/apidocs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>sourcepath</name>
+          <description>Colon-separated list of paths to source files for Javadoc. User property: sourcepath</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>subpackages</name>
+          <description>Colon-separated package names to recursively include. User property: subpackages</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludePackageNames</name>
+          <description>Colon-separated list of package patterns to exclude. User property: excludePackageNames</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>source</name>
+          <description>Java language version passed to javadoc tool (-source). User property: source</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>release</name>
+          <description>Java release version for javadoc tool (--release). User property: release</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding of source files (-encoding). User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>docencoding</name>
+          <description>Encoding of generated HTML output (-docencoding). User property: docencoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>UTF-8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>charset</name>
+          <description>HTML charset meta tag value (-charset). User property: charset</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>UTF-8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── HTML content ───────────────────────────────────────────── -->
+        <parameter>
+          <name>author</name>
+          <description>Include @author tag in generated docs. User property: author</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>version</name>
+          <description>Include @version tag in generated docs. User property: version</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>bottom</name>
+          <description>HTML text placed at the bottom of each output page. User property: bottom</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>header</name>
+          <description>HTML text placed at the top of each output page. User property: header</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>footer</name>
+          <description>HTML text placed at the bottom of each output page. User property: footer</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>top</name>
+          <description>HTML text placed above the navigation bar on each page. User property: top</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>windowtitle</name>
+          <description>Browser window title for the generated documentation. User property: windowtitle</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.name} ${project.version} API</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>doctitle</name>
+          <description>Title for the overview summary page. User property: doctitle</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.name} ${project.version} API</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>overview</name>
+          <description>Path to an HTML overview page to include. User property: overview</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Visibility scope ───────────────────────────────────────── -->
+        <parameter>
+          <name>show</name>
+          <description>Scope of members to document: public, protected, package, or private. User property: show</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>protected</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Tags and taglets ───────────────────────────────────────── -->
+        <parameter>
+          <name>tags</name>
+          <description>Custom tag definitions (-tag name:placement:header) to register.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>taglet</name>
+          <description>Fully qualified class name of a custom Taglet to use. User property: taglet</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tagletpath</name>
+          <description>Search paths for taglet classes. User property: tagletpath</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tagletArtifacts</name>
+          <description>Maven artifact coordinates for taglet JARs to add to taglet classpath.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Links ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>links</name>
+          <description>List of URLs for external Javadoc packages to cross-reference. User property: links</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>ArrayList</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>offlineLinks</name>
+          <description>List of offline package-list locations for external Javadoc cross-references.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>OfflineLink[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>detectLinks</name>
+          <description>Auto-detect Javadoc links from project dependencies. User property: detectLinks</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>detectJavaApiLink</name>
+          <description>Auto-detect and link to the JDK API docs for the project source version. User property: detectJavaApiLink</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linksource</name>
+          <description>Create HTML hyperlinks to source code for each class/interface/method. User property: linksource</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Frame / navigation options ────────────────────────────── -->
+        <parameter>
+          <name>splitindex</name>
+          <description>Split the index into separate per-letter files. User property: splitindex</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>use</name>
+          <description>Include a Class Use page for each class/interface. User property: use</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>noindex</name>
+          <description>Omit the index from the generated docs. User property: noindex</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>notree</name>
+          <description>Omit the class hierarchy tree from the generated docs. User property: notree</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nohelp</name>
+          <description>Omit the help link from the navigation bar. User property: nohelp</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nonavbar</name>
+          <description>Omit the navigation bar from all pages. User property: nonavbar</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nodeprecated</name>
+          <description>Omit deprecated API information from generated docs. User property: nodeprecated</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nodeprecatedlist</name>
+          <description>Omit the deprecated API list page from generated docs. User property: nodeprecatedlist</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nocomment</name>
+          <description>Suppress all comments and descriptive text from generated docs. User property: nocomment</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Stylesheet ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>stylesheet</name>
+          <description>Built-in stylesheet selection: maven or java. User property: stylesheet</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>java</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>stylesheetfile</name>
+          <description>Path to a custom CSS stylesheet to use in the generated Javadoc. User property: stylesheetfile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addStylesheets</name>
+          <description>Additional CSS stylesheets to include. User property: addStylesheets</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.3.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Doclint ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>doclint</name>
+          <description>Doclint checks to enable/disable (e.g., none, all, -missing). User property: doclint</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.10.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Misc Javadoc options ───────────────────────────────────── -->
+        <parameter>
+          <name>breakiterator</name>
+          <description>Use BreakIterator for sentence boundary detection in summaries. User property: breakiterator</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>docfilessubdirs</name>
+          <description>Recursively copy doc-files subdirectories. User property: docfilessubdirs</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>locale</name>
+          <description>Locale used for generated documentation text. User property: locale</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>serialwarn</name>
+          <description>Generate warnings about missing @serial tags. User property: serialwarn</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sourcetab</name>
+          <description>Number of spaces for tab expansion in source views. User property: sourcetab</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>4</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>groups</name>
+          <description>List of package groups to display in the overview summary. User property: groups</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>additionalJOptions</name>
+          <description>Additional JVM options passed to the javadoc tool. User property: additionalJOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.9,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>additionalOptions</name>
+          <description>Additional options passed directly to the javadoc command line. User property: additionalOptions</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Toolchain ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>jdkToolchain</name>
+          <description>Toolchain requirements (version, vendor) to select the JDK for javadoc.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Behavioral ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>debug</name>
+          <description>Enable debug mode; logs the javadoc command line. User property: debug</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failOnError</name>
+          <description>Fail the build if javadoc tool returns an error. User property: maven.javadoc.failOnError</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failOnWarnings</name>
+          <description>Fail the build if javadoc tool reports warnings. User property: maven.javadoc.failOnWarnings</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip Javadoc generation entirely. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:test-javadoc                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-javadoc</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:test-javadoc</fullName>
+      <description>Generates Javadoc HTML pages for the project test sources.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Destination directory for generated test Javadoc files.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/testapidocs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportOutputDirectory</name>
+          <description>Report output directory for test Javadoc in site integration.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}/testapidocs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding of test source files. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>show</name>
+          <description>Scope of members to document: public, protected, package, or private.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>protected</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>links</name>
+          <description>List of URLs for external Javadoc packages to cross-reference.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>ArrayList</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip test Javadoc generation entirely. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:jar                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>jar</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:jar</fullName>
+      <description>Bundles the generated Javadoc into a JAR artifact.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>attach</name>
+          <description>Attach the Javadoc JAR to the project as a secondary artifact. User property: attach</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier appended to the Javadoc JAR artifact name. User property: classifier</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>javadoc</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the Javadoc JAR is placed. User property: project.build.directory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>jarOutputDirectory</name>
+          <description>Override directory where the Javadoc JAR is written. User property: jarOutputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>finalName</name>
+          <description>Base name of the output JAR file. User property: project.build.finalName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.finalName}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the Javadoc JAR goal entirely. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:test-jar                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-jar</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:test-jar</fullName>
+      <description>Bundles the generated test Javadoc into a JAR artifact.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>attach</name>
+          <description>Attach the test Javadoc JAR to the project as a secondary artifact.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classifier</name>
+          <description>Classifier for the test Javadoc JAR artifact. User property: classifier</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>test-javadoc</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip test Javadoc JAR generation. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:aggregate                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>aggregate</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:aggregate</fullName>
+      <description>Generates an aggregated Javadoc report for a multi-module project.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Destination directory for the aggregated Javadoc.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/site/apidocs</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding of source files in aggregated modules.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludePackageNames</name>
+          <description>Colon-separated package patterns to exclude from aggregated docs.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip Javadoc aggregate generation. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:aggregate-jar                                              -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>aggregate-jar</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:aggregate-jar</fullName>
+      <description>Bundles the aggregated multi-module Javadoc into a JAR artifact.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>attach</name>
+          <description>Attach the aggregated Javadoc JAR as a secondary artifact.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip aggregated Javadoc JAR generation. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:fix                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>fix</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:fix</fullName>
+      <description>Automatically adds or fixes Javadoc comments in main sources.</description>
+      <versionRange>[2.6,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>fixTags</name>
+          <description>Comma-separated list of Javadoc tags to fix: all, author, version, since, param, return, throws. User property: fixTags</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>all</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fixClassComment</name>
+          <description>Fix missing Javadoc on class/interface/enum declarations. User property: fixClassComment</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fixFieldComment</name>
+          <description>Fix missing Javadoc on field declarations. User property: fixFieldComment</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fixMethodComment</name>
+          <description>Fix missing Javadoc on method declarations. User property: fixMethodComment</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding of source files read and written during fix. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip Javadoc fixing entirely. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:test-fix                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-fix</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:test-fix</fullName>
+      <description>Automatically adds or fixes Javadoc comments in test sources.</description>
+      <versionRange>[2.6,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>fixTags</name>
+          <description>Comma-separated list of Javadoc tags to fix in test sources. User property: fixTags</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>all</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Encoding of test source files read and written during fix.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip test Javadoc fixing entirely. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:resource-bundle                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>resource-bundle</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:resource-bundle</fullName>
+      <description>Bundles the Javadoc resources (options file, stylesheets) for use by aggregate goals.</description>
+      <versionRange>[2.5,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the resource bundle is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>attach</name>
+          <description>Attach the resource bundle as a secondary project artifact.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip resource bundle creation. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:test-resource-bundle                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test-resource-bundle</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:test-resource-bundle</fullName>
+      <description>Bundles the test Javadoc resources for use by aggregate goals.</description>
+      <versionRange>[2.5,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the test resource bundle is written.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>attach</name>
+          <description>Attach the test resource bundle as a secondary artifact.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip test resource bundle creation. User property: maven.javadoc.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  javadoc:help                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-javadoc-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.1,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output formatting. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-surefire-report-plugin.
+  Source: https://maven.apache.org/plugins/maven-surefire-report-plugin/
+  Latest documented version: 3.5.5
+
+  category values:
+    functional  - affects the generated test report content
+                  (cache must be invalidated on change)
+    behavioral  - affects how the report mojo runs but not the output
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-report-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire-report:report                                             -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>report</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-report-plugin:report</fullName>
+      <description>Generates an HTML report from Surefire XML test results.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Output location ───────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for the generated HTML report. Default: ${project.reporting.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputName</name>
+          <description>Base name for the generated report file (without extension). User property: outputName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>surefire-report</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Input data ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>reportsDirectory</name>
+          <description>Directory containing Surefire XML result files. Default: ${project.build.directory}/surefire-reports</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/surefire-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportsDirectories</name>
+          <description>List of directories containing Surefire/Failsafe XML results to aggregate.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+
+        <!-- ── Report content ─────────────────────────────────────────── -->
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link test failures to cross-reference HTML source. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showSuccess</name>
+          <description>Include passing tests in the report (false = failures only). User property: showSuccess</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>aggregate</name>
+          <description>Aggregate reports from all modules in a multi-module project. User property: aggregate</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>xrefLocation</name>
+          <description>Location of the Xref HTML cross-reference pages for source linking.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}/xref-test</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ───────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skipSurefireReport</name>
+          <description>Skip Surefire report generation entirely. User property: skipSurefireReport</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire-report:report-only                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>report-only</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-report-plugin:report-only</fullName>
+      <description>Generates HTML report without re-running Surefire (uses existing XML results).</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for the generated HTML report.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputName</name>
+          <description>Base name for the generated report file. User property: outputName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>surefire-report</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportsDirectory</name>
+          <description>Directory containing Surefire XML result files.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/surefire-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link test failures to cross-reference HTML source. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showSuccess</name>
+          <description>Include passing tests in the report. User property: showSuccess</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>aggregate</name>
+          <description>Aggregate reports from all modules. User property: aggregate</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSurefireReport</name>
+          <description>Skip Surefire report generation. User property: skipSurefireReport</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire-report:failsafe-report                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>failsafe-report</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-report-plugin:failsafe-report</fullName>
+      <description>Generates an HTML report from Failsafe XML integration test results.</description>
+      <versionRange>[2.11,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for the generated HTML report.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputName</name>
+          <description>Base name for the Failsafe report file. User property: outputName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>failsafe-report</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportsDirectory</name>
+          <description>Directory containing Failsafe XML result files. Default: ${project.build.directory}/failsafe-reports</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/failsafe-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link test failures to cross-reference HTML source. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showSuccess</name>
+          <description>Include passing integration tests in report. User property: showSuccess</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSurefireReport</name>
+          <description>Skip Failsafe report generation. User property: skipSurefireReport</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire-report:failsafe-report-only                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>failsafe-report-only</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-report-plugin:failsafe-report-only</fullName>
+      <description>Generates Failsafe HTML report without re-running integration tests.</description>
+      <versionRange>[2.11,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Output directory for the generated HTML report.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputName</name>
+          <description>Base name for the Failsafe report file. User property: outputName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>failsafe-report</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportsDirectory</name>
+          <description>Directory containing Failsafe XML result files.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/failsafe-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linkXRef</name>
+          <description>Link test failures to cross-reference HTML source. User property: linkXRef</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showSuccess</name>
+          <description>Include passing tests in the report. User property: showSuccess</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipSurefireReport</name>
+          <description>Skip Failsafe report generation. User property: skipSurefireReport</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.11,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire-report:help                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-report-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output formatting. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

@@ -1,0 +1,699 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for jacoco-maven-plugin.
+  Source: https://www.jacoco.org/jacoco/trunk/doc/maven.html
+  Latest documented version: 0.8.12
+
+  category values:
+    functional  - affects coverage data files or report content
+    behavioral  - affects how the goal runs but not the coverage outputs
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.jacoco</groupId>
+  <artifactId>jacoco-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:prepare-agent                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>prepare-agent</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:prepare-agent</fullName>
+      <description>Prepares the JaCoCo Java agent for test coverage recording. Sets the argLine property.</description>
+      <versionRange>[0.5,)</versionRange>
+      <parameters>
+
+        <!-- ── Coverage data output ───────────────────────────────────── -->
+        <parameter>
+          <name>destFile</name>
+          <description>Path to write the execution data (.exec) file. User property: jacoco.destFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jacoco.exec</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>append</name>
+          <description>Append coverage data to existing .exec file rather than overwriting it. User property: jacoco.append</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Class filtering ────────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Class name patterns (with wildcards) to include in coverage instrumentation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Class name patterns (with wildcards) to exclude from coverage instrumentation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>exclClassLoaders</name>
+          <description>Class loader names whose classes are excluded from instrumentation. User property: jacoco.exclClassLoaders</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>inclBootstrapClasses</name>
+          <description>Instrument bootstrap classloader classes (requires special agent options). User property: jacoco.inclBootstrapClasses</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.7.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>inclNoLocationClasses</name>
+          <description>Instrument classes with no source location attribute. User property: jacoco.inclNoLocationClasses</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.7.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Agent configuration ────────────────────────────────────── -->
+        <parameter>
+          <name>propertyName</name>
+          <description>Maven property name that receives the -javaagent JVM argument. User property: jacoco.propertyName</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>argLine</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>sessionId</name>
+          <description>Session identifier stored in the execution data (defaults to build timestamp). User property: jacoco.sessionId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dumpOnExit</name>
+          <description>Dump coverage data on JVM exit. User property: jacoco.dumpOnExit</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip JaCoCo agent preparation entirely. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:prepare-agent-integration                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>prepare-agent-integration</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:prepare-agent-integration</fullName>
+      <description>Prepares the JaCoCo agent for integration-test coverage. Same parameters as prepare-agent but defaults to jacoco-it.exec.</description>
+      <versionRange>[0.6.4,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>destFile</name>
+          <description>Path to write the integration-test execution data (.exec) file. User property: jacoco.destFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jacoco-it.exec</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>append</name>
+          <description>Append to existing .exec file. User property: jacoco.append</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Class name patterns to include in coverage instrumentation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Class name patterns to exclude from coverage instrumentation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertyName</name>
+          <description>Maven property name that receives the -javaagent JVM argument. User property: jacoco.propertyName</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>argLine</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip JaCoCo integration agent preparation. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:report                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>report</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:report</fullName>
+      <description>Generates a code coverage report in HTML, XML, and CSV formats.</description>
+      <versionRange>[0.5,)</versionRange>
+      <parameters>
+
+        <!-- ── Input data ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>dataFile</name>
+          <description>Path to the execution data (.exec) file used to generate the report. User property: jacoco.dataFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jacoco.exec</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the HTML report is written. User property: jacoco.outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}/jacoco</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Class filtering ────────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Class name patterns to include in the report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Class name patterns to exclude from the report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Report metadata ───────────────────────────────────────── -->
+        <parameter>
+          <name>title</name>
+          <description>Report title shown in the HTML header. User property: jacoco.title</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>footer</name>
+          <description>Optional footer text added to each HTML report page. User property: jacoco.footer</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for source file rendering in the report. User property: project.build.sourceEncoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>UTF-8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Format toggles ─────────────────────────────────────────── -->
+        <parameter>
+          <name>formats</name>
+          <description>Report formats to generate: HTML, XML, CSV. User property: jacoco.formats</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.8.7,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip report generation entirely. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:report-integration                                          -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>report-integration</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:report-integration</fullName>
+      <description>Generates a code coverage report from integration-test execution data.</description>
+      <versionRange>[0.6.4,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>dataFile</name>
+          <description>Path to the integration-test execution data (.exec) file. User property: jacoco.dataFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jacoco-it.exec</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the integration-test report is written. User property: jacoco.outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.reporting.outputDirectory}/jacoco-it</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includes</name>
+          <description>Class name patterns to include in the report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Class name patterns to exclude from the report.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for source file rendering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>UTF-8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>formats</name>
+          <description>Report formats to generate: HTML, XML, CSV.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.8.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip integration report generation entirely. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:check                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>check</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:check</fullName>
+      <description>Checks that coverage metrics meet the configured threshold rules and optionally fails the build.</description>
+      <versionRange>[0.6.3,)</versionRange>
+      <parameters>
+
+        <!-- ── Input data ─────────────────────────────────────────────── -->
+        <parameter>
+          <name>dataFile</name>
+          <description>Path to the execution data (.exec) file for coverage analysis. User property: jacoco.dataFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jacoco.exec</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Coverage rules ─────────────────────────────────────────── -->
+        <parameter>
+          <name>rules</name>
+          <description>Coverage rule definitions specifying element types, counters, and minimum values.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Class filtering ────────────────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Class name patterns to include when evaluating coverage rules.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Class name patterns to exclude when evaluating coverage rules.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Failure behavior ───────────────────────────────────────── -->
+        <parameter>
+          <name>haltOnFailure</name>
+          <description>Fail the build when coverage rules are not met. User property: jacoco.haltOnFailure</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip coverage check entirely. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.6.3,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:dump                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>dump</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:dump</fullName>
+      <description>Requests a coverage data dump from a running JaCoCo agent via TCP/IP.</description>
+      <versionRange>[0.6.4,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>destFile</name>
+          <description>Path to write the dumped execution data. User property: jacoco.destFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/jacoco.exec</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>address</name>
+          <description>Host or IP address of the JaCoCo agent to connect to. User property: jacoco.address</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <defaultValue>localhost</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>port</name>
+          <description>TCP port of the JaCoCo agent. User property: jacoco.port</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>6300</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reset</name>
+          <description>Reset coverage data in the agent after dumping. User property: jacoco.reset</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>append</name>
+          <description>Append dumped data to an existing .exec file. User property: jacoco.append</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip the dump goal entirely. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.6.4,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:instrument                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>instrument</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:instrument</fullName>
+      <description>Performs offline instrumentation of classes for use without a Java agent.</description>
+      <versionRange>[0.6.2,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>includes</name>
+          <description>Class name patterns to include during offline instrumentation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Class name patterns to exclude from offline instrumentation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.6.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip offline instrumentation. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.6.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:restore-instrumented-classes                                -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>restore-instrumented-classes</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:restore-instrumented-classes</fullName>
+      <description>Restores original class files after offline instrumentation.</description>
+      <versionRange>[0.6.2,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>skip</name>
+          <description>Skip class restoration. User property: jacoco.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[0.6.2,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  jacoco:help                                                        -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.jacoco:jacoco-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[0.5,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[0.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

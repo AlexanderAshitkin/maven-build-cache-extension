@@ -24,7 +24,9 @@ import javax.inject.Named;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -35,6 +37,7 @@ import org.apache.commons.lang3.Strings;
 import org.apache.maven.SessionScoped;
 import org.apache.maven.buildcache.artifact.ArtifactRestorationReport;
 import org.apache.maven.buildcache.checksum.MavenProjectInput;
+import org.apache.maven.buildcache.plugincatalog.Parameter;
 import org.apache.maven.buildcache.xml.Build;
 import org.apache.maven.buildcache.xml.CacheConfig;
 import org.apache.maven.buildcache.xml.CacheState;
@@ -45,6 +48,7 @@ import org.apache.maven.execution.MavenSession;
 import org.apache.maven.execution.MojoExecutionEvent;
 import org.apache.maven.execution.scope.internal.MojoExecutionScope;
 import org.apache.maven.lifecycle.LifecycleExecutionException;
+import org.apache.maven.model.Plugin;
 import org.apache.maven.plugin.MavenPluginManager;
 import org.apache.maven.plugin.Mojo;
 import org.apache.maven.plugin.MojoExecution;
@@ -77,6 +81,7 @@ public class BuildCacheMojosExecutionStrategy implements MojosExecutionStrategy 
 
     private final CacheController cacheController;
     private final CacheConfig cacheConfig;
+    private final PluginCatalogRegistry catalogRegistry;
     private final MojoParametersListener mojoListener;
     private final LifecyclePhasesHelper lifecyclePhasesHelper;
     private final MavenPluginManager mavenPluginManager;
@@ -86,12 +91,14 @@ public class BuildCacheMojosExecutionStrategy implements MojosExecutionStrategy 
     public BuildCacheMojosExecutionStrategy(
             CacheController cacheController,
             CacheConfig cacheConfig,
+            PluginCatalogRegistry catalogRegistry,
             MojoParametersListener mojoListener,
             LifecyclePhasesHelper lifecyclePhasesHelper,
             MavenPluginManager mavenPluginManager,
             MojoExecutionScope mojoExecutionScope) {
         this.cacheController = cacheController;
         this.cacheConfig = cacheConfig;
+        this.catalogRegistry = catalogRegistry;
         this.mojoListener = mojoListener;
         this.lifecyclePhasesHelper = lifecyclePhasesHelper;
         this.mavenPluginManager = mavenPluginManager;
@@ -398,6 +405,11 @@ public class BuildCacheMojosExecutionStrategy implements MojosExecutionStrategy 
             MavenProject project, MojoExecution mojoExecution, Mojo mojo, CompletedExecution completedExecution) {
         List<TrackedProperty> tracked = cacheConfig.getTrackedProperties(mojoExecution);
 
+        Plugin plugin = mojoExecution.getPlugin();
+        String groupId = plugin != null ? plugin.getGroupId() : null;
+        String artifactId = plugin != null ? plugin.getArtifactId() : null;
+        String goal = mojoExecution.getGoal();
+
         for (TrackedProperty trackedProperty : tracked) {
             final String propertyName = trackedProperty.getPropertyName();
 
@@ -417,6 +429,21 @@ public class BuildCacheMojosExecutionStrategy implements MojosExecutionStrategy 
                 } else if (value instanceof Path) {
                     Path baseDirPath = project.getBasedir().toPath();
                     currentValue = normalizedPath(((Path) value), baseDirPath);
+                } else if (value instanceof String) {
+                    String strVal = (String) value;
+                    Parameter cp = catalogRegistry.findParameter(groupId, artifactId, goal, propertyName);
+                    if (cp != null && cp.isEnvSpecific()) {
+                        String normalized = strVal;
+                        try {
+                            normalized = normalizedPath(
+                                    Paths.get(strVal), project.getBasedir().toPath());
+                        } catch (InvalidPathException ignored) {
+                            // keep original value
+                        }
+                        currentValue = normalized;
+                    } else {
+                        currentValue = strVal;
+                    }
                 } else if (value != null && value.getClass().isArray()) {
                     currentValue = ArrayUtils.toString(value);
                 } else {

@@ -1,0 +1,819 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-surefire-plugin.
+  Source: https://maven.apache.org/surefire/maven-surefire-plugin/test-mojo.html
+  Latest documented version: 3.5.5
+
+  category values:
+    functional  - affects which tests run or how test results are determined
+                  (cache must be invalidated on change)
+    behavioral  - affects how tests execute (threads, timeouts, logging) but
+                  not which tests run or whether they pass
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-surefire-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire:test                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>test</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-plugin:test</fullName>
+      <description>Runs unit tests using Surefire.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Test selection / filtering ────────────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>List of patterns (Ant-style or regex) for test classes to include. User property: surefire.includes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>List of patterns for test classes to exclude. User property: surefire.excludes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includesFile</name>
+          <description>File containing include patterns (one per line). User property: surefire.includesFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.13,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludesFile</name>
+          <description>File containing exclude patterns (one per line). User property: surefire.excludesFile</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.13,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>test</name>
+          <description>Run specific test class or method: -Dtest=MyTest or -Dtest=MyTest#myMethod. User property: test</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>groups</name>
+          <description>JUnit 5 tag expression / TestNG group filter: only tests in matching groups are run. User property: groups</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludedGroups</name>
+          <description>JUnit 5 tag expression / TestNG group filter: tests in matching groups are excluded. User property: excludedGroups</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>includeJUnit5Engines</name>
+          <description>JUnit 5 engine IDs to include (others are excluded). User property: surefire.includeJUnit5Engines</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludeJUnit5Engines</name>
+          <description>JUnit 5 engine IDs to exclude from test execution. User property: surefire.excludeJUnit5Engines</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>dependenciesToScan</name>
+          <description>Dependency coordinates (groupId:artifactId) whose JARs are also scanned for test classes. User property: dependenciesToScan</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.15,)</versionRange>
+        </parameter>
+
+        <!-- ── Test source / class directories ───────────────────────── -->
+        <parameter>
+          <name>testSourceDirectory</name>
+          <description>Directory containing test source files (used for TestNG HTML reports). Default: ${project.build.testSourceDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.testSourceDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testClassesDirectory</name>
+          <description>Directory containing compiled test classes. Default: ${project.build.testOutputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.testOutputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classesDirectory</name>
+          <description>Directory containing compiled main classes added to the test classpath. Default: ${project.build.outputDirectory}</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Classpath ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>additionalClasspathElements</name>
+          <description>Extra JARs or directories appended to the test classpath. User property: maven.test.additionalClasspath</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>additionalClasspathDependencies</name>
+          <description>Maven dependencies (with transitive resolution) added to the test classpath. User property: maven.test.additionalClasspathDependencies</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classpathDependencyExcludes</name>
+          <description>Dependencies excluded from the test classpath (groupId:artifactId patterns). User property: maven.test.dependency.excludes</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>classpathDependencyScopeExclude</name>
+          <description>Dependency scope to exclude from the test classpath (e.g. compile, runtime, test)</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useModulePath</name>
+          <description>Put test classes on the module path when module-info.java is present (JDK 9+). User property: surefire.useModulePath</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useSystemClassLoader</name>
+          <description>Use system classloader to load test classes (prevents SPI lookup issues). User property: surefire.useSystemClassLoader</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>childDelegation</name>
+          <description>Use standard parent-first classloader delegation instead of isolated classloader. User property: childDelegation</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Reporting ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>reportsDirectory</name>
+          <description>Base directory where test reports are written. Default: ${project.build.directory}/surefire-reports</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/surefire-reports</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportFormat</name>
+          <description>Console report format: brief or plain. User property: surefire.reportFormat</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>brief</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reportNameSuffix</name>
+          <description>Custom suffix appended to report file names. User property: surefire.reportNameSuffix</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for report files. Default: ${project.reporting.outputEncoding}. User property: surefire.encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.reporting.outputEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useFile</name>
+          <description>Write test output to file-based reports (false = console only). User property: surefire.useFile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>redirectTestOutputToFile</name>
+          <description>Redirect test stdout/stderr to a per-test output file. User property: maven.test.redirectTestOutputToFile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>trimStackTrace</name>
+          <description>Trim stack traces in test reports to lines inside test classes only. User property: trimStackTrace</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enableOutErrElements</name>
+          <description>Include system-out and system-err elements in XML reports. User property: enableOutErrElements</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enablePropertiesElement</name>
+          <description>Include properties element in XML reports. User property: enablePropertiesElement</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.3.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Failure handling ───────────────────────────────────────── -->
+        <parameter>
+          <name>testFailureIgnore</name>
+          <description>Continue build even if tests fail (not recommended). User property: maven.test.failure.ignore</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failIfNoTests</name>
+          <description>Fail the build if no tests were run. User property: failIfNoTests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failIfNoSpecifiedTests</name>
+          <description>Fail if the -Dtest= pattern matches no tests. User property: surefire.failIfNoSpecifiedTests</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.12,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>rerunFailingTestsCount</name>
+          <description>Rerun failing tests up to N times; passing reruns are reported as flakes. User property: surefire.rerunFailingTestsCount</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.21.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipAfterFailureCount</name>
+          <description>Skip remaining tests after N test failures/errors (0 = never skip). User property: surefire.skipAfterFailureCount</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.19,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failOnFlakeCount</name>
+          <description>Fail the build if cumulative flake count reaches N (0 = unlimited). User property: surefire.failOnFlakeCount</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M6,)</versionRange>
+        </parameter>
+
+        <!-- ── Test framework detection ───────────────────────────────── -->
+        <parameter>
+          <name>junitArtifactName</name>
+          <description>Artifact coordinate used to detect JUnit version on classpath. User property: junitArtifactName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>junit:junit</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testNGArtifactName</name>
+          <description>Artifact coordinate used to detect TestNG version on classpath. User property: testNGArtifactName</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>org.testng:testng</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>objectFactory</name>
+          <description>(TestNG only) Factory class for creating test instances. User property: objectFactory</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>properties</name>
+          <description>Provider-specific configuration properties (e.g., TestNG listener configuration)</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Properties</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Forking ────────────────────────────────────────────────── -->
+        <parameter>
+          <name>forkCount</name>
+          <description>Number of JVM processes to fork: integer, decimal (e.g., 1.5C = 1.5x CPUs), or 0 (no fork). User property: forkCount</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.14,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>reuseForks</name>
+          <description>Reuse forked JVMs across test classes (false = new VM per class). User property: reuseForks</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.13,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>jvm</name>
+          <description>Path to the Java executable used for forked processes. User property: jvm</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>jdkToolchain</name>
+          <description>Toolchain requirements map (version, vendor) to select the JVM for forked processes</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>argLine</name>
+          <description>JVM arguments for forked test processes (supports @{property} late-replacement). User property: argLine</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>workingDirectory</name>
+          <description>Working directory for forked test processes. User property: basedir</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>environmentVariables</name>
+          <description>Additional environment variables passed to forked test processes</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludedEnvironmentVariables</name>
+          <description>Environment variables to exclude from inheritance in forked processes. User property: surefire.excludedEnvironmentVariables</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useManifestOnlyJar</name>
+          <description>Use manifest-only JAR for classpath when forking (avoids OS command-line length limits). User property: surefire.useManifestOnlyJar</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>forkedProcessTimeoutInSeconds</name>
+          <description>Kill forked process if it runs longer than N seconds (0 = never). User property: surefire.timeout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>forkedProcessExitTimeoutInSeconds</name>
+          <description>Timeout for forked process to terminate gracefully after tests complete. User property: surefire.exitTimeout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>30</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.20,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>shutdown</name>
+          <description>JVM shutdown strategy: exit, testset, or kill. User property: surefire.shutdown</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>exit</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.19,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enableProcessChecker</name>
+          <description>Enable process checkers to detect native subprocesses: ping, native, or all. User property: surefire.enableProcessChecker</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>tempDir</name>
+          <description>Relative path within ${project.build.directory} used for surefire boot files. User property: tempDir</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>surefire</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.20,)</versionRange>
+        </parameter>
+
+        <!-- ── Parallel execution ─────────────────────────────────────── -->
+        <parameter>
+          <name>parallel</name>
+          <description>Parallel execution mode: classes, methods, classesAndMethods, suites, suitesAndClasses, suitesAndMethods, all, none. User property: parallel</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>threadCount</name>
+          <description>Total number of threads for parallel test execution. User property: threadCount</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>threadCountSuites</name>
+          <description>Thread count for concurrent test suites in parallel mode. User property: threadCountSuites</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.16,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>threadCountClasses</name>
+          <description>Thread count for concurrent test classes in parallel mode. User property: threadCountClasses</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.16,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>threadCountMethods</name>
+          <description>Thread count for concurrent test methods in parallel mode. User property: threadCountMethods</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.16,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>perCoreThreadCount</name>
+          <description>Treat threadCount values as per-CPU-core multipliers. User property: perCoreThreadCount</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useUnlimitedThreads</name>
+          <description>Use an unbounded thread pool for parallel execution (overrides threadCount). User property: useUnlimitedThreads</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>parallelOptimized</name>
+          <description>Automatically optimize parallel thread counts to avoid exceeding available resources. User property: parallelOptimized</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.17,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>parallelTestsTimeoutInSeconds</name>
+          <description>Timeout in seconds for queued parallel tests (0 = wait forever). User property: surefire.parallel.timeout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>double</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.16,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>parallelTestsTimeoutForcedInSeconds</name>
+          <description>Force-interrupt running parallel tests after N seconds (0 = never). User property: surefire.parallel.forcedTimeout</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>double</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.16,)</versionRange>
+        </parameter>
+
+        <!-- ── System properties ──────────────────────────────────────── -->
+        <parameter>
+          <name>systemPropertyVariables</name>
+          <description>System properties passed to the test JVM (values may embed paths). User property: -</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>systemPropertiesFile</name>
+          <description>Properties file whose entries are set as system properties for tests. User property: surefire.systemPropertiesFile</description>
+          <category>behavioral</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>promoteUserPropertiesToSystemProperties</name>
+          <description>Pass Maven user-defined properties (-D) as JVM system properties to the test provider</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.4.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Test ordering ──────────────────────────────────────────── -->
+        <parameter>
+          <name>runOrder</name>
+          <description>Execution order of test classes: filesystem, alphabetical, reversealphabetical, random, hourly, failedfirst, balanced. User property: surefire.runOrder</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>filesystem</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.7,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>runOrderRandomSeed</name>
+          <description>Seed for random test ordering (for reproducible randomisation). User property: surefire.runOrder.random.seed</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>Long</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0-M6,)</versionRange>
+        </parameter>
+
+        <!-- ── Logging / diagnostics ──────────────────────────────────── -->
+        <parameter>
+          <name>printSummary</name>
+          <description>Print a summary line for each test suite after execution. User property: surefire.printSummary</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enableAssertions</name>
+          <description>Enable JVM assertion checking (-ea) in test processes. User property: enableAssertions</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ───────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Bypass test compilation and execution entirely. User property: maven.test.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipTests</name>
+          <description>Skip test execution but still compile tests. User property: skipTests</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  surefire:help                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-surefire-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.1,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output formatting. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

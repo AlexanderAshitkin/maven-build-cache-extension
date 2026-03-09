@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-resources-plugin.
+  Source: https://maven.apache.org/plugins/maven-resources-plugin/
+  Latest documented version: 3.5.0
+
+  category values:
+    functional  - affects the content or set of copied resources (changing this
+                  means the output directory will differ)
+    behavioral  - affects how copying runs but not the resulting files
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-resources-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  resources:resources                                                -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>resources</name>
+      <fullName>org.apache.maven.plugins:maven-resources-plugin:resources</fullName>
+      <description>Copy resources for the main source code to the main output directory.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for reading and writing filtered resources. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertiesEncoding</name>
+          <description>Character encoding for reading and writing filtered properties files. Defaults to the value of encoding when not set.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>The output directory into which resources are copied.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>filters</name>
+          <description>Extra filter properties files used during resource filtering. Paths are resolved against the local filesystem.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useBuildFilters</name>
+          <description>Whether to use filters defined in the POM build/filters section in addition to any filters configured here.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>delimiters</name>
+          <description>Set of expression delimiters used during filtering (format: beginToken*endToken, e.g. ${*} or @).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>LinkedHashSet</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultDelimiters</name>
+          <description>Use the default ${*} and @ delimiters in addition to any custom delimiters.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeString</name>
+          <description>String that prefixes expressions to prevent interpolation (e.g. set to \ so that \${foo} is copied verbatim).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeWindowsPaths</name>
+          <description>Escape backslashes and colons in Windows-style path values found during filtering to prevent them from being interpreted as escape characters.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>supportMultiLineFiltering</name>
+          <description>When true, the end-token search does not stop at line boundaries, enabling multi-line expression filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fileNameFiltering</name>
+          <description>Enable filtering of file names and directory names in addition to file content.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nonFilteredFileExtensions</name>
+          <description>Additional file extensions to exclude from filtering. Common binary types (jpg, jpeg, gif, bmp, png) are already excluded by default.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Copy behaviour ────────────────────────────────────────── -->
+        <parameter>
+          <name>includeEmptyDirs</name>
+          <description>Copy empty directories that are declared in the resource set.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addDefaultExcludes</name>
+          <description>Exclude VCS metadata files and directories (.git, .svn, .gitignore, .cvsignore, etc.) from resource copying. Set to false to include them.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>changeDetection</name>
+          <description>Strategy for deciding whether a destination file needs to be overwritten: content, timestamp, timestamp+content, always, or never. Supersedes the deprecated overwrite parameter.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>content</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mavenFilteringHints</name>
+          <description>List of Plexus component hints for custom MavenResourcesFiltering implementations to apply during filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip copying resources entirely. User property: maven.resources.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  resources:testResources                                            -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>testResources</name>
+      <fullName>org.apache.maven.plugins:maven-resources-plugin:testResources</fullName>
+      <description>Copy resources for the test source code to the test output directory.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for reading and writing filtered test resources. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertiesEncoding</name>
+          <description>Character encoding for filtered properties files. Defaults to the value of encoding when not set.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Output ─────────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>The output directory into which test resources are copied.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.testOutputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>filters</name>
+          <description>Extra filter properties files used during test resource filtering.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useBuildFilters</name>
+          <description>Whether to use filters defined in the POM build/filters section.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>delimiters</name>
+          <description>Set of expression delimiters used during filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>LinkedHashSet</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultDelimiters</name>
+          <description>Use the default ${*} and @ delimiters in addition to custom delimiters.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeString</name>
+          <description>String that prefixes expressions to prevent interpolation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeWindowsPaths</name>
+          <description>Escape backslashes and colons in Windows-style path values during filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>supportMultiLineFiltering</name>
+          <description>When true, the end-token search does not stop at line boundaries.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fileNameFiltering</name>
+          <description>Enable filtering of file names and directory names.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nonFilteredFileExtensions</name>
+          <description>Additional file extensions to exclude from filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Copy behaviour ────────────────────────────────────────── -->
+        <parameter>
+          <name>includeEmptyDirs</name>
+          <description>Copy empty directories declared in the test resource set.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addDefaultExcludes</name>
+          <description>Exclude VCS metadata files and directories from resource copying. Set to false to include them.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>changeDetection</name>
+          <description>Strategy for deciding whether a destination file needs to be overwritten: content, timestamp, timestamp+content, always, or never.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>content</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mavenFilteringHints</name>
+          <description>List of Plexus component hints for custom MavenResourcesFiltering implementations.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip copying test resources entirely. User property: maven.test.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.6,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  resources:copy-resources                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>copy-resources</name>
+      <fullName>org.apache.maven.plugins:maven-resources-plugin:copy-resources</fullName>
+      <description>Copy resources to an output directory, independent of the standard lifecycle resource phases.</description>
+      <versionRange>[2.3,)</versionRange>
+      <parameters>
+
+        <!-- ── Required ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>outputDirectory</name>
+          <description>The output directory into which the resources are copied (required).</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>resources</name>
+          <description>The list of resource sets to transfer. Each entry may specify a directory, includes, excludes, and filtering flag.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Character encoding for reading and writing filtered resources.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>propertiesEncoding</name>
+          <description>Character encoding for filtered properties files. Defaults to the value of encoding when not set.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Filtering ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>filters</name>
+          <description>Extra filter properties files used during resource filtering.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useBuildFilters</name>
+          <description>Whether to use filters defined in the POM build/filters section.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>delimiters</name>
+          <description>Set of expression delimiters used during filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>LinkedHashSet</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useDefaultDelimiters</name>
+          <description>Use the default ${*} and @ delimiters in addition to custom delimiters.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeString</name>
+          <description>String that prefixes expressions to prevent interpolation.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>escapeWindowsPaths</name>
+          <description>Escape backslashes and colons in Windows-style path values during filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>supportMultiLineFiltering</name>
+          <description>When true, the end-token search does not stop at line boundaries.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fileNameFiltering</name>
+          <description>Enable filtering of file names and directory names.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>nonFilteredFileExtensions</name>
+          <description>Additional file extensions to exclude from filtering.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+
+        <!-- ── Copy behaviour ────────────────────────────────────────── -->
+        <parameter>
+          <name>includeEmptyDirs</name>
+          <description>Copy empty directories declared in the resource set.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.3,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>addDefaultExcludes</name>
+          <description>Exclude VCS metadata files and directories from resource copying.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>changeDetection</name>
+          <description>Strategy for deciding whether a destination file needs to be overwritten: content, timestamp, timestamp+content, always, or never.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>content</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>mavenFilteringHints</name>
+          <description>List of Plexus component hints for custom MavenResourcesFiltering implementations.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.4,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skip</name>
+          <description>Skip copy-resources goal execution entirely. User property: maven.resources.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[3.0.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  resources:help                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-resources-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.5,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output.</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

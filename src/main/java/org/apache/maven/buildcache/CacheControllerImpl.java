@@ -856,8 +856,12 @@ public class CacheControllerImpl implements CacheController {
 
             final String propertyName = parameter.getName();
             final boolean tracked = isTracked(propertyName, trackedProperties);
-            if (!tracked && isExcluded(propertyName, logAll, noLogProperties, forceLogProperties)) {
-                continue;
+            if (!tracked) {
+                if (isExcluded(propertyName, logAll, noLogProperties, forceLogProperties)) {
+                    continue;
+                } else {
+                    cacheConfig.checkUnknownParameter(mojoExecution, propertyName);
+                }
             }
 
             try {

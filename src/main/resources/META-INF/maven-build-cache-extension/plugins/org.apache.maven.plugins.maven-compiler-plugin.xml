@@ -1,0 +1,870 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for maven-compiler-plugin.
+  Source: https://maven.apache.org/plugins/maven-compiler-plugin/
+  Latest documented version: 3.15.0
+
+  category values:
+    functional  - affects compiled output (bytecode, generated sources, class structure)
+    behavioral  - affects how compilation runs but not the output artifacts
+
+  envSpecific: true if the parameter commonly carries file-system paths or
+               machine-specific values that differ across environments.
+-->
+<plugin-catalog>
+  <groupId>org.apache.maven.plugins</groupId>
+  <artifactId>maven-compiler-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  compiler:compile                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>compile</name>
+      <fullName>org.apache.maven.plugins:maven-compiler-plugin:compile</fullName>
+      <description>Compiles main application sources.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Source / target compatibility ─────────────────────────── -->
+        <parameter>
+          <name>source</name>
+          <description>Java source compatibility level (-source). User property: maven.compiler.source</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1.8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>target</name>
+          <description>Bytecode target version (-target). User property: maven.compiler.target</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1.8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>release</name>
+          <description>Single --release flag replacing -source/-target (Java 9+). User property: maven.compiler.release</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6,)</versionRange>
+        </parameter>
+
+        <!-- ── Encoding ───────────────────────────────────────────────── -->
+        <parameter>
+          <name>encoding</name>
+          <description>Source file character encoding (-encoding). User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Compiler selection ────────────────────────────────────── -->
+        <parameter>
+          <name>compilerId</name>
+          <description>Compiler implementation ID (e.g. javac, eclipse). User property: maven.compiler.compilerId</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>javac</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>executable</name>
+          <description>Path to compiler binary when fork=true. User property: maven.compiler.executable</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>jdkToolchain</name>
+          <description>Toolchain requirements (version, vendor) to select alternate javac</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>forceLegacyJavacApi</name>
+          <description>Use legacy com.sun.tools.javac API instead of javax.tools. User property: maven.compiler.forceLegacyJavacApi</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.13,)</versionRange>
+        </parameter>
+
+        <!-- ── Annotation processing ─────────────────────────────────── -->
+        <parameter>
+          <name>proc</name>
+          <description>Annotation processing mode: none, only, full. Required for JDK 21+. User property: maven.compiler.proc</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>annotationProcessors</name>
+          <description>Explicit annotation processor class names to run (JDK 6+)</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>annotationProcessorPaths</name>
+          <description>Maven coordinates for annotation processor classpath entries</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>annotationProcessorPathsUseDepMgmt</name>
+          <description>Resolve transitive annotation processor deps via dependency management</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.12.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>generatedSourcesDirectory</name>
+          <description>Output directory for annotation-processor generated sources</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/generated-sources/annotations</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+
+        <!-- ── Compiler arguments ────────────────────────────────────── -->
+        <parameter>
+          <name>compilerArgs</name>
+          <description>Additional arguments passed directly to the compiler</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compilerArgument</name>
+          <description>Single unformatted argument string for the compiler</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Debug symbols ─────────────────────────────────────────── -->
+        <parameter>
+          <name>debug</name>
+          <description>Include debug symbols in compiled classes (-g). User property: maven.compiler.debug</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>debuglevel</name>
+          <description>Debug symbol detail: none, lines, vars, source (comma-separated). User property: maven.compiler.debuglevel</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Output bytecode features ──────────────────────────────── -->
+        <parameter>
+          <name>parameters</name>
+          <description>Generate method parameter name metadata (-parameters). User property: maven.compiler.parameters</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enablePreview</name>
+          <description>Enable JDK preview language features (--enable-preview). User property: maven.compiler.enablePreview</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>implicit</name>
+          <description>Value for -implicit: compiler option. User property: maven.compiler.implicit</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>createMissingPackageInfoClass</name>
+          <description>Create empty .class for package-info.java with only javadoc. User property: maven.compiler.createMissingPackageInfoClass</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>multiReleaseOutput</name>
+          <description>Place classes under META-INF/versions/${release} for multi-release JARs</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.7.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>moduleVersion</name>
+          <description>--module-version argument for modular projects. User property: maven.compiler.moduleVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.version}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.14.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useModuleVersion</name>
+          <description>Whether to pass --module-version for modular projects. User property: maven.compiler.useModuleVersion</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.15.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Reproducible builds ───────────────────────────────────── -->
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Reproducible output timestamp (ISO 8601 or SOURCE_DATE_EPOCH). User property: project.build.outputTimestamp</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.12.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source / output file filtering ───────────────────────── -->
+        <parameter>
+          <name>includes</name>
+          <description>Inclusion filters (Ant-style) for source files to compile</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>excludes</name>
+          <description>Exclusion filters (Ant-style) for source files to skip</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where compiled .class files are written</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compileSourceRoots</name>
+          <description>Source directories to compile (bound to project.compileSourceRoots)</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <defaultValue>${project.compileSourceRoots}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Build failure control ─────────────────────────────────── -->
+        <parameter>
+          <name>failOnError</name>
+          <description>Fail build on compilation errors. User property: maven.compiler.failOnError</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>failOnWarning</name>
+          <description>Fail build on any compiler warning. User property: maven.compiler.failOnWarning</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6,)</versionRange>
+        </parameter>
+
+        <!-- ── Forked process / memory ───────────────────────────────── -->
+        <parameter>
+          <name>fork</name>
+          <description>Run compiler in a separate forked JVM process. User property: maven.compiler.fork</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>meminitial</name>
+          <description>Initial heap for forked JVM (e.g. 64m). User property: maven.compiler.meminitial</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>maxmem</name>
+          <description>Maximum heap for forked JVM (e.g. 256m). User property: maven.compiler.maxmem</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0.1,)</versionRange>
+        </parameter>
+
+        <!-- ── Incremental compilation ───────────────────────────────── -->
+        <parameter>
+          <name>useIncrementalCompilation</name>
+          <description>Enable incremental compilation (recompile all on any change). User property: maven.compiler.useIncrementalCompilation</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>incrementalExcludes</name>
+          <description>Source files excluded from incremental change detection</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>staleMillis</name>
+          <description>Millisecond granularity for file modification time comparison. User property: lastModGranularityMs</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>0</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fileExtensions</name>
+          <description>File extensions checked for incremental build timestamp comparison</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <defaultValue>class,jar</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compilerReuseStrategy</name>
+          <description>Compiler instance reuse strategy: reuseCreated, reuseSame, alwaysNew. User property: maven.compiler.compilerReuseStrategy</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>reuseCreated</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+
+        <!-- ── Logging / diagnostics ─────────────────────────────────── -->
+        <parameter>
+          <name>verbose</name>
+          <description>Show compiler activity messages. User property: maven.compiler.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showDeprecation</name>
+          <description>Show source locations of deprecated API usage. User property: maven.compiler.showDeprecation</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showWarnings</name>
+          <description>Enable/disable compiler warning messages. User property: maven.compiler.showWarnings</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>showCompilationChanges</name>
+          <description>Log files detected as changed by incremental compilation. User property: maven.compiler.showCompilationChanges</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skipMultiThreadWarning</name>
+          <description>Suppress warning when running with multiple threads. User property: maven.compiler.skipMultiThreadWarning</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>debugFileName</name>
+          <description>File to dump compiler command-line args when fork+debug enabled</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>javac</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Skip ──────────────────────────────────────────────────── -->
+        <parameter>
+          <name>skipMain</name>
+          <description>Skip compilation of main sources entirely. User property: maven.main.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  compiler:testCompile                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>testCompile</name>
+      <fullName>org.apache.maven.plugins:maven-compiler-plugin:testCompile</fullName>
+      <description>Compiles test sources.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- Most parameters are identical to compile; only test-specific ones listed. -->
+
+        <parameter>
+          <name>testSource</name>
+          <description>-source level override for test compilation. User property: maven.compiler.testSource</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testTarget</name>
+          <description>-target level override for test compilation. User property: maven.compiler.testTarget</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testRelease</name>
+          <description>--release override for test compilation. User property: maven.compiler.testRelease</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testIncludes</name>
+          <description>Inclusion filters for test source files</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testExcludes</name>
+          <description>Exclusion filters for test source files</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testIncrementalExcludes</name>
+          <description>Test source files excluded from incremental change detection</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>Set</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testCompilerArgument</name>
+          <description>Single extra argument for the test compiler (fork only). User property: maven.compiler.testCompilerArgument</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>testCompilerArguments</name>
+          <description>Extra arguments map for the test compiler (fork only). User property: maven.compiler.testCompilerArguments</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>Map</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>generatedTestSourcesDirectory</name>
+          <description>Output directory for annotation-processor generated test sources</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/generated-test-sources/test-annotations</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useModulePath</name>
+          <description>Put test classes on module path when release/target is 9+. User property: maven.compiler.useModulePath</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.11,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compileSourceRoots</name>
+          <description>Test source directories to compile (bound to project.testCompileSourceRoots)</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <defaultValue>${project.testCompileSourceRoots}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where compiled test .class files are written</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.testOutputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>debugFileName</name>
+          <description>File to dump test-compiler command-line args when fork+debug enabled</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>javac-test</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip test source compilation entirely. User property: maven.test.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- Parameters shared with compile goal (repeated for completeness) -->
+        <parameter>
+          <name>source</name>
+          <description>Java source compatibility level (-source). User property: maven.compiler.source</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1.8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>target</name>
+          <description>Bytecode target version (-target). User property: maven.compiler.target</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>1.8</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>release</name>
+          <description>Single --release flag replacing -source/-target (Java 9+). User property: maven.compiler.release</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>encoding</name>
+          <description>Source file character encoding. User property: encoding</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.sourceEncoding}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>proc</name>
+          <description>Annotation processing mode: none, only, full. User property: maven.compiler.proc</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>annotationProcessors</name>
+          <description>Explicit annotation processor class names to run</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String[]</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>annotationProcessorPaths</name>
+          <description>Maven coordinates for annotation processor classpath entries</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>compilerArgs</name>
+          <description>Additional arguments passed directly to the compiler</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>debug</name>
+          <description>Include debug symbols in compiled classes. User property: maven.compiler.debug</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>parameters</name>
+          <description>Generate method parameter name metadata. User property: maven.compiler.parameters</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.6.2,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>enablePreview</name>
+          <description>Enable JDK preview language features. User property: maven.compiler.enablePreview</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.10.1,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputTimestamp</name>
+          <description>Reproducible output timestamp (ISO 8601 or SOURCE_DATE_EPOCH)</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <defaultValue>${project.build.outputTimestamp}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.12.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>verbose</name>
+          <description>Show compiler activity messages. User property: maven.compiler.verbose</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fork</name>
+          <description>Run compiler in a separate forked JVM process. User property: maven.compiler.fork</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>useIncrementalCompilation</name>
+          <description>Enable incremental compilation. User property: maven.compiler.useIncrementalCompilation</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>true</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[3.1,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  compiler:help                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.apache.maven.plugins:maven-compiler-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.5,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.5,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>

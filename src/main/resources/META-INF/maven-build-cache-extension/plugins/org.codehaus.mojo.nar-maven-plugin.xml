@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Licensed to the Apache Software Foundation (ASF) under one
+or more contributor license agreements.  See the NOTICE file
+distributed with this work for additional information
+regarding copyright ownership.  The ASF licenses this file
+to you under the Apache License, Version 2.0 (the
+"License"); you may not use this file except in compliance
+with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing,
+software distributed under the License is distributed on an
+"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, either express or implied.  See the License for the
+specific language governing permissions and limitations
+under the License.
+-->
+<!--
+  Parameter catalog for nar-maven-plugin.
+  Source: https://maven-nar.github.io/
+  Latest documented version: 3.10.1
+
+  category values:
+    functional  - affects which native sources are compiled and linked,
+                  what artifacts are produced, and the target platform
+    behavioral  - affects execution mechanics without changing native artifacts
+
+  envSpecific: true if the parameter commonly carries file-system paths,
+               OS/architecture selectors, or compiler-specific strings.
+-->
+<plugin-catalog>
+  <groupId>org.codehaus.mojo</groupId>
+  <artifactId>nar-maven-plugin</artifactId>
+  <goals>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-compile                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-compile</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-compile</fullName>
+      <description>Compiles native C, C++, and Fortran sources into object files using the configured compiler.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <!-- ── Platform ──────────────────────────────────────────────── -->
+        <parameter>
+          <name>architecture</name>
+          <description>Target CPU architecture (e.g. x86_64, aarch64). User property: nar.arch</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>os</name>
+          <description>Target operating system (e.g. Linux, Windows, MacOSX). User property: nar.os</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Compiler / linker descriptors ─────────────────────────── -->
+        <parameter>
+          <name>linker</name>
+          <description>Linker configuration descriptor (name, options, libs). Affects link step, not compile.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Linker</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>libraries</name>
+          <description>List of library descriptors specifying type (shared, static, jni, executable) and configuration.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>c</name>
+          <description>C compiler configuration descriptor (includes, excludes, options, defines, debug).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>CCCompiler</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>cpp</name>
+          <description>C++ compiler configuration descriptor (includes, excludes, options, defines, debug).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>CPPCompiler</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>fortran</name>
+          <description>Fortran compiler configuration descriptor (includes, excludes, options).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>FortranCompiler</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── Source / output locations ─────────────────────────────── -->
+        <parameter>
+          <name>classesDirectory</name>
+          <description>Directory containing compiled Java class files (used for javah header generation). User property: classesDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>targetDirectory</name>
+          <description>Directory where native object files and intermediate build artifacts are placed. User property: nar.targetDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/nar</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>resourceDirectories</name>
+          <description>Additional directories containing native resource files to include in the NAR artifact.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+        <!-- ── JNI / javah ────────────────────────────────────────────── -->
+        <parameter>
+          <name>javah</name>
+          <description>javah configuration descriptor (includes, excludes, jniDirectory, classPath).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Javah</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>java</name>
+          <description>Java-linking configuration descriptor (include, link, runtime, runtimeDirectory).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Java</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-download                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-download</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-download</fullName>
+      <description>Downloads NAR dependency artifacts from the Maven repository.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>architecture</name>
+          <description>Target CPU architecture for NAR dependency resolution. User property: nar.arch</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>os</name>
+          <description>Target operating system for NAR dependency resolution. User property: nar.os</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>linker</name>
+          <description>Linker name used for selecting the appropriate NAR classifier. User property: nar.linker</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Linker</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-javah                                                      -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-javah</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-javah</fullName>
+      <description>Runs javah to generate JNI header files from compiled Java class files.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>classesDirectory</name>
+          <description>Directory containing compiled Java class files from which JNI headers are generated.</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>javah</name>
+          <description>javah configuration descriptor (includes, excludes, jniDirectory, classPath).</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>Javah</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-package                                                    -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-package</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-package</fullName>
+      <description>Packages compiled native artifacts into NAR (Native ARchive) files.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>classesDirectory</name>
+          <description>Directory containing Java class files to include in the NAR. User property: classesDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.outputDirectory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>outputDirectory</name>
+          <description>Directory where the packaged NAR files are placed. User property: outputDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>libraries</name>
+          <description>List of library descriptors controlling which native library types are packaged.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>List</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip NAR packaging entirely. User property: nar.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-unpack                                                     -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-unpack</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-unpack</fullName>
+      <description>Unpacks NAR dependency artifacts into the project build directory for native linking.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>targetDirectory</name>
+          <description>Directory where NAR dependency artifacts are unpacked. User property: nar.targetDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/nar</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-validate                                                   -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-validate</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-validate</fullName>
+      <description>Validates NAR plugin configuration and detects the host OS/architecture/linker settings.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>architecture</name>
+          <description>Override auto-detected CPU architecture. User property: nar.arch</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>os</name>
+          <description>Override auto-detected operating system. User property: nar.os</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-test-compile                                               -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-test-compile</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-test-compile</fullName>
+      <description>Compiles native test sources using the configured compiler.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>architecture</name>
+          <description>Target CPU architecture for the test native compilation. User property: nar.arch</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>os</name>
+          <description>Target operating system for the test native compilation. User property: nar.os</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>c</name>
+          <description>C compiler configuration descriptor for test sources.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>CCCompiler</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>cpp</name>
+          <description>C++ compiler configuration descriptor for test sources.</description>
+          <category>functional</category>
+          <envSpecific>false</envSpecific>
+          <type>CPPCompiler</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:nar-test                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>nar-test</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:nar-test</fullName>
+      <description>Runs native test executables produced by the NAR build.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+
+        <parameter>
+          <name>targetDirectory</name>
+          <description>Directory containing compiled native test executables. User property: nar.targetDirectory</description>
+          <category>functional</category>
+          <envSpecific>true</envSpecific>
+          <type>File</type>
+          <defaultValue>${project.build.directory}/nar</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>skip</name>
+          <description>Skip execution of native tests. User property: maven.test.skip</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>true</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+
+      </parameters>
+    </goal>
+
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <!--  nar:help                                                           -->
+    <!-- ═══════════════════════════════════════════════════════════════════ -->
+    <goal>
+      <name>help</name>
+      <fullName>org.codehaus.mojo:nar-maven-plugin:help</fullName>
+      <description>Displays help information on available goals and parameters.</description>
+      <versionRange>[2.0,)</versionRange>
+      <parameters>
+        <parameter>
+          <name>detail</name>
+          <description>Show parameter details for the specified goal. User property: detail</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>boolean</type>
+          <defaultValue>false</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>goal</name>
+          <description>Name of the goal for which to show detailed help. User property: goal</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>String</type>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>lineLength</name>
+          <description>Maximum line length for help output. User property: lineLength</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>80</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+        <parameter>
+          <name>indentSize</name>
+          <description>Number of spaces per indentation level in help output. User property: indentSize</description>
+          <category>behavioral</category>
+          <envSpecific>false</envSpecific>
+          <type>int</type>
+          <defaultValue>2</defaultValue>
+          <skipProperty>false</skipProperty>
+          <versionRange>[2.0,)</versionRange>
+        </parameter>
+      </parameters>
+    </goal>
+
+  </goals>
+</plugin-catalog>
